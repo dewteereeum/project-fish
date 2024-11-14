@@ -1,0 +1,21 @@
+{
+  "item.functionalfish.diamond_fish": "Diamond Fish",
+  "item.functionalfish.gold_fish": "Gold Fish",
+  "item.functionalfish.iron_fish": "Iron Fish",
+  "item.functionalfish.sand_fish": "Sand Fish",
+  "item.functionalfish.anglowfish": "Anglowish",
+
+  "item.functionalfish.iron_scale": "Iron Scale",
+
+  "block.functionalfish.fishbowl": "Fishbowl",
+
+  "item.functionalfish.improved_substrate": "Improved Substrate",
+
+  "block.functionalfish.improved_substrate_block": "Improved Substrate Block",
+
+
+  "itemGroup.functionalfish.functional_fish_items_tab": "Functional Fish Items",
+  "itemGroup.functionalfish.functional_fish_blocks_tab": "Functional Fish Blocks",
+
+  "blockentity.functionalfish.fishbowl": "Fishbowl"
+}
