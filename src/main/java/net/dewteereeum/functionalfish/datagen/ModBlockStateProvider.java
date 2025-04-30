@@ -3,6 +3,7 @@ package net.dewteereeum.functionalfish.datagen;
 import net.dewteereeum.functionalfish.FunctionalFishMod;
 import net.dewteereeum.functionalfish.block.ModBlocks;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -19,6 +20,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.IMPROVED_SUBSTRATE_BLOCK);
 
     }
+
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock) {
         simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));

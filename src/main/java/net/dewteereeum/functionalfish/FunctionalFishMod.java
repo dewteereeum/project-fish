@@ -3,8 +3,10 @@ package net.dewteereeum.functionalfish;
 import net.dewteereeum.functionalfish.block.ModBlocks;
 import net.dewteereeum.functionalfish.block.entity.ModBlockEntities;
 import net.dewteereeum.functionalfish.block.entity.renderer.FishbowlBlockEntityRenderer;
+import net.dewteereeum.functionalfish.component.ModDataComponentTypes;
 import net.dewteereeum.functionalfish.item.ModCreativeModeTabs;
 import net.dewteereeum.functionalfish.item.ModItems;
+import net.dewteereeum.functionalfish.recipe.ModRecipes;
 import net.dewteereeum.functionalfish.screen.ModMenuTypes;
 import net.dewteereeum.functionalfish.screen.custom.FishbowlScreen;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -50,9 +52,12 @@ public class FunctionalFishMod {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModDataComponentTypes.register(modEventBus);
+
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
 
+        ModRecipes.register(modEventBus);
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.

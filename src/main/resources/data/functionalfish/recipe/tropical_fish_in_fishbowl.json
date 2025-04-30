@@ -1,0 +1,9 @@
+{
+  "type": "functionalfish:fishbowl_production",
+  "ingredient": {
+    "item": "minecraft:tropical_fish"
+  },
+  "result": {
+    "id": "minecraft:kelp"
+  }
+}

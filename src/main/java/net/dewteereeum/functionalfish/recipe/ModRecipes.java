@@ -1,0 +1,32 @@
+package net.dewteereeum.functionalfish.recipe;
+
+import net.dewteereeum.functionalfish.FunctionalFishMod;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Function;
+
+public class ModRecipes {
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
+            DeferredRegister.create(Registries.RECIPE_SERIALIZER, FunctionalFishMod.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> TYPES =
+            DeferredRegister.create(Registries.RECIPE_TYPE, FunctionalFishMod.MOD_ID);
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FishbowlRecipe>> FISHBOWL_SERIALIZER =
+            SERIALIZERS.register("fishbowl_production", FishbowlRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FishbowlRecipe>> FISHBOWL_TYPE =
+            TYPES.register("fishbowl_production", () -> new RecipeType<FishbowlRecipe>() {
+                @Override
+                public String toString() {
+                    return "fishbowl_production";
+                }
+            });
+
+    public static void register(IEventBus eventBus) {
+        SERIALIZERS.register(eventBus);
+        TYPES.register(eventBus);
+    }
+}

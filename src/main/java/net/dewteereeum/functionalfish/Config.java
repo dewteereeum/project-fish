@@ -19,6 +19,13 @@ public class Config
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+    public static final ModConfigSpec.BooleanValue RENDER_BOWLS = BUILDER
+            .comment("Whether to render items in Fishbowls. Renderings make the Fishbowls seem alive, but may reduce framerates in large amounts.")
+            .define("renderFishbowlItems", true);
+
+
+
+
     private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
             .comment("Whether to log the dirt block on common setup")
             .define("logDirtBlock", true);

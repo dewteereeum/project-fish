@@ -19,6 +19,7 @@ public class ModTags {
 
     public static class Items {
         public static final TagKey<Item> FUNCTIONAL_FISH = createTag("functional_fish");
+        public static final TagKey<Item> SUBSTRATE = createTag("substrate");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FunctionalFishMod.MOD_ID,name));

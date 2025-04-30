@@ -1,8 +1,13 @@
 package net.dewteereeum.functionalfish.block.entity.custom;
 
+import net.dewteereeum.functionalfish.block.ModBlocks;
 import net.dewteereeum.functionalfish.block.entity.ModBlockEntities;
 import net.dewteereeum.functionalfish.item.ModItems;
+import net.dewteereeum.functionalfish.recipe.FishbowlRecipe;
+import net.dewteereeum.functionalfish.recipe.FishbowlRecipeInput;
+import net.dewteereeum.functionalfish.recipe.ModRecipes;
 import net.dewteereeum.functionalfish.screen.custom.FishbowlMenu;
+import net.dewteereeum.functionalfish.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -15,13 +20,20 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sin;
@@ -37,6 +49,23 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             }
         }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return switch(slot){
+                case 0 -> stack.is(ModTags.Items.FUNCTIONAL_FISH);
+                case 1 -> stack.is(Items.WATER_BUCKET);
+                case 2 -> stack.is(ModTags.Items.SUBSTRATE);
+                case 3 -> true;
+                case 4 -> false;
+                case 5 -> false;
+                case 6 -> false;
+                default -> super.isItemValid(slot, stack);
+
+
+            };
+
+        }
     };
 
     private static final int FISH_SLOT = 0;
@@ -49,13 +78,35 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
 
     private final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 72;
-    private final int DEFAULT_MAX_PROGRESS = 72;
+    private final int DEFAULT_MAX_PROGRESS = 80;
+    private int maxProgress = 80;
+
+    private int FishTier;
+    private int SubTier;
+
+    private int progressModifier(){
+        Item substrate = itemHandler.getStackInSlot(2).getItem();
+
+        if (Tiers.containsKey(substrate)){
+            return Tiers.get(substrate);
+
+        } else return 1;
+
+    }
+
+    private static Map<Item, Integer> Tiers = Map.of(
+            Items.SAND, 1,
+            Items.GRAVEL, 1,
+            ModBlocks.IMPROVED_SUBSTRATE_BLOCK.asItem(), 2);
+
+
+
 
     private float rotation;
 
     public FishbowlBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FISHBOWL_BE.get(), pos, blockState);
+
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
@@ -153,12 +204,14 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
 
     private void resetProgress() {
         this.progress = 0;
-        this.maxProgress = DEFAULT_MAX_PROGRESS;
+        this.maxProgress = maxProgress;
     }
 
     private void craftItem() {
-        ItemStack output = new ItemStack(ModItems.IRON_SCALE.get());
-        itemHandler.insertItem(availableSlot, output, false);
+        Optional<RecipeHolder<FishbowlRecipe>> recipe = getCurrentRecipe();
+
+        ItemStack output = recipe.get().value().output();
+        itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
     }
 
     private boolean CraftingFinished() {
@@ -166,12 +219,13 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void increaseCraftingProgress() {
-        progress++;
+        progress = progress+
+                progressModifier();
     }
 
     int availableSlot;
     private boolean OutputIsEmptyOrReceivable() {
-       /* for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
             if (this.itemHandler.getStackInSlot(i).isEmpty() ||
                     this.itemHandler.getStackInSlot(i).getCount() < this.itemHandler.getStackInSlot(i).getMaxStackSize()){
                 availableSlot = i;
@@ -179,17 +233,25 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
 
-        */
+
         return false;
 
     }
 
     private boolean hasRecipe() {
-        ItemStack input = new ItemStack(ModItems.IRON_FISH.get());
-        ItemStack output = new ItemStack(ModItems.IRON_SCALE.get());
+        Optional<RecipeHolder<FishbowlRecipe>> recipe = getCurrentRecipe();
+        if(recipe.isEmpty()) {
+            return false;
+        }
 
-        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output) &&
-                this.itemHandler.getStackInSlot(FISH_SLOT).getItem() == input.getItem();
+        ItemStack output = recipe.get().value().getResultItem(null);
+
+        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+    }
+
+    private Optional<RecipeHolder<FishbowlRecipe>> getCurrentRecipe() {
+        return this.level.getRecipeManager()
+                .getRecipeFor(ModRecipes.FISHBOWL_TYPE.get(), new FishbowlRecipeInput(itemHandler.getStackInSlot(FISH_SLOT)), level);
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {
@@ -202,7 +264,7 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        /*for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
             int maxCount = itemHandler.getStackInSlot(i).isEmpty() ? 64 : itemHandler.getStackInSlot(i).getMaxStackSize();
             int currentCount = itemHandler.getStackInSlot(i).getCount();
             if (maxCount >= currentCount + count){
@@ -211,7 +273,7 @@ public class FishbowlBlockEntity extends BlockEntity implements MenuProvider {
 
         }
 
-         */
+
         return false;
     }
 
