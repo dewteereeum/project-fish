@@ -3,7 +3,7 @@
 	"render_type": "minecraft:translucent",
 	"textures": {
 		"7": "functionalfish:block/empty_floor_layer",
-		"9": "functionalfish:block/bowl_empty",
+		"9": "functionalfish:block/tank_empty",
 		"10": "functionalfish:block/base",
 		"particle": "minecraft:block/glass"
 	},

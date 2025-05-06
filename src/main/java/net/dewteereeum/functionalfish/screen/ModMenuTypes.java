@@ -1,7 +1,7 @@
 package net.dewteereeum.functionalfish.screen;
 
 import net.dewteereeum.functionalfish.FunctionalFishMod;
-import net.dewteereeum.functionalfish.screen.custom.FishbowlMenu;
+import net.dewteereeum.functionalfish.screen.custom.FishtankMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -15,8 +15,8 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, FunctionalFishMod.MOD_ID);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<FishbowlMenu>> FISHBOWL_MENU =
-            registerMenuType("fishbowl_menu", FishbowlMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<FishtankMenu>> FISHBOWL_MENU =
+            registerMenuType("fishtank_menu", FishtankMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));

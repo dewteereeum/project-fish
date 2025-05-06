@@ -2,13 +2,13 @@ package net.dewteereeum.functionalfish;
 
 import net.dewteereeum.functionalfish.block.ModBlocks;
 import net.dewteereeum.functionalfish.block.entity.ModBlockEntities;
-import net.dewteereeum.functionalfish.block.entity.renderer.FishbowlBlockEntityRenderer;
+import net.dewteereeum.functionalfish.block.entity.renderer.FishtankBlockEntityRenderer;
 import net.dewteereeum.functionalfish.component.ModDataComponentTypes;
 import net.dewteereeum.functionalfish.item.ModCreativeModeTabs;
 import net.dewteereeum.functionalfish.item.ModItems;
 import net.dewteereeum.functionalfish.recipe.ModRecipes;
 import net.dewteereeum.functionalfish.screen.ModMenuTypes;
-import net.dewteereeum.functionalfish.screen.custom.FishbowlScreen;
+import net.dewteereeum.functionalfish.screen.custom.FishtankScreen;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
@@ -106,12 +105,12 @@ public class FunctionalFishMod {
         }
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(ModBlockEntities.FISHBOWL_BE.get(), FishbowlBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.FISHTANK_BE.get(), FishtankBlockEntityRenderer::new);
         }
 
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.FISHBOWL_MENU.get(), FishbowlScreen::new);
+            event.register(ModMenuTypes.FISHBOWL_MENU.get(), FishtankScreen::new);
         }
     }
 }

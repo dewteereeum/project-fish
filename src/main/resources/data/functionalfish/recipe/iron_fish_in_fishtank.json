@@ -1,5 +1,5 @@
 {
-  "type": "functionalfish:fishbowl_production",
+  "type": "functionalfish:fishtank_production",
   "ingredient": {
     "item": "functionalfish:iron_fish"
   },

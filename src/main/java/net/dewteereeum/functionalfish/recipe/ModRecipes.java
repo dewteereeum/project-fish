@@ -8,20 +8,18 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.Function;
-
 public class ModRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, FunctionalFishMod.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, FunctionalFishMod.MOD_ID);
-    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FishbowlRecipe>> FISHBOWL_SERIALIZER =
-            SERIALIZERS.register("fishbowl_production", FishbowlRecipe.Serializer::new);
-    public static final DeferredHolder<RecipeType<?>, RecipeType<FishbowlRecipe>> FISHBOWL_TYPE =
-            TYPES.register("fishbowl_production", () -> new RecipeType<FishbowlRecipe>() {
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FishtankRecipe>> FISHTANK_SERIALIZER =
+            SERIALIZERS.register("fishtank_production", FishtankRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FishtankRecipe>> FISHTANK_TYPE =
+            TYPES.register("fishtank_production", () -> new RecipeType<FishtankRecipe>() {
                 @Override
                 public String toString() {
-                    return "fishbowl_production";
+                    return "fishtank_production";
                 }
             });
 

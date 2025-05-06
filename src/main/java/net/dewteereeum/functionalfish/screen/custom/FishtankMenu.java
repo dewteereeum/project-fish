@@ -1,7 +1,7 @@
 package net.dewteereeum.functionalfish.screen.custom;
 
 import net.dewteereeum.functionalfish.block.ModBlocks;
-import net.dewteereeum.functionalfish.block.entity.custom.FishbowlBlockEntity;
+import net.dewteereeum.functionalfish.block.entity.custom.FishtankBlockEntity;
 import net.dewteereeum.functionalfish.screen.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,19 +12,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class FishbowlMenu extends AbstractContainerMenu {
-    public final FishbowlBlockEntity blockEntity;
+public class FishtankMenu extends AbstractContainerMenu {
+    public final FishtankBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public FishbowlMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public FishtankMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
 
-    public FishbowlMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+    public FishtankMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.FISHBOWL_MENU.get(), pContainerId);
-        blockEntity = ((FishbowlBlockEntity) entity);
+        blockEntity = ((FishtankBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -107,7 +107,7 @@ public class FishbowlMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.FISHBOWL.get());
+                player, ModBlocks.FISHTANK.get());
     }
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {

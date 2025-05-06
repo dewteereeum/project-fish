@@ -14,7 +14,7 @@ public class ModItems {
     public static final DeferredItem<Item> IRON_SCALE = ITEMS.registerSimpleItem("iron_scale");
     public static final DeferredItem<Item> SAND_FISH = ITEMS.registerSimpleItem("sand_fish");
     public static final DeferredItem<Item> ANGLOWFISH = ITEMS.registerSimpleItem("anglowfish");
-    public static final DeferredItem<Item> GOLD_FISH = ITEMS.registerItem("gold_fish", Item::new, new Item.Properties());
+    public static final DeferredItem<Item> GOLD_FISH = ITEMS.registerSimpleItem("gold_fish");
     public static final DeferredItem<Item> IMPROVED_SUBSTRATE = ITEMS.registerSimpleItem("improved_substrate");
 
     public static void register(IEventBus eventBus) {

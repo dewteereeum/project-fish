@@ -1,12 +1,11 @@
 package net.dewteereeum.functionalfish.block;
 
 import net.dewteereeum.functionalfish.FunctionalFishMod;
-import net.dewteereeum.functionalfish.block.custom.Fishbowl;
+import net.dewteereeum.functionalfish.block.custom.Fishtank;
 import net.dewteereeum.functionalfish.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -22,8 +21,8 @@ public class ModBlocks {
     public static final DeferredBlock<Block> IMPROVED_SUBSTRATE_BLOCK = registerBlock("improved_substrate_block",
             () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL)));
 
-    public static final DeferredBlock<Block> FISHBOWL = registerBlock("fishbowl",
-            () -> new Fishbowl(BlockBehaviour.Properties.of().noOcclusion().sound(SoundType.GLASS)));
+    public static final DeferredBlock<Block> FISHTANK = registerBlock("fishtank",
+            () -> new Fishtank(BlockBehaviour.Properties.of().noOcclusion().sound(SoundType.GLASS)));
 
 
 

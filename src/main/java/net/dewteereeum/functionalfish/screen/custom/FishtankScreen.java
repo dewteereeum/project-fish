@@ -9,11 +9,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class FishbowlScreen extends AbstractContainerScreen<FishbowlMenu> {
+public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
     private static final ResourceLocation GUI_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(FunctionalFishMod.MOD_ID, "textures/gui/fishbowl/fishbowl_gui.png");
+            ResourceLocation.fromNamespaceAndPath(FunctionalFishMod.MOD_ID, "textures/gui/fishtank/fishtank_gui.png");
 
-    public FishbowlScreen(FishbowlMenu menu, Inventory playerInventory, Component title) {
+    public FishtankScreen(FishtankMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 

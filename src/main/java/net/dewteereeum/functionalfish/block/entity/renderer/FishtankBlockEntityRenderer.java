@@ -3,8 +3,8 @@ package net.dewteereeum.functionalfish.block.entity.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.dewteereeum.functionalfish.Config;
-import net.dewteereeum.functionalfish.block.custom.Fishbowl;
-import net.dewteereeum.functionalfish.block.entity.custom.FishbowlBlockEntity;
+import net.dewteereeum.functionalfish.block.custom.Fishtank;
+import net.dewteereeum.functionalfish.block.entity.custom.FishtankBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -18,26 +18,23 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.Vec3;
 
-public class FishbowlBlockEntityRenderer implements BlockEntityRenderer<FishbowlBlockEntity> {
-    public FishbowlBlockEntityRenderer(BlockEntityRendererProvider.Context context){
+public class FishtankBlockEntityRenderer implements BlockEntityRenderer<FishtankBlockEntity> {
+    public FishtankBlockEntityRenderer(BlockEntityRendererProvider.Context context){
 
     }
 
 
 
     @Override
-    public void render(FishbowlBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack,
+    public void render(FishtankBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack,
                        MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
 
-        if (Config.RENDER_BOWLS.get()) {
+        if (Config.RENDER_TANKS.get()) {
 
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack stack = pBlockEntity.itemHandler.getStackInSlot(0);
-        Direction facing = pBlockEntity.getBlockState().getValue(Fishbowl.FACING);
+        Direction facing = pBlockEntity.getBlockState().getValue(Fishtank.FACING);
 
 
             pPoseStack.pushPose();

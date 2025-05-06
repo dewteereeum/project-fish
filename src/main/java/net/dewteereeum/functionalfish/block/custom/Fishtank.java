@@ -2,12 +2,10 @@ package net.dewteereeum.functionalfish.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.dewteereeum.functionalfish.block.entity.ModBlockEntities;
-import net.dewteereeum.functionalfish.block.entity.custom.FishbowlBlockEntity;
+import net.dewteereeum.functionalfish.block.entity.custom.FishtankBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
@@ -30,11 +28,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class Fishbowl extends BaseEntityBlock {
+public class Fishtank extends BaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 15, 15);
-    public static final MapCodec<Fishbowl> CODEC = simpleCodec(Fishbowl::new);
+    public static final MapCodec<Fishtank> CODEC = simpleCodec(Fishtank::new);
 
     //FACING
     @Override
@@ -59,7 +57,7 @@ public class Fishbowl extends BaseEntityBlock {
     }
     //END OF FACING
 
-    public Fishbowl(Properties properties) {
+    public Fishtank(Properties properties) {
         super(properties);
     }
 
@@ -78,7 +76,7 @@ public class Fishbowl extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FishbowlBlockEntity(blockPos, blockState);
+        return new FishtankBlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -89,8 +87,8 @@ public class Fishbowl extends BaseEntityBlock {
     @Override
     protected void onRemove(BlockState pState, Level plevel, BlockPos pPos, BlockState newState, boolean movedByPiston) {
         if(pState.getBlock() != newState.getBlock()) {
-            if(plevel.getBlockEntity(pPos) instanceof FishbowlBlockEntity fishbowlBlockEntity) {
-                fishbowlBlockEntity.drops();
+            if(plevel.getBlockEntity(pPos) instanceof FishtankBlockEntity fishtankBlockEntity) {
+                fishtankBlockEntity.drops();
                 plevel.updateNeighbourForOutputSignal(pPos, this);
             }
         }
@@ -128,8 +126,8 @@ public class Fishbowl extends BaseEntityBlock {
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof FishbowlBlockEntity fishbowlBlockEntity) {
-                ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(fishbowlBlockEntity, Component.literal("Fishbowl")), pPos);
+            if(entity instanceof FishtankBlockEntity fishtankBlockEntity) {
+                ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(fishtankBlockEntity, Component.literal("Fishtank")), pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -145,7 +143,7 @@ public class Fishbowl extends BaseEntityBlock {
        if(pLevel.isClientSide()) {
            return null;
        }
-       return createTickerHelper(pBlockEntityType, ModBlockEntities.FISHBOWL_BE.get(),
+       return createTickerHelper(pBlockEntityType, ModBlockEntities.FISHTANK_BE.get(),
                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }

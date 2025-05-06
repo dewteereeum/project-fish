@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public record FishbowlRecipe(Ingredient inputItem, ItemStack output) implements Recipe<FishbowlRecipeInput> {
+public record FishtankRecipe(Ingredient inputItem, ItemStack output) implements Recipe<FishtankRecipeInput> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -23,7 +23,7 @@ public record FishbowlRecipe(Ingredient inputItem, ItemStack output) implements 
     }
 
     @Override
-    public boolean matches(FishbowlRecipeInput pInput, Level level) {
+    public boolean matches(FishtankRecipeInput pInput, Level level) {
         if(level.isClientSide()) {
             return false;
         }
@@ -32,7 +32,7 @@ public record FishbowlRecipe(Ingredient inputItem, ItemStack output) implements 
     }
 
     @Override
-    public ItemStack assemble(FishbowlRecipeInput pInput, HolderLookup.Provider provider) {
+    public ItemStack assemble(FishtankRecipeInput pInput, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -48,31 +48,31 @@ public record FishbowlRecipe(Ingredient inputItem, ItemStack output) implements 
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipes.FISHBOWL_SERIALIZER.get();
+        return ModRecipes.FISHTANK_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ModRecipes.FISHBOWL_TYPE.get();
+        return ModRecipes.FISHTANK_TYPE.get();
     }
-    public static class Serializer implements RecipeSerializer<FishbowlRecipe> {
+    public static class Serializer implements RecipeSerializer<FishtankRecipe> {
 
-        public static final MapCodec<FishbowlRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(FishbowlRecipe::inputItem),
-                ItemStack.CODEC.fieldOf("result").forGetter(FishbowlRecipe::output)
-        ).apply(inst, FishbowlRecipe::new));
-        public static final StreamCodec<RegistryFriendlyByteBuf, FishbowlRecipe> STREAM_CODEC =
+        public static final MapCodec<FishtankRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(FishtankRecipe::inputItem),
+                ItemStack.CODEC.fieldOf("result").forGetter(FishtankRecipe::output)
+        ).apply(inst, FishtankRecipe::new));
+        public static final StreamCodec<RegistryFriendlyByteBuf, FishtankRecipe> STREAM_CODEC =
                 StreamCodec.composite(
-                        Ingredient.CONTENTS_STREAM_CODEC, FishbowlRecipe::inputItem,
-                        ItemStack.STREAM_CODEC, FishbowlRecipe::output,
-                        FishbowlRecipe::new);
+                        Ingredient.CONTENTS_STREAM_CODEC, FishtankRecipe::inputItem,
+                        ItemStack.STREAM_CODEC, FishtankRecipe::output,
+                        FishtankRecipe::new);
         @Override
-        public MapCodec<FishbowlRecipe> codec() {
+        public MapCodec<FishtankRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public StreamCodec<RegistryFriendlyByteBuf, FishbowlRecipe> streamCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, FishtankRecipe> streamCodec() {
             return STREAM_CODEC;
         }
     }

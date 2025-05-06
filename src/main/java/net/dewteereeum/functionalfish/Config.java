@@ -19,9 +19,9 @@ public class Config
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.BooleanValue RENDER_BOWLS = BUILDER
-            .comment("Whether to render items in Fishbowls. Renderings make the Fishbowls seem alive, but may reduce framerates in large amounts.")
-            .define("renderFishbowlItems", true);
+    public static final ModConfigSpec.BooleanValue RENDER_TANKS = BUILDER
+            .comment("Whether to render items in Fishtanks. Renderings make the Fishtanks seem alive, but may reduce framerates in large amounts.")
+            .define("renderFishtankItems", true);
 
 
 
