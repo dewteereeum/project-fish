@@ -105,7 +105,9 @@ public class FunctionalFishMod {
         }
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(ModBlockEntities.FISHTANK_BE.get(), FishtankBlockEntityRenderer::new);
+            if(Config.RENDER_TANKS.getAsBoolean()) {
+                event.registerBlockEntityRenderer(ModBlockEntities.FISHTANK_BE.get(), FishtankBlockEntityRenderer::new);
+            }
         }
 
         @SubscribeEvent

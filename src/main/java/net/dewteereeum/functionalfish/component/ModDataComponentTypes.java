@@ -17,6 +17,10 @@ public class ModDataComponentTypes {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FISH_TIER = register("fish_tier",
             builder -> builder.persistent(Codec.STRING));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FISH_QUALITY = register("fish_quality",
+            builder -> builder.persistent(Codec.STRING));
+
+
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return DATA_COMPONENT_TYPES.register(name, () -> builderOperator.apply(DataComponentType.builder()).build());
     }

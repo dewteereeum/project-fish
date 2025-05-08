@@ -5,11 +5,25 @@
   "item.functionalfish.sand_fish": "Sand Fish",
   "item.functionalfish.anglowfish": "Anglowish",
 
+  "tooltip.functionalfish.producingfish.tooltip.dirt": "Dirt",
+
+  "tooltip.functionalfish.fishtype.tooltip.EARTHLY": "Earthly",
+  "tooltip.functionalfish.fishtype.tooltip.HELLISH": "Hellish",
+  "tooltip.functionalfish.fishtype.tooltip.VOID": "Void",
+  "tooltip.functionalfish.fishtype.tooltip.COSMIC": "Cosmic",
+
+  "tooltip.functionalfish.quality.tooltip.NATURAL": "Natural",
+  "tooltip.functionalfish.quality.tooltip.ALTERED": "Altered",
+  "tooltip.functionalfish.quality.tooltip.IMPROVED": "Improved",
+  "tooltip.functionalfish.quality.tooltip.SUPERIOR": "Superior",
+  "tooltip.functionalfish.quality.tooltip.TRANSCENDENT": "Transcendent",
+
   "item.functionalfish.iron_scale": "Iron Scale",
+  "item.functionalfish.improved_substrate": "Improved Substrate",
 
   "block.functionalfish.fishtank": "Fishtank",
 
-  "item.functionalfish.improved_substrate": "Improved Substrate",
+
 
   "block.functionalfish.improved_substrate_block": "Improved Substrate Block",
 
