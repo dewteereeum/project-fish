@@ -3,6 +3,7 @@ package net.dewteereeum.functionalfish.component;
 import com.mojang.serialization.Codec;
 import net.dewteereeum.functionalfish.FunctionalFishMod;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -14,11 +15,8 @@ public class ModDataComponentTypes {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
             DeferredRegister.createDataComponents(FunctionalFishMod.MOD_ID);
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FISH_TIER = register("fish_tier",
-            builder -> builder.persistent(Codec.STRING));
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FISH_QUALITY = register("fish_quality",
-            builder -> builder.persistent(Codec.STRING));
+   public static final DeferredHolder<DataComponentType<?>, DataComponentType<FishData>> FISH_STATS = register("fish_stats",
+           fishDataBuilder -> fishDataBuilder.persistent(FishData.CODEC));
 
 
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {

@@ -1,4 +1,4 @@
-package net.dewteereeum.functionalfish.item.custom;
+package net.dewteereeum.functionalfish.component;
 
 public enum FishQuality {
 

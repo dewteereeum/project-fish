@@ -1,4 +1,4 @@
-package net.dewteereeum.functionalfish.block;
+package net.dewteereeum.functionalfish.component;
 
 public enum SubstrateTier {
     BASIC(0),

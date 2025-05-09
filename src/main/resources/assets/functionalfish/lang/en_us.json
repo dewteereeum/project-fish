@@ -5,18 +5,7 @@
   "item.functionalfish.sand_fish": "Sand Fish",
   "item.functionalfish.anglowfish": "Anglowish",
 
-  "tooltip.functionalfish.producingfish.tooltip.dirt": "Dirt",
 
-  "tooltip.functionalfish.fishtype.tooltip.EARTHLY": "Earthly",
-  "tooltip.functionalfish.fishtype.tooltip.HELLISH": "Hellish",
-  "tooltip.functionalfish.fishtype.tooltip.VOID": "Void",
-  "tooltip.functionalfish.fishtype.tooltip.COSMIC": "Cosmic",
-
-  "tooltip.functionalfish.quality.tooltip.NATURAL": "Natural",
-  "tooltip.functionalfish.quality.tooltip.ALTERED": "Altered",
-  "tooltip.functionalfish.quality.tooltip.IMPROVED": "Improved",
-  "tooltip.functionalfish.quality.tooltip.SUPERIOR": "Superior",
-  "tooltip.functionalfish.quality.tooltip.TRANSCENDENT": "Transcendent",
 
   "item.functionalfish.iron_scale": "Iron Scale",
   "item.functionalfish.improved_substrate": "Improved Substrate",
@@ -31,5 +20,25 @@
   "itemGroup.functionalfish.functional_fish_items_tab": "Functional Fish Items",
   "itemGroup.functionalfish.functional_fish_blocks_tab": "Functional Fish Blocks",
 
-  "blockentity.functionalfish.fishtank": "Fishtank"
+  "blockentity.functionalfish.fishtank": "Fishtank",
+
+
+  "tooltip.functionalfish.tooltip.requirements": "Press §oShift§r for substrate requirements",
+
+  "tooltip.functionalfish.tooltip.earthly": "§2Earthly§r",
+  "tooltip.functionalfish.tooltip.hellish": "§6Hellish§r",
+  "tooltip.functionalfish.tooltip.enderic": "§3Enderic§r",
+  "tooltip.functionalfish.tooltip.cosmic": "§d§kCosmic§r",
+
+  "tooltip.functionalfish.tooltip.natural": "§fNatural§r",
+  "tooltip.functionalfish.tooltip.altered": "§aAltered§r",
+  "tooltip.functionalfish.tooltip.enhanced": "§bEnhanced§r",
+  "tooltip.functionalfish.tooltip.enchanted": "§dEnchanted§r",
+  "tooltip.functionalfish.tooltip.transcendent": "§cTranscendent§r",
+
+  "tooltip.functionalfish.tooltip.basic" : "§fBasic§r",
+  "tooltip.functionalfish.tooltip.improved": "Improved§r",
+  "tooltip.functionalfish.tooltip.advanced": "Advanced§r",
+  "tooltip.functionalfish.tooltip.superior": "Superior§r",
+  "tooltip.functionalfish.tooltip.catalytic": "Catalytic§r"
 }

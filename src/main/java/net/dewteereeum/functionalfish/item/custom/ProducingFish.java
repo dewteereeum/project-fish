@@ -1,14 +1,13 @@
 package net.dewteereeum.functionalfish.item.custom;
 
-import net.dewteereeum.functionalfish.block.SubstrateTier;
-import net.dewteereeum.functionalfish.block.SubstrateType;
-import net.dewteereeum.functionalfish.component.ModDataComponentTypes;
+import net.dewteereeum.functionalfish.component.SubstrateTier;
+import net.dewteereeum.functionalfish.component.SubstrateType;
+import net.dewteereeum.functionalfish.component.FishQuality;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
