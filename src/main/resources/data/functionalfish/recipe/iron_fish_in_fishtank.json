@@ -1,9 +1,0 @@
-{
-  "type": "functionalfish:fishtank_production",
-  "ingredient": {
-    "item": "functionalfish:iron_fish"
-  },
-  "result": {
-    "id": "functionalfish:iron_scale"
-  }
-}

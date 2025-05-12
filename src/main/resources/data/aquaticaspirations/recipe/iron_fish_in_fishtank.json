@@ -1,0 +1,9 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:iron_fish"
+  },
+  "result": {
+    "id": "aquaticaspirations:iron_scale"
+  }
+}
