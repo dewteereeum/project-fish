@@ -37,6 +37,8 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
         renderProgressArrow(pGuiGraphics, x, y);
     }
 
+
+
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if (menu.isCrafting()) {
             guiGraphics.blit(GUI_TEXTURE, x + 110, y + 56 - menu.getScaledProgress(), 176, 32 - menu.getScaledProgress(), 10, 32);

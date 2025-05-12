@@ -37,8 +37,8 @@
   "tooltip.functionalfish.tooltip.transcendent": "§cTranscendent§r",
 
   "tooltip.functionalfish.tooltip.basic" : "§fBasic§r",
-  "tooltip.functionalfish.tooltip.improved": "Improved§r",
-  "tooltip.functionalfish.tooltip.advanced": "Advanced§r",
-  "tooltip.functionalfish.tooltip.superior": "Superior§r",
-  "tooltip.functionalfish.tooltip.catalytic": "Catalytic§r"
+  "tooltip.functionalfish.tooltip.improved": "§aImproved§r",
+  "tooltip.functionalfish.tooltip.advanced": "§bAdvanced§r",
+  "tooltip.functionalfish.tooltip.superior": "§dSuperior§r",
+  "tooltip.functionalfish.tooltip.catalytic": "§cCatalytic§r"
 }

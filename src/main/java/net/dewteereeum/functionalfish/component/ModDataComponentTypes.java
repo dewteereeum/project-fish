@@ -1,22 +1,25 @@
 package net.dewteereeum.functionalfish.component;
 
-import com.mojang.serialization.Codec;
 import net.dewteereeum.functionalfish.FunctionalFishMod;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.world.item.component.CustomData;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import javax.xml.crypto.Data;
 import java.util.function.UnaryOperator;
 
 public class ModDataComponentTypes {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
             DeferredRegister.createDataComponents(FunctionalFishMod.MOD_ID);
 
-   public static final DeferredHolder<DataComponentType<?>, DataComponentType<FishData>> FISH_STATS = register("fish_stats",
-           fishDataBuilder -> fishDataBuilder.persistent(FishData.CODEC));
+   public static final DeferredHolder<DataComponentType<?>, DataComponentType<FishQuality>> FISH_QUALITY = register("fish_quality",
+           fishQualityBuilder -> fishQualityBuilder.persistent(FishQuality.CODEC));
+
+   public static final DeferredHolder<DataComponentType<?>, DataComponentType<SubstrateTier>> SUBSTRATE_TIER = register("substrate_tier",
+           substrateTierBuilder -> substrateTierBuilder.persistent(SubstrateTier.CODEC));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SubstrateType>> SUBSTRATE_TYPE = register("substrate_type",
+            substrateTypeBuilder -> substrateTypeBuilder.persistent(SubstrateType.CODEC));
 
 
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {

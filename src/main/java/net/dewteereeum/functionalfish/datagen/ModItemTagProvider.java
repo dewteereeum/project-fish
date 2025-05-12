@@ -9,6 +9,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,16 +22,24 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+
+        this.tag(ModTags.Items.SUBSTRATE)
+                .add(ModBlocks.IMPROVED_SUBSTRATE_BLOCK.get().asItem())
+                .add(Blocks.SAND.asItem());
+
         this.tag(ModTags.Items.FUNCTIONAL_FISH)
                 .add(ModItems.DIAMOND_FISH.get())
                 .add(ModItems.GOLD_FISH.get())
                 .add(ModItems.IRON_FISH.get())
                 .add(ModItems.ANGLOWFISH.get())
                 .add(Items.TROPICAL_FISH);
-        this.tag(ModTags.Items.SUBSTRATE)
-                .add(ModItems.IMPROVED_SUBSTRATE.get())
-                .add(ModBlocks.IMPROVED_SUBSTRATE_BLOCK.asItem())
-                .add(Items.SAND)
-                .add(Items.GRAVEL);
+
+        this.tag(ModTags.Items.EARTHLY)
+                .add(ModItems.DIAMOND_FISH.get());
+
+        this.tag(ModTags.Items.ADVANCED)
+                .add(ModItems.DIAMOND_FISH.get());
+
     }
 }
+

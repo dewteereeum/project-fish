@@ -1,20 +1,57 @@
 package net.dewteereeum.functionalfish.component;
 
-public enum SubstrateTier {
-    BASIC(0),
-    IMPROVED(1),
-    ADVANCED(2),
-    SUPERIOR(3),
-    CATALYTIC(4);
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-    private final int substrateTier;
+import java.util.Objects;
 
-    SubstrateTier(int tier){
-        this.substrateTier=tier;
+public record SubstrateTier(int tier) {
+
+    //'tier' is the lowest level of substrate the fish requires. Higher-value fish (ex: diamond > dirt) require higher substrate tiers.
+
+    public static final Codec<SubstrateTier> CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                    Codec.INT.fieldOf("tier").forGetter(SubstrateTier :: tier))
+                    .apply(instance, SubstrateTier::new));
+
+
+
+    static final String[] tierNames = {
+            "Basic",
+            "Improved",
+            "Advanced",
+            "Superior",
+            "Catalytic"
+    };
+
+    public String getTierString() {
+        return "tooltip.functionalfish.tooltip." + tierNames[tier].toLowerCase();
+    }
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.tier);
 
     }
 
-    public int getSubstrateTier(){
-        return this.substrateTier;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        else {
+            return
+                    obj instanceof SubstrateTier fd
+
+                            && this.tier == fd.tier;
+
+
+        }
     }
+
+
+
+
 }

@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 public class Fishtank extends BaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 15, 15);
+    public static final VoxelShape SHAPE = Block.box(1, 0, 1, 16, 15, 16);
     public static final MapCodec<Fishtank> CODEC = simpleCodec(Fishtank::new);
 
     //FACING

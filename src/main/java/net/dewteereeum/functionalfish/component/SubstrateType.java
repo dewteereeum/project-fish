@@ -1,20 +1,49 @@
 package net.dewteereeum.functionalfish.component;
 
-public enum SubstrateType {
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-    EARTHLY(0),
-    HELLISH(1),
-    VOID(2),
-    COSMIC(3);
+import java.util.Objects;
 
-    private final int subType;
+public record SubstrateType(int type) {
 
-    SubstrateType(int type){
-        this.subType=type;
+    //'type' is an indicator of which substrate family to use
+
+    public static final Codec<SubstrateType> CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                    Codec.INT.fieldOf("type").forGetter(SubstrateType :: type))
+                    .apply(instance, SubstrateType::new));
+
+
+    static final String[] typeNames = {
+            "Earthly",
+            "Hellish",
+            "Enderic",
+            "COSMIC"
+    };
+
+    public String getTypeString(){
+        return "tooltip.functionalfish.tooltip." + typeNames[type].toLowerCase();
     }
 
-    int getSubTypeValue(){
-        return this.subType;
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.type);
+
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        else {
+            return
+                    obj instanceof SubstrateType fd
+
+                            && this.type == fd.type;
+
+
+        }
+    }
 }

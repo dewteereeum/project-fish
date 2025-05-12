@@ -1,21 +1,54 @@
 package net.dewteereeum.functionalfish.component;
 
-public enum FishQuality {
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-    NATURAL(0),
-    ALTERED(1),
-    ENHANCED(2),
-    ENCHANTED(3),
-    TRANSCENDENT(4);
+import java.util.Objects;
 
-    private final int qualityTier;
+public record FishQuality(int quality) {
 
-    FishQuality(int tier){
-        this.qualityTier = tier;
+    //'quality' refers to the upgrade-level of the fish. Think of it as a production multiplier. It should start at 0 by default.
+
+
+    public static final Codec<FishQuality> CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(
+                    Codec.INT.fieldOf("quality").forGetter(FishQuality:: quality))
+                    .apply(instance, FishQuality::new));
+
+
+
+    static final String[] qualityNames = {
+            "Natural",
+            "Altered",
+            "Enhanced",
+            "Enchanted",
+            "Transcendent"
+    };
+
+
+    public String getQualityString(){
+        return "tooltip.functionalfish.tooltip." + qualityNames[quality].toLowerCase();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.quality);
 
     }
 
-    public int getQualityValue(){
-        return this.qualityTier;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+        else {
+            return
+                    obj instanceof FishQuality fd
+                    //&& this.type == fd.type
+                    //&& this.tier == fd.tier
+                    && this.quality == fd.quality;
+
+            }
     }
 }
