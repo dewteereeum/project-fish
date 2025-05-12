@@ -3,9 +3,9 @@
 	"render_type": "minecraft:translucent",
 	"textures": {
 		"0": "minecraft:block/anvil",
-		"1": "functionalfish:block/fishtank_rim",
-		"2": "functionalfish:block/fishtank_glass",
-		"particle": "block/anvil"
+		"1": "functionalfish:block/fishtank/fishtank_rim",
+		"2": "functionalfish:block/fishtank/fishtank_glass",
+		"particle": "functionalfish:block/fishtank/fishtank_glass"
 	},
 	"elements": [
 		{

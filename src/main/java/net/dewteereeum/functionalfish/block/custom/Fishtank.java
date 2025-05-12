@@ -94,32 +94,7 @@ public class Fishtank extends BaseEntityBlock {
         }
         super.onRemove(pState, plevel, pPos, newState, movedByPiston);
     }
- /*
-    @Override
-   protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 
-        if(level.getBlockEntity(pos) instanceof FishbowlBlockEntity fishbowlBlockEntity) {
-            if(player.isCrouching() && !level.isClientSide()){
-                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(fishbowlBlockEntity, Component.literal("Fishbowl")), pos);
-                return ItemInteractionResult.SUCCESS;
-            }
-           if (fishbowlBlockEntity.itemHandler.getStackInSlot(0).isEmpty() && !stack.isEmpty()) {
-                fishbowlBlockEntity.itemHandler.insertItem(0,stack.copy(), false);
-                stack.shrink(1);
-                level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
-
-            } else if (stack.isEmpty() && !fishbowlBlockEntity.itemHandler.getStackInSlot(0).isEmpty() && !player.isCrouching()) {
-                ItemStack stackInBowl = fishbowlBlockEntity.itemHandler.extractItem(0, 1, false);
-                player.setItemInHand(InteractionHand.MAIN_HAND, stackInBowl);
-                fishbowlBlockEntity.clearContents();
-                level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
-            }
-        }
-
-        return ItemInteractionResult.SUCCESS;
-    }
-
-     */
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,

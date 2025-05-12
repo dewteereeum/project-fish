@@ -82,23 +82,6 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private int FishTier;
     private int SubTier;
 
-    private int progressModifier(){
-        Item substrate = itemHandler.getStackInSlot(2).getItem();
-
-        if (Tiers.containsKey(substrate)){
-            return Tiers.get(substrate);
-
-        } else return 1;
-
-    }
-
-    private static Map<Item, Integer> Tiers = Map.of(
-            Items.SAND, 1,
-            Items.GRAVEL, 1,
-            ModBlocks.IMPROVED_SUBSTRATE_BLOCK.asItem(), 2);
-
-
-
 
     private float rotation;
 
@@ -217,8 +200,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void increaseCraftingProgress() {
-        progress = progress+
-                progressModifier();
+        progress = progress +1 ;
     }
 
     int availableSlot;

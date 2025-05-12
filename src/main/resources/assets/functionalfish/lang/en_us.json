@@ -23,7 +23,7 @@
   "blockentity.functionalfish.fishtank": "Fishtank",
 
 
-  "tooltip.functionalfish.tooltip.requirements": "Press §oShift§r for substrate requirements",
+  "tooltip.functionalfish.tooltip.requirements": "§7Press §oShift§r §7for substrate requirements§r",
 
   "tooltip.functionalfish.tooltip.earthly": "§2Earthly§r",
   "tooltip.functionalfish.tooltip.hellish": "§6Hellish§r",

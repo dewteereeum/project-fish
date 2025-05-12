@@ -14,12 +14,25 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(FunctionalFishMod.MOD_ID);
 
+    //FunctionalFish Types:
+    //EARTHLY: 0
+    //HELLISH: 1
+    //ENDERIC: 2
+    //COSMIC: 3
+
+    //FunctionalFish Tiers:
+    //BASIC: 0
+    //IMPROVED: 1
+    //ADVANCED: 2
+    //SUPERIOR: 3
+    //CATALYTIC: 4
+
     public static final DeferredItem<Item> DIAMOND_FISH =
             ITEMS.register("diamond_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(3))
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
                     )
             );
@@ -55,8 +68,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(1))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
                     )
             );
 
