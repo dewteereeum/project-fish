@@ -7,6 +7,7 @@ import net.dewteereeum.aquaticaspirations.recipe.ModRecipes;
 import net.dewteereeum.aquaticaspirations.screen.custom.FishtankMenu;
 import net.dewteereeum.aquaticaspirations.util.ModTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,6 +26,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidActionResult;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,13 +74,44 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
+    public IItemHandler getItemHandler(Direction direction){
+        return this.itemHandler;
+    }
+
+    private final FluidTank FLUID_TANK = createFluidTank();
+    private FluidTank createFluidTank(){
+        return new FluidTank(1000){
+            @Override
+            protected void onContentsChanged() {
+                setChanged();;
+                if(!level.isClientSide()) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                }
+            }
+
+            @Override
+            public boolean isFluidValid(FluidStack stack) {
+                return true;
+            }
+        };
+    }
+
+    public FluidStack getFluid(){
+        return FLUID_TANK.getFluid();
+    }
+
+    public IFluidHandler getTank(@Nullable Direction direction) {
+        return FLUID_TANK;
+    }
+
+
     private static final int FISH_SLOT = 0;
-    private static final int FLUID_SLOT = 1;
-    private static final int SUBSTRATE_SLOT = 2;
-    private static final int ACCESSORY_SLOT = 3;
-    private static final int OUTPUT_SLOT1 = 4;
-    private static final int OUTPUT_SLOT2 = 5;
-    private static final int OUTPUT_SLOT3 = 6;
+    //private static final int FLUID_SLOT = 1;
+    private static final int SUBSTRATE_SLOT = 1;
+    private static final int ACCESSORY_SLOT = 2;
+    private static final int OUTPUT_SLOT1 = 3;
+    private static final int OUTPUT_SLOT2 = 4;
+    private static final int OUTPUT_SLOT3 = 5;
 
     private final ContainerData data;
     private int progress = 0;
@@ -80,10 +122,13 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private int SubTier;
 
 
+    private boolean hasFilterBlock = false;
+
     private float rotation;
 
     public FishtankBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FISHTANK_BE.get(), pos, blockState);
+
 
         this.data = new ContainerData() {
             @Override
@@ -132,8 +177,11 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
         pTag.put("inventory", itemHandler.serializeNBT(pRegistries));
+        pTag = FLUID_TANK.writeToNBT(pRegistries, pTag);
         pTag.putInt("fishtank.progress", progress);
         pTag.putInt("fishtank.max_progress", maxProgress);
+
+        super.saveAdditional(pTag, pRegistries);
     }
 
     @Override
@@ -141,6 +189,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
         itemHandler.deserializeNBT(pRegistries, pTag.getCompound("inventory"));
+        FLUID_TANK.readFromNBT(pRegistries, pTag);
         progress = pTag.getInt("fishtank.progress");
         maxProgress = pTag.getInt("fishtank.max_progress");
     }
@@ -217,7 +266,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
-        if(recipe.isEmpty()) {
+        if(recipe.isEmpty() || FLUID_TANK.isEmpty()) {
             return false;
         }
 
@@ -225,6 +274,29 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
     }
+
+
+    /*
+    private void transferFluidToTank() {
+        FluidActionResult result = FluidUtil.tryEmptyContainer(itemHandler.getStackInSlot(0), this.FLUID_TANK, Integer.MAX_VALUE, null, true);
+        if(result.result != ItemStack.EMPTY) {
+            itemHandler.setStackInSlot(1, result.result);
+        }
+    }
+    private void transferFluidFromTankToHandler() {
+        FluidActionResult result = FluidUtil.tryFillContainer(itemHandler.getStackInSlot(1), this.FLUID_TANK, Integer.MAX_VALUE, null, true);
+        if(result.result != ItemStack.EMPTY) {
+            itemHandler.setStackInSlot(1, result.result);
+        }
+    }
+
+    private boolean hasFluidStackInFirstSlot() {
+        return !itemHandler.getStackInSlot(1).isEmpty()
+                && itemHandler.getStackInSlot(1).getCapability(Capabilities.FluidHandler.ITEM, null) != null
+                && !itemHandler.getStackInSlot(1).getCapability(Capabilities.FluidHandler.ITEM, null).getFluidInTank(0).isEmpty();
+    }
+
+     */
 
     private Optional<RecipeHolder<FishtankRecipe>> getCurrentRecipe() {
         return this.level.getRecipeManager()
@@ -266,6 +338,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
     }
+
 
 
 }

@@ -12,6 +12,9 @@
 
   "block.aquaticaspirations.fishtank": "Fishtank",
 
+  "aquaticaspirations.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "aquaticaspirations.tooltip.liquid.amount": "%s mB",
+
 
 
   "block.aquaticaspirations.improved_substrate_block": "Improved Substrate Block",

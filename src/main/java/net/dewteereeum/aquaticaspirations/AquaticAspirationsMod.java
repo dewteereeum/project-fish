@@ -37,7 +37,7 @@ public class AquaticAspirationsMod {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "aquaticaspirations";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
