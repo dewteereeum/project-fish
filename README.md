@@ -3,9 +3,13 @@ Aquatic Aspirations is a mod project by me, that aims to add a method of resourc
 In its base state, it includes:
 
 -A fish for most vanilla resources, along with deafult methods to obtain them.
+
 -Substrate blocks to utilize in resource production (or build with, if you really wanted.
+
 -A Fishtank Block entity that facilitates resource production.
+
 -Fishtank Accessories that alter Fishtank fucntionality.
+
 -A Fishbowl, which is a Fishtank with a fancier texture, but no functionality aside from displaying the stored fish. Use it to decorate your home!
 
 This is my first modding endeavour, and more than that, my first real coding project at all. The 'Aspirations' part is mine. I dreamt of a mod idea and wanted to bring it into reality.
