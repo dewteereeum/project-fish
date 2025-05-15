@@ -3,14 +3,18 @@ package net.dewteereeum.aquaticaspirations.block.custom;
 import com.mojang.serialization.MapCodec;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
+import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -26,6 +30,13 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.client.event.sound.SoundEvent;
+import net.neoforged.neoforge.common.data.SoundDefinition;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.Nullable;
 
 public class Fishtank extends BaseEntityBlock {
@@ -96,19 +107,75 @@ public class Fishtank extends BaseEntityBlock {
     }
 
 
+    //Credit to klikli_dev for help with fluid handling, from Theurgy Mod
+    //https://github.com/klikli-dev/theurgy/blob/version/1.21.1/src/main/java/com/klikli_dev/theurgy/content/behaviour/fluidhandler/OneTankFluidHandlerBehaviour.java
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
+            ItemStack stackInHand = pPlayer.getItemInHand(pHand);
+            boolean holdingBucketItem =
+             stackInHand.getCapability(Capabilities.FluidHandler.ITEM) != null;
+
+
+
             if(entity instanceof FishtankBlockEntity fishtankBlockEntity) {
-                ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(fishtankBlockEntity, Component.literal("Fishtank")), pPos);
+                if(holdingBucketItem){
+                    if(pHand != InteractionHand.MAIN_HAND){
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                    }
+
+                    ItemStack fillStack = stackInHand.copyWithCount(1);
+                    IFluidHandler blockFluidhandler = pLevel.getCapability(Capabilities.FluidHandler.BLOCK, pPos, null);
+
+                    if(blockFluidhandler == null){
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                    }
+
+                    IFluidHandlerItem itemFluidHandler = fillStack.getCapability(Capabilities.FluidHandler.ITEM);
+
+                    if(itemFluidHandler == null){
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                    }
+                    //try to insert
+                    FluidStack transferredFluid = FluidUtil.tryFluidTransfer(blockFluidhandler, itemFluidHandler, Integer.MAX_VALUE, true);
+                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)){
+                        pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS);
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                    //try to extract
+                    transferredFluid = FluidUtil.tryFluidTransfer(itemFluidHandler, blockFluidhandler, Integer.MAX_VALUE, true);
+                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)){
+                        pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS);
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                }
+                else {
+                    ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(fishtankBlockEntity, Component.literal("Fishtank")), pPos);
+                }
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
         }
 
         return ItemInteractionResult.sidedSuccess(pLevel.isClientSide());
+    }
+
+    private boolean updateFluidContainerInHand(Player pPlayer, InteractionHand pHand, ItemStack stackInHand, IFluidHandlerItem itemFluidHandler, FluidStack transferredFluid) {
+        if (!transferredFluid.isEmpty()) {
+            //handle bucket stacking correctly
+            stackInHand.shrink(1);
+            if (stackInHand.isEmpty()) {
+                pPlayer.setItemInHand(pHand, itemFluidHandler.getContainer()); //always set to container to handle e.g. empty bucket correctly
+            } else {
+                pPlayer.setItemInHand(pHand, stackInHand);
+                pPlayer.getInventory().placeItemBackInInventory(itemFluidHandler.getContainer());
+            }
+
+            return true;
+        }
+        return false;
     }
 
 
