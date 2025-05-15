@@ -42,6 +42,9 @@ Planned features include:
 
 ----------------------------------------------------
 
+A large thank-you to KaupenJoe, whose course helped make this mod possible.
+
+
 Thank you for reading and I hope you enjoy my mod <3
 
 -Dewt
