@@ -42,7 +42,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
     private void renderFluidTooltipArea(GuiGraphics guiGraphics, int pMouseX, int pMouseY, int x, int y,
                                         FluidStack stack, int offsetX, int offsetY, FluidTankRenderer renderer) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, offsetX, offsetY, renderer)) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, offsetX, offsetY, renderer) && this.getSlotUnderMouse() == null) {
             guiGraphics.renderTooltip(this.font, renderer.getTooltip(stack, TooltipFlag.Default.NORMAL),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }
@@ -72,6 +72,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
 
 
+
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if (menu.isCrafting()) {
             guiGraphics.blit(GUI_TEXTURE, x + 110, y + 56 - menu.getScaledProgress(), 176, 32 - menu.getScaledProgress(), 10, 32);
@@ -88,5 +89,6 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
     public static boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, FluidTankRenderer renderer) {
         return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, renderer.getWidth(), renderer.getHeight());
     }
+
 
 }
