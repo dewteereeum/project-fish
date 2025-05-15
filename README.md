@@ -40,7 +40,7 @@ Planned features include:
 
 -No permission is needed to add this mod to a modpack. Keep in mind that it will *always* be WIP, and bugs aren't unlikely. Please let me know if you run into issues.
 
-======================================================
+----------------------------------------------------
 
 Thank you for reading and I hope you enjoy my mod <3
 
