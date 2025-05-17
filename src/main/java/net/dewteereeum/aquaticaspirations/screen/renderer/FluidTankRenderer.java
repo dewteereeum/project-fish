@@ -60,6 +60,7 @@ public class FluidTankRenderer {
         this.tooltipMode = tooltipMode;
         this.width = width;
         this.height = height;
+
     }
 
     public void render(GuiGraphics guiGraphics, int x, int y, FluidStack fluidStack) {
@@ -74,6 +75,9 @@ public class FluidTankRenderer {
         RenderSystem.disableBlend();
     }
 
+    public boolean hasSubstrate = false;
+
+
     private void drawFluid(GuiGraphics guiGraphics, final int width, final int height, FluidStack fluidStack) {
         Fluid fluid = fluidStack.getFluid();
         if (fluid.isSame(Fluids.EMPTY)) {
@@ -83,17 +87,19 @@ public class FluidTankRenderer {
         TextureAtlasSprite fluidStillSprite = getStillFluidSprite(fluidStack);
         int fluidColor = getColorTint(fluidStack);
 
+
         long amount = fluidStack.getAmount();
         long scaledAmount = (amount * height) / capacity;
+        int adjustedHeight = (hasSubstrate) ? height - 4 : height;
 
         if (amount > 0 && scaledAmount < MIN_FLUID_HEIGHT) {
             scaledAmount = MIN_FLUID_HEIGHT;
         }
-        if (scaledAmount > height) {
-            scaledAmount = height;
+        if (scaledAmount > adjustedHeight) {
+            scaledAmount = adjustedHeight;
         }
 
-        drawTiledSprite(guiGraphics, width, height, fluidColor, scaledAmount, fluidStillSprite);
+        drawTiledSprite(guiGraphics, width, adjustedHeight, fluidColor, scaledAmount, fluidStillSprite);
     }
 
     private TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {

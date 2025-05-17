@@ -46,6 +46,10 @@ public class FishtankMenu extends AbstractContainerMenu {
 
     }
 
+    public ItemStack getSubstrateStack(){
+        return this.blockEntity.itemHandler.getStackInSlot(1);
+    }
+
     public int getScaledProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress

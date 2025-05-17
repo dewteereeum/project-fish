@@ -57,15 +57,26 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         @Override
+        public int getSlotLimit(int slot) {
+            return switch(slot){
+                case 0, 1, 2 -> 1;
+
+                default -> super.getSlotLimit(slot);
+
+            };
+
+
+        }
+
+        @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return switch(slot){
                 case 0 -> stack.is(ModTags.Items.FUNCTIONAL_FISH);
-                case 1 -> stack.is(Items.WATER_BUCKET);
-                case 2 -> stack.is(ModTags.Items.SUBSTRATE);
-                case 3 -> true;
+                case 1 -> stack.is(ModTags.Items.SUBSTRATE);
+                case 2 -> true;
+                case 3 -> false;
                 case 4 -> false;
                 case 5 -> false;
-                case 6 -> false;
                 default -> super.isItemValid(slot, stack);
 
 
@@ -95,6 +106,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             }
         };
     }
+    public int substrateAdjustment = (this.itemHandler.getStackInSlot(1).isEmpty()) ? 0 : 4;
 
     public FluidStack getFluid(){
         return FLUID_TANK.getFluid();
@@ -136,6 +148,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
                 return switch (pIndex) {
                     case 0 -> FishtankBlockEntity.this.progress;
                     case 1 -> FishtankBlockEntity.this.maxProgress;
+
                     default -> 0;
                 };
             }

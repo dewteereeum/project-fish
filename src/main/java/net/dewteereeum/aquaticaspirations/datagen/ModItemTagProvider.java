@@ -25,7 +25,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
         this.tag(ModTags.Items.SUBSTRATE)
                 .add(ModBlocks.IMPROVED_SUBSTRATE_BLOCK.get().asItem())
-                .add(Blocks.SAND.asItem());
+                .add(Blocks.SAND.asItem())
+                .add(Blocks.GRAVEL.asItem());
 
         this.tag(ModTags.Items.FUNCTIONAL_FISH)
                 .add(ModItems.DIAMOND_FISH.get())
