@@ -34,7 +34,7 @@ Planned features include:
 
 -If you would like to contribute to Aquatic Aspirations, please feel free to reach out. You will certainly be more experienced than I am.
 
--If you would like to create your own fork, please feel free. I just ask two things: Credit me for the ideas, and please implement the Diamond Fish texture in some capacity. It's important to me.
+-If you would like to create your own fork, please feel free. I just ask two things: Credit me for the ideas, and please implement the Diamond Fish sprite in some capacity. It's important to me.
 
 -Addons are welcome! Want to add some custom content to Aquatic Aspirations with your own mod? I have no idea how to do that, but it would be very cool!
 
