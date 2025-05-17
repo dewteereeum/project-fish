@@ -1,0 +1,44 @@
+{
+  "item.aquaticaspirations.diamond_fish": "Diamond Fish",
+  "item.aquaticaspirations.gold_fish": "Gold Fish",
+  "item.aquaticaspirations.iron_fish": "Iron Fish",
+  "item.aquaticaspirations.sand_fish": "Sand Fish",
+  "item.aquaticaspirations.anglowfish": "Anglowish",
+
+
+
+  "item.aquaticaspirations.iron_scale": "Iron Scale",
+  "item.aquaticaspirations.improved_substrate": "Improved Substrate",
+
+  "block.aquaticaspirations.fishtank": "Fishtank",
+
+
+
+  "block.aquaticaspirations.improved_substrate_block": "Improved Substrate Block",
+
+
+  "itemGroup.aquaticaspirations.aquaticaspirations_items_tab": "Aquatic Aspirations Items",
+  "itemGroup.aquaticaspirations.aquaticaspirations_blocks_tab": "Aquatic Aspirations Blocks",
+
+  "blockentity.aquaticaspirations.fishtank": "Fishtank",
+
+
+  "tooltip.aquaticaspirations.tooltip.requirements": "§7Press §oShift§r §7for substrate requirements§r",
+
+  "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",
+  "tooltip.aquaticaspirations.tooltip.hellish": "§6Hellish§r",
+  "tooltip.aquaticaspirations.tooltip.enderic": "§3Enderic§r",
+  "tooltip.aquaticaspirations.tooltip.cosmic": "§d§kCosmic§r",
+
+  "tooltip.aquaticaspirations.tooltip.natural": "§fNatural§r",
+  "tooltip.aquaticaspirations.tooltip.altered": "§aAltered§r",
+  "tooltip.aquaticaspirations.tooltip.enhanced": "§bEnhanced§r",
+  "tooltip.aquaticaspirations.tooltip.enchanted": "§dEnchanted§r",
+  "tooltip.aquaticaspirations.tooltip.transcendent": "§cTranscendent§r",
+
+  "tooltip.aquaticaspirations.tooltip.basic" : "§fBasic§r",
+  "tooltip.aquaticaspirations.tooltip.improved": "§aImproved§r",
+  "tooltip.aquaticaspirations.tooltip.advanced": "§bAdvanced§r",
+  "tooltip.aquaticaspirations.tooltip.superior": "§dSuperior§r",
+  "tooltip.aquaticaspirations.tooltip.catalytic": "§cCatalytic§r"
+}
