@@ -5,6 +5,7 @@ import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -51,6 +52,8 @@ public class Fishtank extends BaseEntityBlock {
         return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
     }
 
+
+
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
@@ -67,6 +70,7 @@ public class Fishtank extends BaseEntityBlock {
         builder.add(FACING);
     }
     //END OF FACING
+
 
     public Fishtank(Properties properties) {
         super(properties);
