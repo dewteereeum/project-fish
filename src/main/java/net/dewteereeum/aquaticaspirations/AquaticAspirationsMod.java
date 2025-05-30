@@ -4,14 +4,20 @@ import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.renderer.FishtankBlockEntityRenderer;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
+import net.dewteereeum.aquaticaspirations.fluid.BaseFluidType;
+import net.dewteereeum.aquaticaspirations.fluid.ModFluidTypes;
+import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
 import net.dewteereeum.aquaticaspirations.item.ModCreativeModeTabs;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.dewteereeum.aquaticaspirations.recipe.ModRecipes;
 import net.dewteereeum.aquaticaspirations.screen.ModMenuTypes;
 import net.dewteereeum.aquaticaspirations.screen.custom.FishtankScreen;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -50,6 +56,8 @@ public class AquaticAspirationsMod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
+        ModFluids.register(modEventBus);
 
         ModDataComponentTypes.register(modEventBus);
 
@@ -101,8 +109,19 @@ public class AquaticAspirationsMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TANK_FLUID.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TANK_FLUID.get(), RenderType.translucent());
+            });
 
         }
+
+        @SubscribeEvent
+        public static void onClientExtensions(RegisterClientExtensionsEvent event) {
+            event.registerFluidType(((BaseFluidType) ModFluidTypes.TANK_FLUID_TYPE.get()).getClientFluidTypeExtensions(),
+                    ModFluidTypes.TANK_FLUID_TYPE.get());
+        }
+
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             if(Config.RENDER_TANKS.getAsBoolean()) {

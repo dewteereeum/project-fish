@@ -46,7 +46,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
     private void assignFluidRenderer() {
 
-        fluidRenderer = new FluidTankRenderer(1000, true, 28, 31);
+        fluidRenderer = new FluidTankRenderer(1000, true, 43, 44);
     }
 
 
@@ -82,7 +82,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
         renderSubstrateLayer(pGuiGraphics, x, y);
 
         fluidRenderer.hasSubstrate = !menu.blockEntity.itemHandler.getStackInSlot(1).isEmpty();
-        fluidRenderer.render(pGuiGraphics, x + 63, y + 24, menu.blockEntity.getFluid());
+        fluidRenderer.render(pGuiGraphics, x + 56, y + 22, menu.blockEntity.getFluid());
 
     }
 
@@ -91,7 +91,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if (menu.isCrafting()) {
-            guiGraphics.blit(GUI_TEXTURE, x + 110, y + 56 - menu.getScaledProgress(), 176, 32 - menu.getScaledProgress(), 10, 32);
+            guiGraphics.blit(GUI_TEXTURE, x + 113, y + 56 - menu.getScaledProgress(), 176, 32 - menu.getScaledProgress(), 10, 32);
         }
     }
 
@@ -113,7 +113,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
 
         if(!substrateName.equals("air")) {
-            guiGraphics.blit(SUBSTRATE_TEXTURE, x + 63, y + 51, 0, 0, 28, 4, 16, 16);
+            guiGraphics.blit(SUBSTRATE_TEXTURE, x + 56, y + 60, 0, 0, 43, 6, 16, 16);
             //System.out.println(blockKeyTest);
         }
 

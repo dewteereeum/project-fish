@@ -1,39 +1,27 @@
 package net.dewteereeum.aquaticaspirations.block.entity.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.dewteereeum.aquaticaspirations.Config;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
-import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.material.FluidState;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FishtankBlockEntityRenderer implements BlockEntityRenderer<FishtankBlockEntity> {
@@ -52,77 +40,56 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
 
 
-            //FLUID RENDERER
-            // Credits to TurtyWurty
-            // Under MIT-License: https://github.com/DaRealTurtyWurty/1.20-Tutorial-Mod?tab=MIT-1-ov-file#readme
-
-
+            //Credit to thedarkcolour
+            //Under GNU-License: https://github.com/thedarkcolour/ExDeorum/tree/1.21.1?tab=readme-ov-file
 
             FluidStack fluidStack = pBlockEntity.getFluid();
+            ItemStack substrateStack = pBlockEntity.itemHandler.getStackInSlot(1);
+            boolean hasFluid = (!pBlockEntity.getFluid().isEmpty());
+            boolean hasFish = (!pBlockEntity.itemHandler.getStackInSlot(0).isEmpty());
+            boolean hasSubstrate = (!pBlockEntity.itemHandler.getStackInSlot(1).isEmpty());
 
-            if (!fluidStack.isEmpty()){
+            int r = -1;
+            int g = -1;
+            int b = -1;
+            float percentage = fluidStack.getAmount() / 1000.0f;
 
-
+            if (hasFluid){
+                Fluid fluid = fluidStack.getFluid();
                 Level level = pBlockEntity.getLevel();
-                if (level == null)
-                    return;
-
                 BlockPos pos = pBlockEntity.getBlockPos();
+                float tankFloor = hasSubstrate ? 4/16f : 2/16f;
+                float tankCeiling = 15.01f/16f;
+                float y = Mth.lerp(percentage, tankFloor, tankCeiling);
+                int inputFluidColour = TankRenderUtil.getFluidColor(fluid, level, pos);
 
-                IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-                ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
+                r = (inputFluidColour >> 16) & 0xff;
+                g = (inputFluidColour >> 8) & 0xff;
+                b = inputFluidColour & 0xff;
 
-
-                FluidState state = fluidStack.getFluid().defaultFluidState();
-
-                TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(stillTexture);
-                int tintColor = fluidTypeExtensions.getTintColor(state, level, pos);
-
-
-
-                float height = (((float) pBlockEntity.getTank(null).getFluidInTank(0).getAmount() / pBlockEntity.getTank(null).getTankCapacity(0)) * 0.625f) + 0.25f;
-
-
-                VertexConsumer builder = pBufferSource.getBuffer(ItemBlockRenderTypes.getRenderLayer(state));
-                //VertexConsumer builder = pBufferSource.getBuffer();
+                //TOP FACE
+                //TankRenderUtil.renderTopFace(pBufferSource.getBuffer(RenderType.TRANSLUCENT), pPoseStack, y, r, g, b, fluid, pPackedLight, 2.0f);
 
 
 
 
-                // Top Texture
-                drawQuad(builder, pPoseStack, 0.1f, height, 0.1f, 0.9f, height, 0.9f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
-                drawQuad(builder, pPoseStack, 0.1f, 0.15f, 0.1f, 0.9f, height, 0.1f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
 
+                TankRenderUtil.renderFluidCube(pBufferSource, pPoseStack, level, pos, tankFloor, y, 2.0f, pPackedLight, r, g, b, fluid);
 
+            }
 
+            //SUBSTRATE RENDERER
+            if(hasSubstrate){
+                //System.out.println("r = " + r);
+                //System.out.println("g = " + g);
+                //System.out.println("b = " + b);
 
-                pPoseStack.pushPose();
-                pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-                pPoseStack.translate(0, -0.9f, -1f);
-                drawQuad(builder, pPoseStack, 0.1f, height, 0.1f, 0.9f, height, 0.9f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
-                pPoseStack.popPose();
-
-
-
-
-                pPoseStack.pushPose();
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(180));
-                pPoseStack.translate(-1f, 0, -1.8f);
-                drawQuad(builder, pPoseStack, 0.1f, 0.15f, 0.9f, 0.9f, height, 0.9f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
-                pPoseStack.popPose();
-
-                pPoseStack.pushPose();
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(90));
-                pPoseStack.translate(-1f, 0, 0);
-                drawQuad(builder, pPoseStack, 0.1f, 0.15f, 0.1f, 0.9f, height, 0.1f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
-                pPoseStack.popPose();
-
-                pPoseStack.pushPose();
-                pPoseStack.mulPose(Axis.YN.rotationDegrees(90));
-                pPoseStack.translate(0, 0, -1f);
-                drawQuad(builder, pPoseStack, 0.1f, 0.15f, 0.1f, 0.9f, height, 0.1f, sprite.getU0(), sprite.getV0(), sprite.getU1(), sprite.getV1(), pPackedLight, tintColor);
-                pPoseStack.popPose();
-
+               if(hasFluid){
+                   r = Math.min(255, r + 60);
+                   g = Math.min(255, g + 60);
+                   b = Math.min(255, b + 60);
+               }
+               TankRenderUtil.renderCuboid(pBufferSource.getBuffer(RenderType.CUTOUT), pPoseStack, 2/16f, 4/16f, r, g, b, substrateStack, pPackedLight, 2.0f);
             }
 
 
@@ -132,47 +99,53 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
 
 
-            //System.out.println("FluidRenderer Pass");
+            //System.out.println(IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor());
 
             //ITEM RENDERER
 
-            ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-            ItemStack stack = pBlockEntity.itemHandler.getStackInSlot(0);
-            Direction facing = pBlockEntity.getBlockState().getValue(Fishtank.FACING);
+            if(hasFish) {
+                ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+                ItemStack stack = pBlockEntity.itemHandler.getStackInSlot(0);
+                Direction facing = pBlockEntity.getBlockState().getValue(Fishtank.FACING);
+                float fishY = Math.max(4/16f, percentage * 0.6f);
+                int fishZRot = hasFluid ? 0 : -90;
+
+
+                pPoseStack.pushPose();
+
+                pPoseStack.translate(0.5f, fishY, 0.5f);
+                pPoseStack.scale(0.5f, 0.5f, 0.5f);
+                pPoseStack.mulPose(Axis.ZN.rotationDegrees(fishZRot));
+
+                //setting facing direction
+                int fishYRot = switch (facing){
+                    case NORTH -> 180;
+                    case EAST -> -90;
+                    case SOUTH -> 0;
+                    case WEST -> 90;
+                    default -> 0;
+                };
+
+                pPoseStack.mulPose(Axis.YP.rotationDegrees(fishYRot));
 
 
 
-            pPoseStack.pushPose();
+                if(hasFluid) {
+                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(pBlockEntity.getRenderingRotation()));
+                }
 
-            pPoseStack.translate(0.5f, 0.5f, 0.5f);
-            pPoseStack.scale(0.5f, 0.5f, 0.5f);
+                itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
+                        OverlayTexture.NO_OVERLAY, pPoseStack, pBufferSource, pBlockEntity.getLevel(), 1);
 
-            //setting facing direction
-            if (facing == Direction.NORTH) {
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(180));
-            } else if (facing == Direction.EAST) {
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(270));
-            } else if (facing == Direction.SOUTH) {
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(0));
-            } else if (facing == Direction.WEST) {
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(90));
+
+                pPoseStack.popPose();
             }
-
-
-            pPoseStack.mulPose(Axis.ZP.rotationDegrees(pBlockEntity.getRenderingRotation()));
-
-
-
-            itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
-                    OverlayTexture.NO_OVERLAY, pPoseStack, pBufferSource, pBlockEntity.getLevel(), 1);
-
-
-            pPoseStack.popPose();
 
 
 
         }
     }
+
 
     private static void drawVertex(VertexConsumer builder, PoseStack poseStack, float x, float y, float z, float u, float v, int packedLight, int color) {
         builder.addVertex(poseStack.last().pose(), x, y, z)

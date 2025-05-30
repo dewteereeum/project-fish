@@ -22,16 +22,29 @@
 			}
 		},
 		{
+			"name": "fill level",
 			"from": [1.01, 2, 1.01],
-			"to": [14.99, 15, 14.99],
+			"to": [14.99, 14, 14.99],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 2, 3]},
 			"faces": {
-				"north": {"uv": [0, 0, 13.98, 13], "texture": "#2"},
-				"east": {"uv": [0, 0, 13.98, 13], "texture": "#2"},
-				"south": {"uv": [0, 0, 13.98, 13], "texture": "#2"},
-				"west": {"uv": [0, 0, 13.98, 13], "texture": "#2"},
-				"up": {"uv": [0, 0, 13.98, 13.98], "rotation": 270, "texture": "#2"},
+				"north": {"uv": [0, 0, 13.98, 12], "texture": "#2"},
+				"east": {"uv": [0, 0, 13.98, 12], "texture": "#2"},
+				"south": {"uv": [0, 0, 13.98, 12], "texture": "#2"},
+				"west": {"uv": [0, 0, 13.98, 12], "texture": "#2"},
 				"down": {"uv": [0, 0, 13.98, 13.98], "rotation": 90, "texture": "#2"}
+			}
+		},
+		{
+			"name": "air_gap",
+			"from": [1.01, 14, 1.01],
+			"to": [14.99, 15, 14.99],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 14, 3]},
+			"faces": {
+				"north": {"uv": [0, 0, 13.98, 1], "texture": "#2"},
+				"east": {"uv": [0, 0, 13.98, 1], "texture": "#2"},
+				"south": {"uv": [0, 0, 13.98, 1], "texture": "#2"},
+				"west": {"uv": [0, 0, 13.98, 1], "texture": "#2"},
+				"up": {"uv": [0, 0, 13.98, 13.98], "rotation": 270, "texture": "#2"}
 			}
 		},
 		{
@@ -139,19 +152,53 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [3, 46, 0],
+			"translation": [0.5, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [3, 46, 0],
+			"translation": [0.5, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [3, 46, 0],
+			"translation": [0.5, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [3, 46, 0],
+			"translation": [0.5, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [11.39, 22.19, 6.8],
+			"translation": [0.5, -0.75, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"head": {
+			"scale": [1.25, 1.01, 1.25]
+		}
+	},
 	"groups": [
 		0,
 		{
 			"name": "tank_body",
 			"origin": [0, 2, 2],
 			"color": 0,
-			"children": [1]
+			"children": [1, 2]
 		},
 		{
 			"name": "rim",
 			"origin": [0, 15, 2],
 			"color": 0,
-			"children": [2, 3, 4, 5, 6, 7, 8, 9]
+			"children": [3, 4, 5, 6, 7, 8, 9, 10]
 		}
 	]
 }

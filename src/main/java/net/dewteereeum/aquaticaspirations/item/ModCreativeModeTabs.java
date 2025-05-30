@@ -25,6 +25,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.IRON_FISH);
                         output.accept(ModItems.SAND_FISH);
                         output.accept(ModItems.ANGLOWFISH);
+                        output.accept(ModItems.UNDEAD_FISH);
+                        output.accept(ModItems.SKELETAL_FISH);
                         output.accept(ModItems.IRON_SCALE);
 
                         output.accept(ModItems.IMPROVED_SUBSTRATE);

@@ -1,6 +1,10 @@
 package net.dewteereeum.aquaticaspirations.block.entity.custom;
 
+import net.dewteereeum.aquaticaspirations.block.ModBlockProperties;
+import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
+import net.dewteereeum.aquaticaspirations.item.ModItems;
+import net.dewteereeum.aquaticaspirations.item.custom.FunctionalFishItem;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipe;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipeInput;
 import net.dewteereeum.aquaticaspirations.recipe.ModRecipes;
@@ -14,25 +18,24 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidActionResult;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -40,6 +43,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.Random;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sin;
@@ -75,8 +79,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
                 case 1 -> stack.is(ModTags.Items.SUBSTRATE);
                 case 2 -> true;
                 case 3 -> false;
-                case 4 -> false;
-                case 5 -> false;
+                //case 4 -> false;
+                //case 5 -> false;
                 default -> super.isItemValid(slot, stack);
 
 
@@ -84,6 +88,28 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
         }
     };
+
+
+    /*
+    private void dyingFish(){
+        if (fishOutOfWater() && dyingFishCounter == 0){
+            this.getLevel().playSound(null, this.getBlockPos(), SoundEvents.TROPICAL_FISH_FLOP, SoundSource.BLOCKS, 1f, 1f);
+            System.out.println("A fish is dying. Time: " + this.dyingFishCounter);
+            dyingFishCounter = dyingFishCounter +1;
+            setChanged(level, this.getBlockPos(), this.getBlockState());
+
+            if (this.dyingFishCounter >= 200){
+                this.dyingFishCounter = 0;
+            }
+        }
+        else this.dyingFishCounter = 0;
+
+
+    }
+
+     */
+
+
 
     public IItemHandler getItemHandler(Direction direction){
         return this.itemHandler;
@@ -94,7 +120,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         return new FluidTank(1000){
             @Override
             protected void onContentsChanged() {
-                setChanged();;
+                setChanged();
                 if(!level.isClientSide()) {
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
@@ -117,13 +143,15 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
 
+
     private static final int FISH_SLOT = 0;
     //private static final int FLUID_SLOT = 1;
     private static final int SUBSTRATE_SLOT = 1;
     private static final int ACCESSORY_SLOT = 2;
     private static final int OUTPUT_SLOT1 = 3;
-    private static final int OUTPUT_SLOT2 = 4;
-    private static final int OUTPUT_SLOT3 = 5;
+    //private static final int OUTPUT_SLOT2 = 4;
+    //private static final int OUTPUT_SLOT3 = 5;
+    public int outputSlots = 1;
 
     private final ContainerData data;
     private int progress = 0;
@@ -132,6 +160,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     private int FishTier;
     private int SubTier;
+
+    private ModBlockProperties.ContainedFluid lastFluidState = ModBlockProperties.ContainedFluid.EMPTY;
 
 
     private boolean hasFilterBlock = false;
@@ -193,6 +223,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         pTag = FLUID_TANK.writeToNBT(pRegistries, pTag);
         pTag.putInt("fishtank.progress", progress);
         pTag.putInt("fishtank.max_progress", maxProgress);
+        pTag.putInt("fishtank.dying_fish_counter", dyingFishCounter);
 
         super.saveAdditional(pTag, pRegistries);
     }
@@ -205,6 +236,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         FLUID_TANK.readFromNBT(pRegistries, pTag);
         progress = pTag.getInt("fishtank.progress");
         maxProgress = pTag.getInt("fishtank.max_progress");
+        dyingFishCounter = pTag.getInt("fishtank.dying_fish_counter");
     }
 
     public float getRenderingRotation(){
@@ -229,6 +261,20 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick(Level level, BlockPos pPos, BlockState pState){
+        if(fishOutOfWater()){
+            if(dyingFishCounter == 0){
+                dyingFish();
+            }
+            deathCounterIncrease();
+            setChanged(level, pPos, pState);
+            if (deathCounterElapsed()){
+                resetDyingFishCounter();
+            }
+        } else {
+            resetDyingFishCounter();
+        }
+
+        //fluidChangedCheck(level, pPos, pState);
         if(hasRecipe() && OutputIsEmptyOrReceivable()){
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
@@ -239,6 +285,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             resetProgress();
         }
+
 
     }
 
@@ -259,12 +306,12 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void increaseCraftingProgress() {
-        progress = progress +1 ;
+        progress = progress + 1 ;
     }
 
     int availableSlot;
     private boolean OutputIsEmptyOrReceivable() {
-        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots -1; i++) {
             if (this.itemHandler.getStackInSlot(i).isEmpty() ||
                     this.itemHandler.getStackInSlot(i).getCount() < this.itemHandler.getStackInSlot(i).getMaxStackSize()){
                 availableSlot = i;
@@ -286,6 +333,70 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         ItemStack output = recipe.get().value().getResultItem(null);
 
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+    }
+
+    boolean fishIs(Item fish){
+        return itemHandler.getStackInSlot(FISH_SLOT).is(fish);
+    }
+
+    boolean fishIsAlive(Item fish){
+        return (!(fishIs(ModItems.SKELETAL_FISH.get()) || fishIs(ModItems.UNDEAD_FISH.get())));
+    }
+
+    boolean fishOutOfWater(){
+        if (!itemHandler.getStackInSlot(FISH_SLOT).isEmpty() && FLUID_TANK.isEmpty()){
+            if (!fishIsAlive(itemHandler.getStackInSlot(FISH_SLOT).getItem())){
+                return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
+    private int dyingFishCounter = 0;
+
+    private void dyingFish(){
+
+        Random rand = new Random();
+        float pitch = rand.nextFloat(0.7f, 1.0f);
+        this.getLevel().playSound(null, this.getBlockPos(),
+                SoundEvents.COD_FLOP, SoundSource.BLOCKS, 1f, pitch);
+        System.out.println("A fish is dying. Timer: " + dyingFishCounter);
+    }
+
+    private void deathCounterIncrease(){
+        dyingFishCounter++;
+    }
+
+    private boolean deathCounterElapsed(){
+        return this.dyingFishCounter >= 10;
+    }
+
+    private void resetDyingFishCounter(){
+        this.dyingFishCounter = 0;
+    }
+
+
+
+
+
+    private void fluidChangedCheck(Level level, BlockPos blockPos, BlockState blockState){
+        Fluid polledStateFluid = blockState.getValue(ModBlockProperties.CONTAINED_FLUID).getFluid();
+
+        System.out.println("succesful poll: " + polledStateFluid.toString());
+        if(polledStateFluid.isSame(this.lastFluidState.getFluid())) return;
+
+        for(ModBlockProperties.ContainedFluid var : ModBlockProperties.ContainedFluid.values()){
+            if (var.getFluid().isSame(this.getFluid().getFluid())){
+                level.setBlockAndUpdate(blockPos, blockState.setValue(Fishtank.FLUID, var));
+                this.lastFluidState = var;
+                System.out.println("Fluid state changed to: " + var.toString());
+                return;
+            }
+        }
+
+        level.setBlockAndUpdate(blockPos, blockState.setValue(Fishtank.FLUID, ModBlockProperties.ContainedFluid.EMPTY));
+        System.out.println("No matching fluid found; Defaulted to EMPTY");
+
     }
 
 
@@ -317,7 +428,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        for(int i = OUTPUT_SLOT1; i<=OUTPUT_SLOT3; i++){
+        for(int i = OUTPUT_SLOT1; i<= OUTPUT_SLOT1 + outputSlots -1; i++){
             if (itemHandler.getStackInSlot(i).isEmpty() || itemHandler.getStackInSlot(i).getItem() == output.getItem()) {
                 return true;
             }
@@ -326,7 +437,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT3; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots -1; i++) {
             int maxCount = itemHandler.getStackInSlot(i).isEmpty() ? 64 : itemHandler.getStackInSlot(i).getMaxStackSize();
             int currentCount = itemHandler.getStackInSlot(i).getCount();
             if (maxCount >= currentCount + count){

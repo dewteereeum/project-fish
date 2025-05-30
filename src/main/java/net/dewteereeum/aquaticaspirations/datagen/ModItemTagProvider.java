@@ -33,10 +33,16 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.GOLD_FISH.get())
                 .add(ModItems.IRON_FISH.get())
                 .add(ModItems.ANGLOWFISH.get())
-                .add(Items.TROPICAL_FISH);
+                .add(Items.TROPICAL_FISH)
+                .add(ModItems.UNDEAD_FISH.get())
+                .add(ModItems.SKELETAL_FISH.get());
 
         this.tag(ModTags.Items.EARTHLY)
-                .add(ModItems.DIAMOND_FISH.get());
+                .add(ModItems.DIAMOND_FISH.get())
+                .add(ModItems.IRON_FISH.get())
+                .add(ModItems.UNDEAD_FISH.get())
+                .add(ModItems.SKELETAL_FISH.get())
+                .add(Items.TROPICAL_FISH);
 
         this.tag(ModTags.Items.ADVANCED)
                 .add(ModItems.DIAMOND_FISH.get());

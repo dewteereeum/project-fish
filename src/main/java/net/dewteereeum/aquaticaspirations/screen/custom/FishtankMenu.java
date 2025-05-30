@@ -16,6 +16,7 @@ public class FishtankMenu extends AbstractContainerMenu {
     public final FishtankBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private int numOutputSlots;
 
     public FishtankMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
@@ -27,16 +28,17 @@ public class FishtankMenu extends AbstractContainerMenu {
         blockEntity = ((FishtankBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
+        this.numOutputSlots = blockEntity.outputSlots;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
-        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 0, 69, 30));
+        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 0, 64, 24));
         //this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 1, 26, 21));
         this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 1, 24, 33));
-        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 2, 78, 43));
-        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 3, 133, 15));
-        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 4, 133, 33));
-        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 5, 133, 51));
+        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 2, 80, 49));
+        this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 3, 136, 33));
+        //this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 4, 133, 33));
+        //this.addSlot(new SlotItemHandler(this.blockEntity.itemHandler, 5, 133, 51));
 
         addDataSlots(data);
     }
@@ -74,7 +76,7 @@ public class FishtankMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 6;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 4;  // must be the number of slots you have!
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);

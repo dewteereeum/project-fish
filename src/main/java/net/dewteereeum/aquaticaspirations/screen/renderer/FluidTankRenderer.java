@@ -90,7 +90,7 @@ public class FluidTankRenderer {
 
         long amount = fluidStack.getAmount();
         long scaledAmount = (amount * height) / capacity;
-        int adjustedHeight = (hasSubstrate) ? height - 4 : height;
+        int adjustedHeight = (hasSubstrate) ? height - 6 : height;
 
         if (amount > 0 && scaledAmount < MIN_FLUID_HEIGHT) {
             scaledAmount = MIN_FLUID_HEIGHT;
