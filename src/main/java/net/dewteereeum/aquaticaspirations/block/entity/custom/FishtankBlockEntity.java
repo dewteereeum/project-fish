@@ -1,10 +1,10 @@
 package net.dewteereeum.aquaticaspirations.block.entity.custom;
 
+
 import net.dewteereeum.aquaticaspirations.block.ModBlockProperties;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
-import net.dewteereeum.aquaticaspirations.item.custom.FunctionalFishItem;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipe;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipeInput;
 import net.dewteereeum.aquaticaspirations.recipe.ModRecipes;
@@ -18,7 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
@@ -33,12 +33,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,14 +57,14 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if(!level.isClientSide()) {
+            if (!level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             }
         }
 
         @Override
         public int getSlotLimit(int slot) {
-            return switch(slot){
+            return switch (slot) {
                 case 0, 1, 2 -> 1;
 
                 default -> super.getSlotLimit(slot);
@@ -74,7 +76,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            return switch(slot){
+            return switch (slot) {
                 case 0 -> stack.is(ModTags.Items.FUNCTIONAL_FISH);
                 case 1 -> stack.is(ModTags.Items.SUBSTRATE);
                 case 2 -> true;
@@ -110,18 +112,18 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
      */
 
 
-
-    public IItemHandler getItemHandler(Direction direction){
+    public IItemHandler getItemHandler(Direction direction) {
         return this.itemHandler;
     }
 
     private final FluidTank FLUID_TANK = createFluidTank();
-    private FluidTank createFluidTank(){
-        return new FluidTank(1000){
+
+    private FluidTank createFluidTank() {
+        return new FluidTank(1000) {
             @Override
             protected void onContentsChanged() {
                 setChanged();
-                if(!level.isClientSide()) {
+                if (!level.isClientSide()) {
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 }
             }
@@ -132,16 +134,16 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             }
         };
     }
+
     public int substrateAdjustment = (this.itemHandler.getStackInSlot(1).isEmpty()) ? 0 : 4;
 
-    public FluidStack getFluid(){
+    public FluidStack getFluid() {
         return FLUID_TANK.getFluid();
     }
 
     public IFluidHandler getTank(@Nullable Direction direction) {
         return FLUID_TANK;
     }
-
 
 
     private static final int FISH_SLOT = 0;
@@ -186,8 +188,10 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0: FishtankBlockEntity.this.progress = pValue;
-                    case 1: FishtankBlockEntity.this.maxProgress = pValue;
+                    case 0:
+                        FishtankBlockEntity.this.progress = pValue;
+                    case 1:
+                        FishtankBlockEntity.this.maxProgress = pValue;
                 }
 
             }
@@ -208,14 +212,14 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
      */
 
 
-
     public void drops() {
         SimpleContainer inv = new SimpleContainer(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++){
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
             inv.setItem(i, itemHandler.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inv);
     }
+
     @Override
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
@@ -239,15 +243,16 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         dyingFishCounter = pTag.getInt("fishtank.dying_fish_counter");
     }
 
-    public float getRenderingRotation(){
+    public float getRenderingRotation() {
         rotation += 0.01f;
-        if(rotation >=360) {
+        if (rotation >= 360) {
             rotation = 0;
         }
-        float oscillator = (float) (3*sin(rotation));
+        float oscillator = (float) (3 * sin(rotation));
 
         return oscillator;
     }
+
 
     @Override
     public Component getDisplayName() {
@@ -260,14 +265,68 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         return new FishtankMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
-    public void tick(Level level, BlockPos pPos, BlockState pState){
-        if(fishOutOfWater()){
-            if(dyingFishCounter == 0){
+    ///////Accessories
+
+    private void runAccessories() {
+        ItemStack accessory = itemHandler.getStackInSlot(2);
+        if (accessory.isEmpty()) return;
+
+
+    }
+
+    //Credit to Direwolf20-MC for EmptyTreasureChest capability
+    //https://github.com/Direwolf20-MC/JustDireThings
+    protected BlockCapabilityCache<IItemHandler, Direction> attachedInventory;
+
+    private IItemHandler getAttachedInventory() {
+        if (attachedInventory == null) {
+            assert this.level != null;
+            BlockState state = this.getBlockState();
+            BlockPos inventoryPos = this.getBlockPos().relative(Direction.DOWN);
+            attachedInventory = BlockCapabilityCache.create(
+                    Capabilities.ItemHandler.BLOCK, // capability to cache
+                    (ServerLevel) this.level, // level
+                    inventoryPos, // target position
+                    Direction.UP // context (The side of the block we're trying to pull/push from?)
+            );
+        }
+        return attachedInventory.getCapability();
+    }
+
+
+    private void EmptyTreasureChest() {
+        assert this.level != null;
+
+        ItemStack outputStack = this.itemHandler.getStackInSlot(OUTPUT_SLOT1);
+
+        if (outputStack.isEmpty()) return;
+
+        IItemHandler handler = getAttachedInventory();
+
+        if (handler == null) return;
+
+        ItemStack leftover = ItemHandlerHelper.insertItemStacked(handler, outputStack, false);
+        if (leftover.isEmpty()) {
+            itemHandler.setStackInSlot(OUTPUT_SLOT1, ItemStack.EMPTY);
+
+        } else {
+            itemHandler.setStackInSlot(OUTPUT_SLOT1, leftover);
+        }
+
+    }
+
+
+    //////////End of Accessories
+
+
+    public void tick(Level level, BlockPos pPos, BlockState pState) {
+        if (fishOutOfWater()) {
+            if (dyingFishCounter == 0) {
                 dyingFish();
             }
             deathCounterIncrease();
             setChanged(level, pPos, pState);
-            if (deathCounterElapsed()){
+            if (deathCounterElapsed()) {
                 resetDyingFishCounter();
             }
         } else {
@@ -275,10 +334,10 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         //fluidChangedCheck(level, pPos, pState);
-        if(hasRecipe() && OutputIsEmptyOrReceivable()){
+        if (hasRecipe() && OutputIsEmptyOrReceivable()) {
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
-            if(CraftingFinished()) {
+            if (CraftingFinished()) {
                 craftItem();
                 resetProgress();
             }
@@ -306,14 +365,15 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private void increaseCraftingProgress() {
-        progress = progress + 1 ;
+        progress = progress + 1;
     }
 
     int availableSlot;
+
     private boolean OutputIsEmptyOrReceivable() {
-        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots -1; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots - 1; i++) {
             if (this.itemHandler.getStackInSlot(i).isEmpty() ||
-                    this.itemHandler.getStackInSlot(i).getCount() < this.itemHandler.getStackInSlot(i).getMaxStackSize()){
+                    this.itemHandler.getStackInSlot(i).getCount() < this.itemHandler.getStackInSlot(i).getMaxStackSize()) {
                 availableSlot = i;
                 return true;
             }
@@ -326,7 +386,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
-        if(recipe.isEmpty() || FLUID_TANK.isEmpty()) {
+        if (recipe.isEmpty() || FLUID_TANK.isEmpty()) {
             return false;
         }
 
@@ -335,26 +395,25 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
     }
 
-    boolean fishIs(Item fish){
+    boolean fishIs(Item fish) {
         return itemHandler.getStackInSlot(FISH_SLOT).is(fish);
     }
 
-    boolean fishIsAlive(Item fish){
+    boolean fishIsAlive(Item fish) {
         return (!(fishIs(ModItems.SKELETAL_FISH.get()) || fishIs(ModItems.UNDEAD_FISH.get())));
     }
 
-    boolean fishOutOfWater(){
-        if (!itemHandler.getStackInSlot(FISH_SLOT).isEmpty() && FLUID_TANK.isEmpty()){
-            if (!fishIsAlive(itemHandler.getStackInSlot(FISH_SLOT).getItem())){
+    boolean fishOutOfWater() {
+        if (!itemHandler.getStackInSlot(FISH_SLOT).isEmpty() && FLUID_TANK.isEmpty()) {
+            if (!fishIsAlive(itemHandler.getStackInSlot(FISH_SLOT).getItem())) {
                 return false;
-            }
-            else return true;
-        }
-        else return false;
+            } else return true;
+        } else return false;
     }
+
     private int dyingFishCounter = 0;
 
-    private void dyingFish(){
+    private void dyingFish() {
 
         Random rand = new Random();
         float pitch = rand.nextFloat(0.7f, 1.0f);
@@ -363,30 +422,27 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         System.out.println("A fish is dying. Timer: " + dyingFishCounter);
     }
 
-    private void deathCounterIncrease(){
+    private void deathCounterIncrease() {
         dyingFishCounter++;
     }
 
-    private boolean deathCounterElapsed(){
+    private boolean deathCounterElapsed() {
         return this.dyingFishCounter >= 10;
     }
 
-    private void resetDyingFishCounter(){
+    private void resetDyingFishCounter() {
         this.dyingFishCounter = 0;
     }
 
 
-
-
-
-    private void fluidChangedCheck(Level level, BlockPos blockPos, BlockState blockState){
+    private void fluidChangedCheck(Level level, BlockPos blockPos, BlockState blockState) {
         Fluid polledStateFluid = blockState.getValue(ModBlockProperties.CONTAINED_FLUID).getFluid();
 
         System.out.println("succesful poll: " + polledStateFluid.toString());
-        if(polledStateFluid.isSame(this.lastFluidState.getFluid())) return;
+        if (polledStateFluid.isSame(this.lastFluidState.getFluid())) return;
 
-        for(ModBlockProperties.ContainedFluid var : ModBlockProperties.ContainedFluid.values()){
-            if (var.getFluid().isSame(this.getFluid().getFluid())){
+        for (ModBlockProperties.ContainedFluid var : ModBlockProperties.ContainedFluid.values()) {
+            if (var.getFluid().isSame(this.getFluid().getFluid())) {
                 level.setBlockAndUpdate(blockPos, blockState.setValue(Fishtank.FLUID, var));
                 this.lastFluidState = var;
                 System.out.println("Fluid state changed to: " + var.toString());
@@ -428,7 +484,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        for(int i = OUTPUT_SLOT1; i<= OUTPUT_SLOT1 + outputSlots -1; i++){
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots - 1; i++) {
             if (itemHandler.getStackInSlot(i).isEmpty() || itemHandler.getStackInSlot(i).getItem() == output.getItem()) {
                 return true;
             }
@@ -437,10 +493,10 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
-        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots -1; i++) {
+        for (int i = OUTPUT_SLOT1; i <= OUTPUT_SLOT1 + outputSlots - 1; i++) {
             int maxCount = itemHandler.getStackInSlot(i).isEmpty() ? 64 : itemHandler.getStackInSlot(i).getMaxStackSize();
             int currentCount = itemHandler.getStackInSlot(i).getCount();
-            if (maxCount >= currentCount + count){
+            if (maxCount >= currentCount + count) {
                 return true;
             }
 
@@ -449,7 +505,6 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
         return false;
     }
-
 
 
     @Nullable
@@ -462,7 +517,6 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
     }
-
 
 
 }

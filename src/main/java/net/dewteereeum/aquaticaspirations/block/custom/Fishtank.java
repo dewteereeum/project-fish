@@ -58,13 +58,11 @@ public class Fishtank extends BaseEntityBlock {
     public static final MapCodec<Fishtank> CODEC = simpleCodec(Fishtank::new);
 
 
-
     //FACING
     @Override
     public BlockState rotate(BlockState state, LevelAccessor level, BlockPos pos, Rotation direction) {
         return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
     }
-
 
 
     @Override
@@ -114,8 +112,8 @@ public class Fishtank extends BaseEntityBlock {
 
     @Override
     protected void onRemove(BlockState pState, Level plevel, BlockPos pPos, BlockState newState, boolean movedByPiston) {
-        if(pState.getBlock() != newState.getBlock()) {
-            if(plevel.getBlockEntity(pPos) instanceof FishtankBlockEntity fishtankBlockEntity) {
+        if (pState.getBlock() != newState.getBlock()) {
+            if (plevel.getBlockEntity(pPos) instanceof FishtankBlockEntity fishtankBlockEntity) {
                 fishtankBlockEntity.drops();
                 plevel.updateNeighbourForOutputSignal(pPos, this);
             }
@@ -133,42 +131,40 @@ public class Fishtank extends BaseEntityBlock {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
             ItemStack stackInHand = pPlayer.getItemInHand(pHand);
             boolean holdingBucketItem =
-             stackInHand.getCapability(Capabilities.FluidHandler.ITEM) != null;
+                    stackInHand.getCapability(Capabilities.FluidHandler.ITEM) != null;
 
 
-
-            if(entity instanceof FishtankBlockEntity fishtankBlockEntity) {
-                if(holdingBucketItem){
-                    if(pHand != InteractionHand.MAIN_HAND){
+            if (entity instanceof FishtankBlockEntity fishtankBlockEntity) {
+                if (holdingBucketItem) {
+                    if (pHand != InteractionHand.MAIN_HAND) {
                         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                     }
 
                     ItemStack fillStack = stackInHand.copyWithCount(1);
                     IFluidHandler blockFluidhandler = pLevel.getCapability(Capabilities.FluidHandler.BLOCK, pPos, null);
 
-                    if(blockFluidhandler == null){
+                    if (blockFluidhandler == null) {
                         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                     }
 
                     IFluidHandlerItem itemFluidHandler = fillStack.getCapability(Capabilities.FluidHandler.ITEM);
 
-                    if(itemFluidHandler == null){
+                    if (itemFluidHandler == null) {
                         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                     }
                     //try to insert
                     FluidStack transferredFluid = FluidUtil.tryFluidTransfer(blockFluidhandler, itemFluidHandler, Integer.MAX_VALUE, true);
-                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)){
+                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)) {
                         pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS);
                         return ItemInteractionResult.SUCCESS;
                     }
                     //try to extract
                     transferredFluid = FluidUtil.tryFluidTransfer(itemFluidHandler, blockFluidhandler, Integer.MAX_VALUE, true);
-                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)){
+                    if (this.updateFluidContainerInHand(pPlayer, pHand, stackInHand, itemFluidHandler, transferredFluid)) {
                         pLevel.playSound(pPlayer, pPos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS);
                         return ItemInteractionResult.SUCCESS;
                     }
-                }
-                else {
+                } else {
                     ((ServerPlayer) pPlayer).openMenu(new SimpleMenuProvider(fishtankBlockEntity, Component.literal("Fishtank")), pPos);
                 }
             } else {
@@ -199,10 +195,10 @@ public class Fishtank extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-       if(pLevel.isClientSide()) {
-           return null;
-       }
-       return createTickerHelper(pBlockEntityType, ModBlockEntities.FISHTANK_BE.get(),
-               (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+        if (pLevel.isClientSide()) {
+            return null;
+        }
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.FISHTANK_BE.get(),
+                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }
