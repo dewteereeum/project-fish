@@ -72,6 +72,24 @@ public class ModItems {
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
                     )
             );
+    public static final DeferredItem<Item> UNDEAD_FISH =
+            ITEMS.register("undead_fish",
+                    () -> new FunctionalFishItem(new Item.Properties()
+                            .stacksTo(1)
+                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
+                    )
+            );
+    public static final DeferredItem<Item> SKELETAL_FISH =
+            ITEMS.register("skeletal_fish",
+                    () -> new FunctionalFishItem(new Item.Properties()
+                            .stacksTo(1)
+                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
+                    )
+            );
 
 
     public static final DeferredItem<Item> IRON_SCALE = ITEMS.registerSimpleItem("iron_scale");

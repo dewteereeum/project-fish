@@ -4,17 +4,28 @@
   "item.aquaticaspirations.iron_fish": "Iron Fish",
   "item.aquaticaspirations.sand_fish": "Sand Fish",
   "item.aquaticaspirations.anglowfish": "Anglowish",
+  "item.aquaticaspirations.undead_fish": "Undead Fish",
+  "item.aquaticaspirations.skeletal_fish": "Skeletal Fish",
 
 
 
   "item.aquaticaspirations.iron_scale": "Iron Scale",
   "item.aquaticaspirations.improved_substrate": "Improved Substrate",
 
+  "item.aquaticaspirations.tank_fluid_bucket": "Tank Fluid Bucket",
+
+
+
   "block.aquaticaspirations.fishtank": "Fishtank",
+
+  "aquaticaspirations.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "aquaticaspirations.tooltip.liquid.amount": "%s mB",
 
 
 
   "block.aquaticaspirations.improved_substrate_block": "Improved Substrate Block",
+
+  "block,aquaticaspirations.tank_fluid_block": "Tank Fluid",
 
 
   "itemGroup.aquaticaspirations.aquaticaspirations_items_tab": "Aquatic Aspirations Items",
@@ -22,8 +33,10 @@
 
   "blockentity.aquaticaspirations.fishtank": "Fishtank",
 
+  "tooltip.aquaticaspirations.tooltip.debug": "Not obtainable, used for debug.",
 
   "tooltip.aquaticaspirations.tooltip.requirements": "§7Press §oShift§r §7for substrate requirements§r",
+
 
   "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",
   "tooltip.aquaticaspirations.tooltip.hellish": "§6Hellish§r",
