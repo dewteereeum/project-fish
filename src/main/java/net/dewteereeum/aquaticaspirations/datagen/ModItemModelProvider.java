@@ -24,6 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.UNDEAD_FISH.get());
         basicItem(ModItems.SKELETAL_FISH.get());
 
+        //basicItem(ModItems.EMPTY_TREASURE_CHEST.get());
 
         basicItem(ModItems.IMPROVED_SUBSTRATE.get());
 

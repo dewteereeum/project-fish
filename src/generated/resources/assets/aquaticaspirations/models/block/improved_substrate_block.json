@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "aquaticaspirations:block/improved_substrate_block"
+  }
+}

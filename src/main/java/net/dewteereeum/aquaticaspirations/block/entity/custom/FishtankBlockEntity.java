@@ -2,9 +2,11 @@ package net.dewteereeum.aquaticaspirations.block.entity.custom;
 
 
 import net.dewteereeum.aquaticaspirations.block.ModBlockProperties;
+import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
+import net.dewteereeum.aquaticaspirations.item.custom.accessory.IFishTankAccessory;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipe;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipeInput;
 import net.dewteereeum.aquaticaspirations.recipe.ModRecipes;
@@ -44,8 +46,10 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sin;
@@ -79,7 +83,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             return switch (slot) {
                 case 0 -> stack.is(ModTags.Items.FUNCTIONAL_FISH);
                 case 1 -> stack.is(ModTags.Items.SUBSTRATE);
-                case 2 -> true;
+                case 2 -> stack.getItem() instanceof IFishTankAccessory;
                 case 3 -> false;
                 //case 4 -> false;
                 //case 5 -> false;
@@ -159,15 +163,16 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private int progress = 0;
     private final int DEFAULT_MAX_PROGRESS = 80;
     private int maxProgress = 80;
+    private int dirtLevel = 0;
 
     private int FishTier;
     private int SubTier;
 
     private ModBlockProperties.ContainedFluid lastFluidState = ModBlockProperties.ContainedFluid.EMPTY;
 
-
-    private boolean hasFilterBlock = false;
-
+    public int[] getOutputSlots(){
+        return new int[]{OUTPUT_SLOT1};
+    }
     private float rotation;
 
     public FishtankBlockEntity(BlockPos pos, BlockState blockState) {
@@ -278,7 +283,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     //https://github.com/Direwolf20-MC/JustDireThings
     protected BlockCapabilityCache<IItemHandler, Direction> attachedInventory;
 
-    private IItemHandler getAttachedInventory() {
+    public IItemHandler getAttachedInventory() {
         if (attachedInventory == null) {
             assert this.level != null;
             BlockState state = this.getBlockState();
@@ -343,6 +348,12 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             }
         } else {
             resetProgress();
+        }
+
+        if(!itemHandler.getStackInSlot(ACCESSORY_SLOT).isEmpty()){
+            if(itemHandler.getStackInSlot(ACCESSORY_SLOT).getItem() instanceof IFishTankAccessory accessory){
+                accessory.accessoryFunction(this);
+            }
         }
 
 
@@ -414,7 +425,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private int dyingFishCounter = 0;
 
     private void dyingFish() {
-
+        assert level != null;
+        if(!level.isClientSide) return;
         Random rand = new Random();
         float pitch = rand.nextFloat(0.7f, 1.0f);
         this.getLevel().playSound(null, this.getBlockPos(),

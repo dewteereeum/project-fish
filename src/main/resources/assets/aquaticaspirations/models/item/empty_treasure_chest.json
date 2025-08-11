@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "aquaticaspirations:item/empty_treasure_chest_2d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "aquaticaspirations:item/empty_treasure_chest_2d"
+    },
+    "ground": {
+      "parent": "aquaticaspirations:item/empty_treasure_chest_3d"
+    },
+    "fixed": {
+      "parent": "aquaticaspirations:item/empty_treasure_chest_3d"
+    }
+  }
+}

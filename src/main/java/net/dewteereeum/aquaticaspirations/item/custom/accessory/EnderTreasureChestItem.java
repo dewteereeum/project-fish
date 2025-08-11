@@ -1,8 +1,6 @@
-package net.dewteereeum.aquaticaspirations.item.custom;
+package net.dewteereeum.aquaticaspirations.item.custom.accessory;
 
 import net.minecraft.world.item.Item;
-
-import java.util.Properties;
 
 public class EnderTreasureChestItem extends Item {
     public EnderTreasureChestItem(Properties properties){

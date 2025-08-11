@@ -1,0 +1,49 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"3": "aquaticaspirations:item/empty_treasure_chest_3d",
+		"particle": "aquaticaspirations:item/empty_treasure_chest_3d"
+	},
+	"elements": [
+		{
+			"from": [6, 8, 7],
+			"to": [8, 10, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 8, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#3"},
+				"south": {"uv": [4, 0, 8, 4], "texture": "#3"},
+				"west": {"uv": [4, 4, 8, 8], "texture": "#3"},
+				"up": {"uv": [4, 12, 0, 8], "texture": "#3"},
+				"down": {"uv": [12, 0, 8, 4], "texture": "#3"}
+			}
+		},
+		{
+			"from": [8, 8, 7],
+			"to": [10, 10, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 8, 0]},
+			"faces": {
+				"north": {"uv": [4, 8, 8, 12], "texture": "#3"},
+				"east": {"uv": [8, 4, 12, 8], "texture": "#3"},
+				"south": {"uv": [8, 8, 12, 12], "texture": "#3"},
+				"up": {"uv": [16, 4, 12, 0], "texture": "#3"},
+				"down": {"uv": [8, 12, 4, 16], "texture": "#3"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "empty_treasure_chest_3d",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "group",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"children": [0, 1]
+				}
+			]
+		}
+	]
+}

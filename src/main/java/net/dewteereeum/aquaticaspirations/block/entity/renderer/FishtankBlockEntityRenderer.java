@@ -48,6 +48,7 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
             boolean hasFluid = (!pBlockEntity.getFluid().isEmpty());
             boolean hasFish = (!pBlockEntity.itemHandler.getStackInSlot(0).isEmpty());
             boolean hasSubstrate = (!pBlockEntity.itemHandler.getStackInSlot(1).isEmpty());
+            boolean hasAccessory = (!pBlockEntity.itemHandler.getStackInSlot(2).isEmpty());
 
             int r = -1;
             int g = -1;
@@ -78,6 +79,7 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
             }
 
+
             //SUBSTRATE RENDERER
             if(hasSubstrate){
                 //System.out.println("r = " + r);
@@ -103,8 +105,11 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
             //ITEM RENDERER
 
+
             if(hasFish) {
+
                 ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+
                 ItemStack stack = pBlockEntity.itemHandler.getStackInSlot(0);
                 Direction facing = pBlockEntity.getBlockState().getValue(Fishtank.FACING);
                 float fishY = Math.max(4/16f, percentage * 0.6f);
@@ -139,6 +144,36 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
 
                 pPoseStack.popPose();
+            }
+
+            if(hasAccessory) {
+
+                ItemRenderer itemRenderer1 = Minecraft.getInstance().getItemRenderer();
+                //ACCESSORY
+                ItemStack stack = pBlockEntity.itemHandler.getStackInSlot(2);
+                Direction facing = pBlockEntity.getBlockState().getValue(Fishtank.FACING);
+
+
+                pPoseStack.pushPose();
+
+                pPoseStack.translate(9/16f, 4/16f, 5/16f);
+                pPoseStack.scale(1.0f, 1.0f, 1.0f);
+
+                //setting facing direction
+                int fishYRot = switch (facing) {
+                    case NORTH -> 180;
+                    case EAST -> -90;
+                    case SOUTH -> 0;
+                    case WEST -> 90;
+                    default -> 0;
+                };
+
+                pPoseStack.mulPose(Axis.YP.rotationDegrees(fishYRot));
+
+                itemRenderer1.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
+                        OverlayTexture.NO_OVERLAY, pPoseStack, pBufferSource, pBlockEntity.getLevel(), 1);
+                pPoseStack.popPose();
+
             }
 
 

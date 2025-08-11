@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gravel"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "GNG",
+    "NGN",
+    "GNG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquaticaspirations:improved_substrate_block"
+  }
+}

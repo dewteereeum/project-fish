@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "aquaticaspirations:improved_substrate_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "aquaticaspirations:improved_substrate"
+  }
+}

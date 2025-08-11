@@ -29,6 +29,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SKELETAL_FISH);
                         output.accept(ModItems.IRON_SCALE);
 
+                        output.accept(ModItems.EMPTY_TREASURE_CHEST);
+
                         output.accept(ModItems.IMPROVED_SUBSTRATE);
 
                     }).build());

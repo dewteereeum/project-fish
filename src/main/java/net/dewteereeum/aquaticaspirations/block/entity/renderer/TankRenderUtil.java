@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 import net.neoforged.neoforge.client.extensions.common.IClientBlockExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -37,29 +39,29 @@ public class TankRenderUtil {
 
     public static TextureAtlas blockAtlas = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS);
 
-    public static Map topTextureGetter = Map.of(
-            Fluids.WATER, ResourceLocation.parse("block/water"),
-            Fluids.LAVA, ResourceLocation.parse("block/lava"),
-            ModFluids.SOURCE_TANK_FLUID, ResourceLocation.parse("entity/end_portal")
-    );
-
-
 
     public static void renderFluidCube(MultiBufferSource buffers, PoseStack stack, Level level, BlockPos pos, float minY, float maxY, float edge, int light, int r, int g, int b, Fluid fluid) {
         var extensions = IClientFluidTypeExtensions.of(fluid);
         var extensionsWater = IClientFluidTypeExtensions.of(ModFluids.SOURCE_TANK_FLUID.get());
         var state = fluid.defaultFluidState();
+//        var builder = buffers.getBuffer(Sheets.translucentCullBlockSheet());
         var builder = buffers.getBuffer(Sheets.translucentCullBlockSheet());
         var pose = stack.last().pose();
         var poseNormal = stack.last().normal();
 
         Vector3f normal;
         TextureAtlasSprite tankFluidSprite = TankRenderUtil.blockAtlas.getSprite(extensionsWater.getStillTexture(state, level, pos));
-        TextureAtlasSprite topFluidSprite = TankRenderUtil.blockAtlas.getSprite(extensions.getStillTexture(state, level, pos));
+        //TextureAtlasSprite topFluidSprite = blockAtlas.getTextures().get(ResourceLocation.withDefaultNamespace("entity/end_portal.png"));
+
         float uMin = tankFluidSprite.getU0();
         float uMax = tankFluidSprite.getU1();
         float vMin = tankFluidSprite.getV0();
         float vMax = tankFluidSprite.getV1();
+//
+//        float uMinT = topFluidSprite.getU0();
+//        float uMaxT = topFluidSprite.getU1();
+//        float vMinT = topFluidSprite.getV0();
+//        float vMaxT = topFluidSprite.getV1();
 
         float edgeMin = edge / 16f;
         float edgeMax = 1f - edge / 16f;
@@ -119,7 +121,7 @@ public class TankRenderUtil {
 
     public static TextureAtlasSprite topFaceTexture(Fluid fluid){
         if(fluid.isSame(ModFluids.SOURCE_TANK_FLUID.get())){
-            return TankRenderUtil.blockAtlas.getSprite(ResourceLocation.withDefaultNamespace("entity/end_portal"));
+            return TankRenderUtil.blockAtlas.getSprite(ResourceLocation.withDefaultNamespace("entity/end_portal.png"));
         }
         var extensions = IClientFluidTypeExtensions.of(fluid);
         return TankRenderUtil.blockAtlas.getSprite(extensions.getStillTexture());

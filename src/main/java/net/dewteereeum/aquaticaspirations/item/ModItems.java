@@ -6,6 +6,7 @@ import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.dewteereeum.aquaticaspirations.component.SubstrateTier;
 import net.dewteereeum.aquaticaspirations.component.SubstrateType;
 import net.dewteereeum.aquaticaspirations.item.custom.FunctionalFishItem;
+import net.dewteereeum.aquaticaspirations.item.custom.accessory.EmptyTreasureChestItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -90,6 +91,10 @@ public class ModItems {
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
                     )
             );
+
+    public static final DeferredItem<Item> EMPTY_TREASURE_CHEST =
+            ITEMS.register("empty_treasure_chest",
+                    () -> new EmptyTreasureChestItem(new Item.Properties()));
 
 
     public static final DeferredItem<Item> IRON_SCALE = ITEMS.registerSimpleItem("iron_scale");
