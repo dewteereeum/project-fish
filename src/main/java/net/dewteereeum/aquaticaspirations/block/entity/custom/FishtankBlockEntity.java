@@ -6,6 +6,7 @@ import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
+import net.dewteereeum.aquaticaspirations.item.custom.accessory.BlockLinkable;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.IFishTankAccessory;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipe;
 import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipeInput;
@@ -281,44 +282,47 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     //Credit to Direwolf20-MC for EmptyTreasureChest capability
     //https://github.com/Direwolf20-MC/JustDireThings
-    protected BlockCapabilityCache<IItemHandler, Direction> attachedInventory;
+    protected BlockCapabilityCache<IItemHandler, Direction> linkedInventory;
 
     public IItemHandler getAttachedInventory() {
-        if (attachedInventory == null) {
+        if (linkedInventory == null) {
             assert this.level != null;
-            BlockState state = this.getBlockState();
-            BlockPos inventoryPos = this.getBlockPos().relative(Direction.DOWN);
-            attachedInventory = BlockCapabilityCache.create(
-                    Capabilities.ItemHandler.BLOCK, // capability to cache
-                    (ServerLevel) this.level, // level
-                    inventoryPos, // target position
-                    Direction.UP // context (The side of the block we're trying to pull/push from?)
-            );
+            ItemStack accessoryStack = this.itemHandler.getStackInSlot(2);
+            if(accessoryStack.getItem() instanceof BlockLinkable linkedItem) {
+                if(linkedItem.getLinkedBlock(this) == null) return null;
+                BlockPos inventoryPos = linkedItem.getLinkedBlock(this);
+                linkedInventory = BlockCapabilityCache.create(
+                        Capabilities.ItemHandler.BLOCK, // capability to cache
+                        (ServerLevel) this.level, // level
+                        inventoryPos, // target position
+                        linkedItem.getDirection(this) // context (The side of the block we're trying to pull/push from?)
+                );
+            }
         }
-        return attachedInventory.getCapability();
+        return linkedInventory.getCapability();
     }
 
 
-    private void EmptyTreasureChest() {
-        assert this.level != null;
-
-        ItemStack outputStack = this.itemHandler.getStackInSlot(OUTPUT_SLOT1);
-
-        if (outputStack.isEmpty()) return;
-
-        IItemHandler handler = getAttachedInventory();
-
-        if (handler == null) return;
-
-        ItemStack leftover = ItemHandlerHelper.insertItemStacked(handler, outputStack, false);
-        if (leftover.isEmpty()) {
-            itemHandler.setStackInSlot(OUTPUT_SLOT1, ItemStack.EMPTY);
-
-        } else {
-            itemHandler.setStackInSlot(OUTPUT_SLOT1, leftover);
-        }
-
-    }
+//    private void EmptyTreasureChest() {
+//        assert this.level != null;
+//
+//        ItemStack outputStack = this.itemHandler.getStackInSlot(OUTPUT_SLOT1);
+//
+//        if (outputStack.isEmpty()) return;
+//
+//        IItemHandler handler = getAttachedInventory();
+//
+//        if (handler == null) return;
+//
+//        ItemStack leftover = ItemHandlerHelper.insertItemStacked(handler, outputStack, false);
+//        if (leftover.isEmpty()) {
+//            itemHandler.setStackInSlot(OUTPUT_SLOT1, ItemStack.EMPTY);
+//
+//        } else {
+//            itemHandler.setStackInSlot(OUTPUT_SLOT1, leftover);
+//        }
+//
+//    }
 
 
     //////////End of Accessories

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 
-public class EmptyTreasureChestItem extends Item implements IFishTankAccessory{
+public class EmptyTreasureChestItem extends Item implements IFishTankAccessory, BlockLinkable{
     public EmptyTreasureChestItem(Properties properties) {
         super(properties);
     }
@@ -43,5 +43,16 @@ public class EmptyTreasureChestItem extends Item implements IFishTankAccessory{
 
 
     }
+
+    @Override
+    public BlockPos getLinkedBlock(FishtankBlockEntity blockEntity) {
+        return blockEntity.getBlockPos().below();
+    }
+
+    @Override
+    public Direction getDirection(FishtankBlockEntity fishtankBlockEntity) {
+        return Direction.UP;
+    }
+
 
 }

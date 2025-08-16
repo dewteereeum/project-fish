@@ -30,6 +30,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.IRON_SCALE);
 
                         output.accept(ModItems.EMPTY_TREASURE_CHEST);
+                        output.accept(ModItems.ENDER_TREASURE_CHEST);
 
                         output.accept(ModItems.IMPROVED_SUBSTRATE);
 

@@ -8,6 +8,7 @@
   "item.aquaticaspirations.skeletal_fish": "Skeletal Fish",
 
   "item.aquaticaspirations.empty_treasure_chest": "Empty Treasure Chest",
+  "item.aquaticaspirations.ender_treasure_chest": "Ender Treasure Chest",
 
 
 
@@ -27,7 +28,7 @@
 
   "block.aquaticaspirations.improved_substrate_block": "Improved Substrate Block",
 
-  "block,aquaticaspirations.tank_fluid_block": "Tank Fluid",
+  "block.aquaticaspirations.tank_fluid_block": "Tank Fluid",
 
 
   "itemGroup.aquaticaspirations.aquaticaspirations_items_tab": "Aquatic Aspirations Items",
@@ -38,6 +39,9 @@
   "tooltip.aquaticaspirations.tooltip.debug": "Not obtainable, used for debug.",
 
   "tooltip.aquaticaspirations.tooltip.requirements": "§7Press §oShift§r §7for substrate requirements§r",
+
+  "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_preview": "§7Hold §oShift§r §7for more information§r",
+  "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info": "A Fishtank will automatically output to the linked inventory. \n§dDoes not work cross-dimensionally §o(for now).§r",
 
 
   "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",

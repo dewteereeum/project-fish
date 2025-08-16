@@ -1,6 +1,7 @@
 package net.dewteereeum.aquaticaspirations.component;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -20,6 +21,12 @@ public class ModDataComponentTypes {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SubstrateType>> SUBSTRATE_TYPE = register("substrate_type",
             substrateTypeBuilder -> substrateTypeBuilder.persistent(SubstrateType.CODEC));
+
+//    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> LINK_COORDS = register("link_coordinates",
+//            builder -> builder.persistent(BlockPos.CODEC));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EnderTreasureChestData>> LINK_BLOCK = register("link_block",
+            builder -> builder.persistent(EnderTreasureChestData.CODEC));
+
 
 
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
