@@ -12,7 +12,6 @@ In its base state, it includes:
 
 -Fishtank Accessories that alter Fishtank fucntionality.
 
--A Fishbowl, which is a Fishtank with a fancier texture, but no functionality aside from displaying the stored fish. Use it to decorate your home!
 
 ---------------------------------------------------------
 
@@ -34,11 +33,9 @@ Planned features include:
 
 -If you would like to contribute to Aquatic Aspirations, please feel free to reach out. You will certainly be more experienced than I am.
 
--If you would like to create your own fork, please feel free. I just ask two things: Credit me for the ideas, and please implement the Diamond Fish sprite in some capacity. It's important to me.
+-Addons are welcome! Want to add some custom content to Aquatic Aspirations with your own mod? I have no idea how to do that, so good luck, but it would be very cool!
 
--Addons are welcome! Want to add some custom content to Aquatic Aspirations with your own mod? I have no idea how to do that, but it would be very cool!
-
--No permission is needed to add this mod to a modpack. Keep in mind that it will *always* be WIP, and bugs aren't unlikely. Please let me know if you run into issues.
+-No permission is needed to add this mod to a modpack. Keep in mind that it will *always* be WIP, and bugs aren't unlikely (if not guaranteed). Please let me know if you run into issues.
 
 ----------------------------------------------------
 
