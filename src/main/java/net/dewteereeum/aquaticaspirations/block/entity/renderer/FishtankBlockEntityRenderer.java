@@ -156,14 +156,22 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
                 pPoseStack.pushPose();
 
+                float x;
+                float y;
+                float z;
+                int accYRot;
+                x = z = 8/16f;
+                y = 4/16f;
+                
+
                 pPoseStack.translate(9/16f, 4/16f, 5/16f);
                 pPoseStack.scale(1.0f, 1.0f, 1.0f);
 
                 //setting facing direction
                 int fishYRot = switch (facing) {
-                    case NORTH -> 180;
+                    case NORTH -> 0;
                     case EAST -> -90;
-                    case SOUTH -> 0;
+                    case SOUTH -> 180;
                     case WEST -> 90;
                     default -> 0;
                 };

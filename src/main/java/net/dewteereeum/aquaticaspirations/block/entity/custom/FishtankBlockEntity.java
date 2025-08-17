@@ -273,14 +273,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     ///////Accessories
 
-    private void runAccessories() {
-        ItemStack accessory = itemHandler.getStackInSlot(2);
-        if (accessory.isEmpty()) return;
-
-
-    }
-
-    //Credit to Direwolf20-MC for EmptyTreasureChest capability
+    //Credit to Direwolf20-MC for capability
     //https://github.com/Direwolf20-MC/JustDireThings
     protected BlockCapabilityCache<IItemHandler, Direction> linkedInventory;
 
@@ -301,28 +294,6 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         }
         return linkedInventory.getCapability();
     }
-
-
-//    private void EmptyTreasureChest() {
-//        assert this.level != null;
-//
-//        ItemStack outputStack = this.itemHandler.getStackInSlot(OUTPUT_SLOT1);
-//
-//        if (outputStack.isEmpty()) return;
-//
-//        IItemHandler handler = getAttachedInventory();
-//
-//        if (handler == null) return;
-//
-//        ItemStack leftover = ItemHandlerHelper.insertItemStacked(handler, outputStack, false);
-//        if (leftover.isEmpty()) {
-//            itemHandler.setStackInSlot(OUTPUT_SLOT1, ItemStack.EMPTY);
-//
-//        } else {
-//            itemHandler.setStackInSlot(OUTPUT_SLOT1, leftover);
-//        }
-//
-//    }
 
 
     //////////End of Accessories

@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public record FishtankRecipe(Ingredient inputItem, ItemStack output) implements Recipe<FishtankRecipeInput> {
+public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements Recipe<FishtankRecipeInput> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
