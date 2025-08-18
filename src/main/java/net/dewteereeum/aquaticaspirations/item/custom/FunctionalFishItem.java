@@ -32,21 +32,20 @@ public class FunctionalFishItem extends Item {
      */
 
 
-
-
-
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if(stack.get(ModDataComponentTypes.FISH_QUALITY.get()) != null && stack.get(ModDataComponentTypes.SUBSTRATE_TYPE.get()) != null && stack.get(ModDataComponentTypes.SUBSTRATE_TIER.get()) != null) {
-            if (Screen.hasShiftDown()) {
-                tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.SUBSTRATE_TIER.get()).getTierString()));
-                tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.SUBSTRATE_TYPE.get()).getTypeString()));
-            } else {
-                tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.FISH_QUALITY.get()).getQualityString()));
-                tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.requirements"));
 
+        if (Screen.hasShiftDown()) {
+            tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.SUBSTRATE_TIER.get()).getTierString()));
+            tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.SUBSTRATE_TYPE.get()).getTypeString()));
+        } else {
+            if(stack.get(ModDataComponentTypes.FISH_QUALITY.get()) != null) {
+                tooltipComponents.add(Component.translatable(stack.get(ModDataComponentTypes.FISH_QUALITY.get()).getQualityString()));
             }
+            tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.requirements"));
+
         }
+
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }

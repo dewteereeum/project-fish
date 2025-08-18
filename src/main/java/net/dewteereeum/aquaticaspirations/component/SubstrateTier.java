@@ -5,13 +5,14 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.Objects;
 
-public record SubstrateTier(int tier) {
+public record SubstrateTier(int tier, String name) {
 
-    //'tier' is the lowest level of substrate the fish requires. Higher-value fish (ex: diamond > dirt) require higher substrate tiers.
+    //'tier' is the lowest level of substrate the fish requires. Higher-tier fish (ex: diamond > dirt) require higher substrate tiers.
 
     public static final Codec<SubstrateTier> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("tier").forGetter(SubstrateTier :: tier))
+                    Codec.INT.fieldOf("tier").forGetter(SubstrateTier::tier),
+                            Codec.STRING.fieldOf("name").forGetter(SubstrateTier::name))
                     .apply(instance, SubstrateTier::new));
 
 
@@ -25,14 +26,14 @@ public record SubstrateTier(int tier) {
     };
 
     public String getTierString() {
-        return "tooltip.aquaticaspirations.tooltip." + tierNames[tier].toLowerCase();
+        return "tooltip.aquaticaspirations.tooltip." + name;
     }
 
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.tier);
+        return Objects.hash(this.tier, this.name);
 
     }
 
@@ -45,7 +46,8 @@ public record SubstrateTier(int tier) {
             return
                     obj instanceof SubstrateTier fd
 
-                            && this.tier == fd.tier;
+                            && this.tier == fd.tier
+                    && this.name.equals(fd.name);
 
 
         }

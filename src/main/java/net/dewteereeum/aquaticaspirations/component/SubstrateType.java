@@ -5,30 +5,26 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.Objects;
 
-public record SubstrateType(int type) {
+public record SubstrateType(int value, String name) {
+
+
 
     //'type' is an indicator of which substrate family to use
 
     public static final Codec<SubstrateType> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("type").forGetter(SubstrateType :: type))
+                    Codec.INT.fieldOf("type").forGetter(SubstrateType :: value),
+                            Codec.STRING.fieldOf("name").forGetter(SubstrateType::name))
                     .apply(instance, SubstrateType::new));
 
 
-    static final String[] typeNames = {
-            "Earthly",
-            "Hellish",
-            "Enderic",
-            "COSMIC"
-    };
-
     public String getTypeString(){
-        return "tooltip.aquaticaspirations.tooltip." + typeNames[type].toLowerCase();
+        return "tooltip.aquaticaspirations.tooltip." + name;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.type);
+        return Objects.hash(this.value, this.name);
 
     }
 
@@ -41,7 +37,8 @@ public record SubstrateType(int type) {
             return
                     obj instanceof SubstrateType fd
 
-                            && this.type == fd.type;
+                            && this.value == fd.value
+                    && this.name.equals(fd.name);
 
 
         }

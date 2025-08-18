@@ -1,10 +1,7 @@
 package net.dewteereeum.aquaticaspirations.item;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
-import net.dewteereeum.aquaticaspirations.component.FishQuality;
-import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
-import net.dewteereeum.aquaticaspirations.component.SubstrateTier;
-import net.dewteereeum.aquaticaspirations.component.SubstrateType;
+import net.dewteereeum.aquaticaspirations.component.*;
 import net.dewteereeum.aquaticaspirations.item.custom.FunctionalFishItem;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.EmptyTreasureChestItem;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.EnderTreasureChestItem;
@@ -33,63 +30,56 @@ public class ModItems {
             ITEMS.register("diamond_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(3))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
     public static final DeferredItem<Item> IRON_FISH =
             ITEMS.register("iron_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(1))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
     public static final DeferredItem<Item> GOLD_FISH =
             ITEMS.register("gold_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(1))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
     public static final DeferredItem<Item> SAND_FISH =
             ITEMS.register("sand_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(0))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
     public static final DeferredItem<Item> ANGLOWFISH =
             ITEMS.register("anglowfish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.ENDERIC)
                     )
             );
     public static final DeferredItem<Item> UNDEAD_FISH =
             ITEMS.register("undead_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
     public static final DeferredItem<Item> SKELETAL_FISH =
             ITEMS.register("skeletal_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.FISH_QUALITY.get(), new FishQuality(0))
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), new SubstrateTier(2))
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), new SubstrateType(2))
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
                     )
             );
 
@@ -97,7 +87,7 @@ public class ModItems {
             ITEMS.register("empty_treasure_chest",
                     () -> new EmptyTreasureChestItem(new Item.Properties()));
     public static final DeferredItem<Item> ENDER_TREASURE_CHEST = ITEMS.register("ender_treasure_chest",
-            () -> new EnderTreasureChestItem(new Item.Properties()));
+            () -> new EnderTreasureChestItem(new Item.Properties().stacksTo(1)));
 
 
     public static final DeferredItem<Item> IRON_SCALE = ITEMS.registerSimpleItem("iron_scale");

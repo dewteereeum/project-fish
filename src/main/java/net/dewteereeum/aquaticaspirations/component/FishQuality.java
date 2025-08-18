@@ -5,14 +5,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import java.util.Objects;
 
-public record FishQuality(int quality) {
+public record FishQuality(int tier, String name) {
 
     //'quality' refers to the upgrade-level of the fish. Think of it as a production multiplier. It should start at 0 by default.
 
 
     public static final Codec<FishQuality> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("quality").forGetter(FishQuality:: quality))
+                    Codec.INT.fieldOf("tier").forGetter(FishQuality::tier),
+                            Codec.STRING.fieldOf("name").forGetter(FishQuality::name))
                     .apply(instance, FishQuality::new));
 
 
@@ -27,13 +28,13 @@ public record FishQuality(int quality) {
 
 
     public String getQualityString(){
-        return "tooltip.aquaticaspirations.tooltip." + qualityNames[quality].toLowerCase();
+        return "tooltip.aquaticaspirations.tooltip." + name;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.quality);
+        return Objects.hash(this.tier, this.name);
 
     }
 
@@ -47,7 +48,7 @@ public record FishQuality(int quality) {
                     obj instanceof FishQuality fd
                     //&& this.type == fd.type
                     //&& this.tier == fd.tier
-                    && this.quality == fd.quality;
+                    && this.tier == fd.tier;
 
             }
     }
