@@ -17,16 +17,6 @@ public record FishQuality(int tier, String name) {
                     .apply(instance, FishQuality::new));
 
 
-
-    static final String[] qualityNames = {
-            "Natural",
-            "Altered",
-            "Enhanced",
-            "Enchanted",
-            "Transcendent"
-    };
-
-
     public String getQualityString(){
         return "tooltip.aquaticaspirations.tooltip." + name;
     }
@@ -46,9 +36,8 @@ public record FishQuality(int tier, String name) {
         else {
             return
                     obj instanceof FishQuality fd
-                    //&& this.type == fd.type
-                    //&& this.tier == fd.tier
-                    && this.tier == fd.tier;
+                    && this.tier == fd.tier
+                    && this.name.equals(fd.name);
 
             }
     }

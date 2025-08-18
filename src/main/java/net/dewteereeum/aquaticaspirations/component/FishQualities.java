@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FishQualities {
+
+    //I understand this is basically an enum, I just couldn't figure out how to make a component-codec for it.
     public static final FishQuality NATURAL = new FishQuality(0, "natural");
     public static final FishQuality ALTERED = new FishQuality(1, "altered");
     public static final FishQuality ENHANCED = new FishQuality(2, "enhanced");
