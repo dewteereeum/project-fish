@@ -66,13 +66,15 @@ public class TankRenderUtil {
         float edgeMin = edge / 16f;
         float edgeMax = 1f - edge / 16f;
 
+        int alpha = 180;
+
         // Top face
 
         normal = poseNormal.transform(new Vector3f(0, 1, 0));
-        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
         // Bottom face
 
         /*
@@ -93,28 +95,28 @@ public class TankRenderUtil {
 
         // South face
         normal = poseNormal.transform(new Vector3f(0, 0, 1));
-        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, minY, edgeMax).setColor(r, g, b, 255).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, minY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, minY, edgeMax).setColor(r, g, b, alpha).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, minY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
         // North face
         normal = poseNormal.transform(new Vector3f(0, 0, -1));
-        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, minY, edgeMin).setColor(r, g, b, 255).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, minY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, minY, edgeMin).setColor(r, g, b, alpha).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, minY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
         // East face
         normal = poseNormal.transform(new Vector3f(1, 0, 0));
-        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, minY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMax, minY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, minY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMax, minY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
         // West face
         normal = poseNormal.transform(new Vector3f(-1, 0, 0));
-        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, minY, edgeMin).setColor(r, g, b, 255).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
-        builder.addVertex(pose, edgeMin, minY, edgeMax).setColor(r, g, b, 255).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, maxY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMin).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, minY, edgeMin).setColor(r, g, b, alpha).setUv(uMin, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
+        builder.addVertex(pose, edgeMin, minY, edgeMax).setColor(r, g, b, alpha).setUv(uMax, vMax).setUv1(0, 10).setLight(light).setNormal(normal.x, normal.y, normal.z);
 
         //System.out.println(extensions.getStillTexture(state, level, pos).toString());
     }

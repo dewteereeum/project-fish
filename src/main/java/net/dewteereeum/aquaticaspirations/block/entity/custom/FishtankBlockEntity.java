@@ -329,6 +329,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             if(itemHandler.getStackInSlot(ACCESSORY_SLOT).getItem() instanceof IFishTankAccessory accessory){
                 accessory.accessoryFunction(this);
             }
+        } else {
+            linkedInventory = null;
         }
 
 
@@ -425,7 +427,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private void fluidChangedCheck(Level level, BlockPos blockPos, BlockState blockState) {
         Fluid polledStateFluid = blockState.getValue(ModBlockProperties.CONTAINED_FLUID).getFluid();
 
-        System.out.println("succesful poll: " + polledStateFluid.toString());
+        System.out.println("succesfull poll: " + polledStateFluid.toString());
         if (polledStateFluid.isSame(this.lastFluidState.getFluid())) return;
 
         for (ModBlockProperties.ContainedFluid var : ModBlockProperties.ContainedFluid.values()) {
