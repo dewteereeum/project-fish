@@ -15,6 +15,8 @@ public class ModDataComponentTypes {
 
    public static final DeferredHolder<DataComponentType<?>, DataComponentType<FishQuality>> FISH_QUALITY = register("fish_quality",
            fishQualityBuilder -> fishQualityBuilder.persistent(FishQuality.CODEC));
+   public static final DeferredHolder<DataComponentType<?>, DataComponentType<Dirtiness>> DIRTINESS = register("dirtiness",
+           dirtinessBuilder -> dirtinessBuilder.persistent(Dirtiness.CODEC));
 
    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SubstrateTier>> SUBSTRATE_TIER = register("substrate_tier",
            substrateTierBuilder -> substrateTierBuilder.persistent(SubstrateTier.CODEC));

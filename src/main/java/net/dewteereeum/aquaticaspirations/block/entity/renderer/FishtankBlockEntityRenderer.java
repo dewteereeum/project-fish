@@ -75,13 +75,6 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
                 b = (int) Mth.lerp(dirtPercentage, b, 80);
 
 
-                //TOP FACE
-                //TankRenderUtil.renderTopFace(pBufferSource.getBuffer(RenderType.TRANSLUCENT), pPoseStack, y, r, g, b, fluid, pPackedLight, 2.0f);
-
-
-
-
-
                 TankRenderUtil.renderFluidCube(pBufferSource, pPoseStack, level, pos, tankFloor, y, 2.0f, pPackedLight, r, g, b, fluid);
 
             }
@@ -89,9 +82,6 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
             //SUBSTRATE RENDERER
             if(hasSubstrate){
-                //System.out.println("r = " + r);
-                //System.out.println("g = " + g);
-                //System.out.println("b = " + b);
 
                if(hasFluid){
                    r = Math.min(255, r + 60);

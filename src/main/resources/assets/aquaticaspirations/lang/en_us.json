@@ -23,7 +23,7 @@
 
   "aquaticaspirations.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "aquaticaspirations.tooltip.liquid.amount": "%s mB",
-  "aquaticaspirations.tooltip.dirtiness.amount": "Dirt levels : %s",
+  "aquaticaspirations.tooltip.dirtiness.amount": "Dirtiness: %s",
 
 
 
@@ -39,7 +39,12 @@
 
   "tooltip.aquaticaspirations.tooltip.debug": "Not obtainable, used for debug.",
 
-  "tooltip.aquaticaspirations.tooltip.requirements": "§7Press §oShift§r §7for substrate requirements§r",
+  "tooltip.aquaticaspirations.tooltip.requirements": "§7Hold §oShift§r §7to see thriving conditions§r",
+  "tooltip.aquaticaspirations.tooltip.prefers_dirty": "§5Prefers dirty water§r",
+  "tooltip.aquaticaspirations.tooltip.prefers_clean": "§3Prefers clean water§r",
+  "tooltip.aquaticaspirations.tooltip.dirt_threshold": "§7Dirtiness threshold: §r",
+  "tooltip.aquaticaspirations.tooltip.substrate_stats": "Requires %s %s substrate",
+
 
   "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_preview": "§7Hold §oShift§r §7for more information§r",
   "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info": "A Fishtank will automatically output to the linked inventory. \n§dDoes not work cross-dimensionally §o(for now).§r",

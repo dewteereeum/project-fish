@@ -213,7 +213,7 @@ public class FluidTankRenderer {
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
             } else if (tooltipMode == TooltipMode.SHOW_AMOUNT) {
                 MutableComponent amountString = Component.translatable("aquaticaspirations.tooltip.liquid.amount", nf.format(milliBuckets));
-                MutableComponent dirtString = Component.translatable("aquaticaspirations.tooltip.dirtiness.amount", nf.format(dirtiness));
+                MutableComponent dirtString = Component.translatable("aquaticaspirations.tooltip.dirtiness.amount", nf.format(dirtiness)).append("%");
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
                 tooltip.add(dirtString.withStyle(ChatFormatting.GRAY));
             }

@@ -3,11 +3,14 @@ package net.dewteereeum.aquaticaspirations.event;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.fluid.TankFluid;
+import net.dewteereeum.aquaticaspirations.util.ModTags;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.neoforged.neoforge.event.entity.item.ItemEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.io.File;
 import java.io.FileWriter;

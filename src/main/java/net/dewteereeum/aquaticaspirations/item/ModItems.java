@@ -31,7 +31,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            1, 20, false
                     )
             );
     public static final DeferredItem<Item> IRON_FISH =
@@ -39,7 +40,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            5, 90, false
                     )
             );
     public static final DeferredItem<Item> GOLD_FISH =
@@ -47,7 +49,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            3, 60, false
                     )
             );
     public static final DeferredItem<Item> SAND_FISH =
@@ -55,7 +58,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            15, 40, true
                     )
             );
     public static final DeferredItem<Item> ANGLOWFISH =
@@ -63,7 +67,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.ENDERIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.ENDERIC),
+                            1, 10, false
                     )
             );
     public static final DeferredItem<Item> UNDEAD_FISH =
@@ -71,7 +76,8 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            8, 20, true
                     )
             );
     public static final DeferredItem<Item> SKELETAL_FISH =
@@ -79,7 +85,9 @@ public class ModItems {
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
                             .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
+                            2, 20, true
+
                     )
             );
 
