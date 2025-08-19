@@ -49,6 +49,7 @@
   "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_preview": "§7Hold §oShift§r §7for more information§r",
   "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info": "A Fishtank will automatically output to the linked inventory. \n§dDoes not work cross-dimensionally §o(for now).§r",
 
+  "tooltip.aquaticaspirations.tooltip.substrate_shift": "§7Hold §oShift§r §7to see substrate information§r",
 
   "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",
   "tooltip.aquaticaspirations.tooltip.hellish": "§6Hellish§r",

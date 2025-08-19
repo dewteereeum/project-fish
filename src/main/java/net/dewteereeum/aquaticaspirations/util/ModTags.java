@@ -33,18 +33,18 @@ public class ModTags {
     public static class Items {
 
         public static final TagKey<Item> FUNCTIONAL_FISH = createTag("functional_fish");
+
+        //Substrate tags
         public static final TagKey<Item> SUBSTRATE = createTag("substrate");
-
-        public static final TagKey<Item> BASIC = createTag("basic");
-        public static final TagKey<Item> IMPROVED = createTag("improved");
-        public static final TagKey<Item> ADVANCED = createTag("advanced");
-        public static final TagKey<Item> SUPERIOR = createTag("superior");
-        public static final TagKey<Item> TRANSCENDENT = createTag("transcendent");
-
         public static final TagKey<Item> EARTHLY = createTag("earthly");
         public static final TagKey<Item> HELLISH = createTag("hellish");
         public static final TagKey<Item> ENDERIC = createTag("enderic");
         public static final TagKey<Item> COSMIC = createTag("cosmic");
+        public static final TagKey<Item> BASIC = createTag("basic");
+        public static final TagKey<Item> IMPROVED = createTag("improved");
+        public static final TagKey<Item> ADVANCED = createTag("advanced");
+        public static final TagKey<Item> SUPERIOR = createTag("superior");
+        public static final TagKey<Item> CATALYTIC = createTag("catalytic");
 
 
 

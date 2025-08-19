@@ -27,31 +27,46 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        var SAND = Blocks.SAND.asItem();
+        var GRAVEL = Blocks.GRAVEL.asItem();
+        var SOUL_SAND = Blocks.SOUL_SAND.asItem();
+
+        var IMP_SUBSTRATE = ModBlocks.IMPROVED_SUBSTRATE_BLOCK.get().asItem();
 
         this.tag(ModTags.Items.SUBSTRATE)
-                .add(ModBlocks.IMPROVED_SUBSTRATE_BLOCK.get().asItem())
-                .add(Blocks.SAND.asItem())
-                .add(Blocks.GRAVEL.asItem());
+                .add(IMP_SUBSTRATE)
+
+                .add(SAND)
+                .add(GRAVEL)
+                .add(SOUL_SAND);
+
+        this.tag(ModTags.Items.BASIC)
+                .add(SAND)
+                .add(GRAVEL)
+                .add(SOUL_SAND);
+        this.tag(ModTags.Items.IMPROVED)
+                .add(IMP_SUBSTRATE);
+
+        this.tag(ModTags.Items.EARTHLY)
+                .add(SAND)
+                .add(GRAVEL)
+
+                .add(IMP_SUBSTRATE);
+
+        this.tag(ModTags.Items.HELLISH)
+                .add(SOUL_SAND);
 
         this.tag(ModTags.Items.FUNCTIONAL_FISH)
                 .add(ModItems.DIAMOND_FISH.get())
                 .add(ModItems.GOLD_FISH.get())
                 .add(ModItems.IRON_FISH.get())
                 .add(ModItems.ANGLOWFISH.get())
-                .add(Items.TROPICAL_FISH)
-                .add(ModItems.UNDEAD_FISH.get())
-                .add(ModItems.SKELETAL_FISH.get());
-
-
-        this.tag(ModTags.Items.EARTHLY)
-                .add(ModItems.DIAMOND_FISH.get())
-                .add(ModItems.IRON_FISH.get())
                 .add(ModItems.UNDEAD_FISH.get())
                 .add(ModItems.SKELETAL_FISH.get())
+
                 .add(Items.TROPICAL_FISH);
 
-        this.tag(ModTags.Items.ADVANCED)
-                .add(ModItems.DIAMOND_FISH.get());
+
 
     }
 }
