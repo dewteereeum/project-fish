@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.material.Fluid;
@@ -63,12 +64,12 @@ public class FluidTankRenderer {
 
     }
 
-    public void render(GuiGraphics guiGraphics, int x, int y, FluidStack fluidStack) {
+    public void render(GuiGraphics guiGraphics, int x, int y, FluidStack fluidStack, int dirt) {
         RenderSystem.enableBlend();
         guiGraphics.pose().pushPose();
         {
             guiGraphics.pose().translate(x, y, 0);
-            drawFluid(guiGraphics, width, height, fluidStack);
+            drawFluid(guiGraphics, width, height, fluidStack, dirt);
         }
         guiGraphics.pose().popPose();
         RenderSystem.setShaderColor(1, 1, 1, 1);
@@ -78,7 +79,7 @@ public class FluidTankRenderer {
     public boolean hasSubstrate = false;
 
 
-    private void drawFluid(GuiGraphics guiGraphics, final int width, final int height, FluidStack fluidStack) {
+    private void drawFluid(GuiGraphics guiGraphics, final int width, final int height, FluidStack fluidStack, int dirt) {
         Fluid fluid = fluidStack.getFluid();
         if (fluid.isSame(Fluids.EMPTY)) {
             return;
@@ -99,7 +100,7 @@ public class FluidTankRenderer {
             scaledAmount = adjustedHeight;
         }
 
-        drawTiledSprite(guiGraphics, width, adjustedHeight, fluidColor, scaledAmount, fluidStillSprite);
+        drawTiledSprite(guiGraphics, width, adjustedHeight, fluidColor, scaledAmount, fluidStillSprite, dirt);
     }
 
     private TextureAtlasSprite getStillFluidSprite(FluidStack fluidStack) {
@@ -117,10 +118,10 @@ public class FluidTankRenderer {
         return renderProperties.getTintColor(ingredient);
     }
 
-    private static void drawTiledSprite(GuiGraphics guiGraphics, final int tiledWidth, final int tiledHeight, int color, long scaledAmount, TextureAtlasSprite sprite) {
+    private static void drawTiledSprite(GuiGraphics guiGraphics, final int tiledWidth, final int tiledHeight, int color, long scaledAmount, TextureAtlasSprite sprite, int dirt) {
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
         Matrix4f matrix = guiGraphics.pose().last().pose();
-        setGLColorFromInt(color);
+        setGLColorFromInt(color, dirt);
 
         final int xTileCount = tiledWidth / TEXTURE_SIZE;
         final int xRemainder = tiledWidth - (xTileCount * TEXTURE_SIZE);
@@ -145,11 +146,27 @@ public class FluidTankRenderer {
         }
     }
 
-    private static void setGLColorFromInt(int color) {
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
+    private static void setGLColorFromInt(int color, int dirt) {
+//        float red = (color >> 16 & 0xFF) / 255.0F;
+//        float green = (color >> 8 & 0xFF) / 255.0F;
+//        float blue = (color & 0xFF) / 255.0F;
+//        float alpha = ((color >> 24) & 0xFF) / 255F;
+//        float dirtPercent = dirt/100f;
+//
+//        red = (int) Mth.lerp(dirtPercent, red, 69);
+//        green = (int) Mth.lerp(dirtPercent, green, 43);
+//        blue = (int) Mth.lerp(dirtPercent, blue, 28);
+
+        float red = (color >> 16 & 0xFF);
+        float green = (color >> 8 & 0xFF);
+        float blue = (color & 0xFF);
         float alpha = ((color >> 24) & 0xFF) / 255F;
+
+        float dirtPercent = dirt/100f;
+        red = Mth.lerp(dirtPercent, red, 69) / 255.0f;
+        green = Mth.lerp(dirtPercent, green, 43) / 255.0f;
+        blue = Mth.lerp(dirtPercent, blue, 28) / 255.0f;
+
 
         RenderSystem.setShaderColor(red, green, blue, alpha);
     }
@@ -173,7 +190,7 @@ public class FluidTankRenderer {
         BufferUploader.drawWithShader(bufferBuilder.build());
     }
 
-    public List<Component> getTooltip(FluidStack fluidStack, TooltipFlag tooltipFlag) {
+    public List<Component> getTooltip(FluidStack fluidStack, int dirtiness, TooltipFlag tooltipFlag) {
         List<Component> tooltip = new ArrayList<>();
 
         Fluid fluidType = fluidStack.getFluid();
@@ -189,13 +206,16 @@ public class FluidTankRenderer {
 
             long amount = fluidStack.getAmount();
             long milliBuckets = (amount * 1000) / FluidType.BUCKET_VOLUME;
+            int dirtLevel = dirtiness;
 
             if (tooltipMode == TooltipMode.SHOW_AMOUNT_AND_CAPACITY) {
                 MutableComponent amountString = Component.translatable("aquaticaspirations.tooltip.liquid.amount.with.capacity", nf.format(milliBuckets), nf.format(capacity));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
             } else if (tooltipMode == TooltipMode.SHOW_AMOUNT) {
                 MutableComponent amountString = Component.translatable("aquaticaspirations.tooltip.liquid.amount", nf.format(milliBuckets));
+                MutableComponent dirtString = Component.translatable("aquaticaspirations.tooltip.dirtiness.amount", nf.format(dirtiness));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
+                tooltip.add(dirtString.withStyle(ChatFormatting.GRAY));
             }
         } catch (RuntimeException e) {
             AquaticAspirationsMod.LOGGER.error("Failed to get tooltip for fluid: " + e);

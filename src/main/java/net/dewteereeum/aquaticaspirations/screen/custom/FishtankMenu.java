@@ -19,7 +19,7 @@ public class FishtankMenu extends AbstractContainerMenu {
     private int numOutputSlots;
 
     public FishtankMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
     }
 
 
@@ -58,6 +58,11 @@ public class FishtankMenu extends AbstractContainerMenu {
         int progressArrowSize = 32; // This is the height in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getDirtLevel(){
+        int dirt = this.data.get(2);
+        return dirt;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons

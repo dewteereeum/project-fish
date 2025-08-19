@@ -176,6 +176,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
     private float rotation;
 
+
     public FishtankBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FISHTANK_BE.get(), pos, blockState);
 
@@ -186,6 +187,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
                 return switch (pIndex) {
                     case 0 -> FishtankBlockEntity.this.progress;
                     case 1 -> FishtankBlockEntity.this.maxProgress;
+                    case 2 -> FishtankBlockEntity.this.dirtLevel;
 
                     default -> 0;
                 };
@@ -198,6 +200,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
                         FishtankBlockEntity.this.progress = pValue;
                     case 1:
                         FishtankBlockEntity.this.maxProgress = pValue;
+                    case 2:
+                        FishtankBlockEntity.this.dirtLevel = pValue;
                 }
 
             }
@@ -205,7 +209,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public int getCount() {
 
-                return 2;
+                return 3;
             }
         };
     }
@@ -230,10 +234,11 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
         pTag.put("inventory", itemHandler.serializeNBT(pRegistries));
-        pTag = FLUID_TANK.writeToNBT(pRegistries, pTag);
+        pTag.putInt("fishtank.dirt_level", dirtLevel);
         pTag.putInt("fishtank.progress", progress);
         pTag.putInt("fishtank.max_progress", maxProgress);
         pTag.putInt("fishtank.dying_fish_counter", dyingFishCounter);
+        pTag = FLUID_TANK.writeToNBT(pRegistries, pTag);
 
         super.saveAdditional(pTag, pRegistries);
     }
@@ -247,6 +252,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         progress = pTag.getInt("fishtank.progress");
         maxProgress = pTag.getInt("fishtank.max_progress");
         dyingFishCounter = pTag.getInt("fishtank.dying_fish_counter");
+        dirtLevel = pTag.getInt("fishtank.dirt_level");
     }
 
     public float getRenderingRotation() {
@@ -257,6 +263,10 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         float oscillator = (float) (3 * sin(rotation));
 
         return oscillator;
+    }
+
+    public int getDirtLevel(){
+        return this.dirtLevel;
     }
 
 
@@ -318,7 +328,10 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
             if (CraftingFinished()) {
-                craftItem();
+                if(dirtCheck()) {
+                    craftItem();
+                }
+                dirtUpdate();
                 resetProgress();
             }
         } else {
@@ -381,6 +394,21 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         ItemStack output = recipe.get().value().getResultItem(null);
 
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+    }
+
+    private void dirtUpdate(){
+        if(dirtLevel == 100) return;
+        int dirtChance = 70;
+        assert this.level != null;
+        int roll = this.level.random.nextInt(1, 101);
+        if(roll <= dirtChance){
+            dirtLevel += 1;
+        }
+    }
+
+    private boolean dirtCheck(){
+        int roll = this.level.random.nextInt(0, 101);
+        return roll >= dirtLevel;
     }
 
     boolean fishIs(Item fish) {

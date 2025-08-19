@@ -46,14 +46,14 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
 
     private void assignFluidRenderer() {
 
-        fluidRenderer = new FluidTankRenderer(1000, true, 43, 44);
+        fluidRenderer = new FluidTankRenderer(1000, false, 43, 44);
     }
 
 
     private void renderFluidTooltipArea(GuiGraphics guiGraphics, int pMouseX, int pMouseY, int x, int y,
-                                        FluidStack stack, int offsetX, int offsetY, FluidTankRenderer renderer) {
+                                        FluidStack stack, int dirtLevel, int offsetX, int offsetY, FluidTankRenderer renderer) {
         if(isMouseAboveArea(pMouseX, pMouseY, x, y, offsetX, offsetY, renderer) && this.getSlotUnderMouse() == null) {
-            guiGraphics.renderTooltip(this.font, renderer.getTooltip(stack, TooltipFlag.Default.NORMAL),
+            guiGraphics.renderTooltip(this.font, renderer.getTooltip(stack, dirtLevel, TooltipFlag.Default.NORMAL),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }
     }
@@ -63,7 +63,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        renderFluidTooltipArea(guiGraphics, pMouseX, pMouseY, x, y, menu.blockEntity.getFluid(), 56, 22, fluidRenderer);
+        renderFluidTooltipArea(guiGraphics, pMouseX, pMouseY, x, y, menu.blockEntity.getFluid(), menu.getDirtLevel(), 56, 22, fluidRenderer);
     }
 
     //private int substrateAdjustment = (menu.blockEntity.itemHandler.getStackInSlot(1).isEmpty()) ? 0 : 4;
@@ -82,7 +82,7 @@ public class FishtankScreen extends AbstractContainerScreen<FishtankMenu> {
         renderSubstrateLayer(pGuiGraphics, x, y);
 
         fluidRenderer.hasSubstrate = !menu.blockEntity.itemHandler.getStackInSlot(1).isEmpty();
-        fluidRenderer.render(pGuiGraphics, x + 56, y + 22, menu.blockEntity.getFluid());
+        fluidRenderer.render(pGuiGraphics, x + 56, y + 22, menu.blockEntity.getFluid(), menu.getDirtLevel());
 
     }
 

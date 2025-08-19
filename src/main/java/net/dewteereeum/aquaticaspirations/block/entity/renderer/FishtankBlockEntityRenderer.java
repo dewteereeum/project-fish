@@ -67,6 +67,13 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
                 r = (inputFluidColour >> 16) & 0xff;
                 g = (inputFluidColour >> 8) & 0xff;
                 b = inputFluidColour & 0xff;
+                float dirtPercentage = pBlockEntity.getDirtLevel() / 100.0f;
+
+
+                r = (int) Mth.lerp(dirtPercentage, r, 120);
+                g = (int) Mth.lerp(dirtPercentage, g, 101);
+                b = (int) Mth.lerp(dirtPercentage, b, 80);
+
 
                 //TOP FACE
                 //TankRenderUtil.renderTopFace(pBufferSource.getBuffer(RenderType.TRANSLUCENT), pPoseStack, y, r, g, b, fluid, pPackedLight, 2.0f);
