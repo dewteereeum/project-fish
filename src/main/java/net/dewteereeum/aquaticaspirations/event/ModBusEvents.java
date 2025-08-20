@@ -6,12 +6,9 @@ import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntit
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.dewteereeum.aquaticaspirations.component.SubstrateTiers;
 import net.dewteereeum.aquaticaspirations.component.SubstrateTypes;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;

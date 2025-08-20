@@ -7,7 +7,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;

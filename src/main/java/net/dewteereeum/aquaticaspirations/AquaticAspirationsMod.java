@@ -1,10 +1,10 @@
 package net.dewteereeum.aquaticaspirations;
 
+import com.mojang.logging.LogUtils;
 import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.renderer.FishtankBlockEntityRenderer;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
-import net.dewteereeum.aquaticaspirations.event.ModBusEvents;
 import net.dewteereeum.aquaticaspirations.fluid.BaseFluidType;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluidTypes;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
@@ -15,16 +15,8 @@ import net.dewteereeum.aquaticaspirations.screen.ModMenuTypes;
 import net.dewteereeum.aquaticaspirations.screen.custom.FishtankScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
-import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
-
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -35,9 +27,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.slf4j.Logger;
 
 // The tier here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(AquaticAspirationsMod.MOD_ID)

@@ -3,10 +3,8 @@ package net.dewteereeum.aquaticaspirations.item.custom;
 
 import net.dewteereeum.aquaticaspirations.component.Dirtiness;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
-
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;

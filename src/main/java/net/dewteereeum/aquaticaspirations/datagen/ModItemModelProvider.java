@@ -4,7 +4,6 @@ import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.minecraft.data.PackOutput;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 

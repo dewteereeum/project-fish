@@ -2,7 +2,6 @@ package net.dewteereeum.aquaticaspirations.block;
 
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.level.block.Block;
 
 public class SubstrateBlockItem extends BlockItem {
     public SubstrateBlockItem(SubstrateBlock block, Properties properties) {

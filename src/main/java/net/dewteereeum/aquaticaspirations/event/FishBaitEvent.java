@@ -3,7 +3,6 @@ package net.dewteereeum.aquaticaspirations.event;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.minecraft.world.item.Item;
 
-
 import java.util.List;
 
 public class FishBaitEvent {

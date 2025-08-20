@@ -1,7 +1,6 @@
 package net.dewteereeum.aquaticaspirations.component;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;

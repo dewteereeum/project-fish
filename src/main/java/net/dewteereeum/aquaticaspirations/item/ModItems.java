@@ -1,7 +1,9 @@
 package net.dewteereeum.aquaticaspirations.item;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
-import net.dewteereeum.aquaticaspirations.component.*;
+import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
+import net.dewteereeum.aquaticaspirations.component.SubstrateTiers;
+import net.dewteereeum.aquaticaspirations.component.SubstrateTypes;
 import net.dewteereeum.aquaticaspirations.item.custom.FunctionalFishItem;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.EmptyTreasureChestItem;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.EnderTreasureChestItem;
