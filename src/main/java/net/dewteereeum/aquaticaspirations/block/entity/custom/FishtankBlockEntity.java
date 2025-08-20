@@ -2,9 +2,9 @@ package net.dewteereeum.aquaticaspirations.block.entity.custom;
 
 
 import net.dewteereeum.aquaticaspirations.block.ModBlockProperties;
-import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
+import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.BlockLinkable;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.IFishTankAccessory;
@@ -43,14 +43,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.Predicate;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sin;
@@ -328,7 +325,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
             if (CraftingFinished()) {
-                if(dirtCheck()) {
+                if(fishThriving()) {
                     craftItem();
                 }
                 dirtUpdate();
@@ -349,11 +346,11 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     }
 
+
     private void resetProgress() {
         this.progress = 0;
         this.maxProgress = maxProgress;
     }
-
     private void craftItem() {
         Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
 
@@ -398,17 +395,36 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
 
     private void dirtUpdate(){
         if(dirtLevel == 100) return;
-        int dirtChance = 70;
+        int dirtChance = (3 - itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes
+                .SUBSTRATE_TIER.get()).tier()) * 5; //3 - tier is so lower tier substrates produce more dirt, 5 is arbitrary
         assert this.level != null;
         int roll = this.level.random.nextInt(1, 101);
         if(roll <= dirtChance){
-            dirtLevel += 1;
+            dirtLevel += itemHandler.getStackInSlot(0).get(ModDataComponentTypes.DIRTINESS.get()).dirtProduction();
         }
     }
 
-    private boolean dirtCheck(){
-        int roll = this.level.random.nextInt(0, 101);
-        return roll >= dirtLevel;
+    private boolean fishThriving(){
+        var fishDirtStats = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.DIRTINESS.get());
+        var fishSubTier = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TIER);
+        var fishSubType = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
+        if(fishDirtStats == null || fishSubType == null || fishSubTier == null) return false;
+        var subTier = itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes.SUBSTRATE_TIER.get());
+        var subType = itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
+
+        if(subType == null || subTier == null) return false;
+
+        if(!fishSubType.equals(subType)) return false;
+
+        boolean goodDirtLevels;
+        if(!fishDirtStats.likesDirtyWater()) {
+            goodDirtLevels = dirtLevel <= fishDirtStats.dirtThreshold();
+        } else {
+            goodDirtLevels = dirtLevel >= fishDirtStats.dirtThreshold();
+        }
+        boolean sufficientSubstrate = fishSubTier.tier() <= subTier.tier();
+
+        return goodDirtLevels && sufficientSubstrate;
     }
 
     boolean fishIs(Item fish) {

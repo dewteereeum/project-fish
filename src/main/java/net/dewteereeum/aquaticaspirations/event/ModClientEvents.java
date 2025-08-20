@@ -1,6 +1,7 @@
 package net.dewteereeum.aquaticaspirations.event;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
+import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.dewteereeum.aquaticaspirations.util.ModTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
@@ -29,10 +30,13 @@ public class ModClientEvents {
             if(!event.getFlags().hasShiftDown()){
                 event.getToolTip().add(Component.translatable("tooltip.aquaticaspirations.tooltip.substrate_shift"));
             } else {
-                List<String> subToolTips = getSubToolTips(event);
-                subToolTips.forEach(s -> event.getToolTip().add(Component.translatable(s)));
+                if(event.getItemStack().get(ModDataComponentTypes.SUBSTRATE_TYPE.get()) == null){
+                    event.getToolTip().add(Component.literal("Has no components"));
+                } else {
+                    event.getToolTip().add(Component.translatable(event.getItemStack().get(ModDataComponentTypes.SUBSTRATE_TIER.get()).getTierString()));
+                    event.getToolTip().add(Component.translatable(event.getItemStack().get(ModDataComponentTypes.SUBSTRATE_TYPE.get()).getTypeString()));
+                }
             }
-
                 }
     }
 

@@ -42,6 +42,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_improved_substrate", has(ModItems.IMPROVED_SUBSTRATE.get()))
                 .save(pRecipeOutput);
 
+        SimpleCookingRecipeBuilder.smelting(
+                Ingredient.of(ModItems.IRON_SCALE.get()),
+                RecipeCategory.MISC,
+                Items.IRON_NUGGET,
+                0.1f,
+                100
+        )
+                .unlockedBy("has_iron_scale", this.has(ModItems.IRON_SCALE))
+                .save(pRecipeOutput, "iron_scale_smelting");
+
     }
 
     protected static void oreSmelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,

@@ -1,7 +1,9 @@
-// 1.21.1	2025-08-19T15:08:37.5351355	Recipes
+// 1.21.1	2025-08-19T18:35:57.0167816	Recipes
 1dcaedfbf2158be01008e7000ee5f659c051739b data/aquaticaspirations/advancement/recipes/misc/improved_substrate.json
 0873f0d67c9bf088821a450bc33a87e471286e49 data/aquaticaspirations/advancement/recipes/misc/improved_substrate_block.json
 f5c6a281b1bf1687bd5046c5371c64b5da308f15 data/aquaticaspirations/advancement/recipes/misc/improved_substrate_block_from_substrate.json
 5d3190243298de475d86fd76e2474fb69b24df3a data/aquaticaspirations/recipe/improved_substrate.json
 92d0abc9bb339e079c1f56518ff4629b2ec6a8ed data/aquaticaspirations/recipe/improved_substrate_block.json
 b4d9fa9cf3c1d2acb9abf49871b0eb48885a5f4d data/aquaticaspirations/recipe/improved_substrate_block_from_substrate.json
+71d07e940fd1978b270358a71e18c4d23a7b80c7 data/minecraft/advancement/recipes/misc/iron_scale_smelting.json
+a7a8b9c702f7e8d125ca666fa3bb82426aca9f57 data/minecraft/recipe/iron_scale_smelting.json

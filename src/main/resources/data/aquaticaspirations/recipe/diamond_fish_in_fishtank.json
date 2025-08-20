@@ -1,0 +1,9 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:diamond_fish"
+  },
+  "result": {
+    "id": "minecraft:diamond"
+  }
+}

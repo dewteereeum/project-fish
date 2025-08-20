@@ -4,6 +4,7 @@ import net.dewteereeum.aquaticaspirations.block.ModBlocks;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.renderer.FishtankBlockEntityRenderer;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
+import net.dewteereeum.aquaticaspirations.event.ModBusEvents;
 import net.dewteereeum.aquaticaspirations.fluid.BaseFluidType;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluidTypes;
 import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;

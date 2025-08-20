@@ -1,7 +1,7 @@
-// 1.21.1	2025-08-19T15:39:30.1063723	Tags for minecraft:item mod id aquaticaspirations
+// 1.21.1	2025-08-19T20:13:16.388141	Tags for minecraft:item mod id aquaticaspirations
 c6afe7b60d6073b0f920e1138ffcead4ec468544 data/aquaticaspirations/tags/item/basic.json
 9ca8a6fe07b81eff505878eb9a3526ccfcf4f3d3 data/aquaticaspirations/tags/item/earthly.json
-cf6890d0723929ed4c22cb3337cd277726c5df4c data/aquaticaspirations/tags/item/functional_fish.json
+768e609c7fb782263885b2850ea5704840c265c3 data/aquaticaspirations/tags/item/functional_fish.json
 b4727e6ebe055c567441285ae565462a8b1e4abc data/aquaticaspirations/tags/item/hellish.json
 22b29b47f26665b1201a833e5cbd3f2d714bcdae data/aquaticaspirations/tags/item/improved.json
 61fbd5678190bd3bf4a652403ac4575c497ca89f data/aquaticaspirations/tags/item/substrate.json

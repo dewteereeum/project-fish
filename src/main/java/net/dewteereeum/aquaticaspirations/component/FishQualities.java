@@ -26,6 +26,6 @@ public class FishQualities {
     }
     public static FishQuality getPreviousTier(FishQuality input){
         if(input.equals(NATURAL)) return NATURAL;
-        return fishQualitiesList.get(fishQualitiesList.indexOf(input));
+        return fishQualitiesList.get(fishQualitiesList.indexOf(input) - 1);
     }
 }

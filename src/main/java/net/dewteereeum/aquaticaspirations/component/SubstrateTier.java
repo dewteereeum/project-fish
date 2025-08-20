@@ -15,16 +15,6 @@ public record SubstrateTier(int tier, String name) {
                             Codec.STRING.fieldOf("name").forGetter(SubstrateTier::name))
                     .apply(instance, SubstrateTier::new));
 
-
-
-    static final String[] tierNames = {
-            "Basic",
-            "Improved",
-            "Advanced",
-            "Superior",
-            "Catalytic"
-    };
-
     public String getTierString() {
         return "tooltip.aquaticaspirations.tooltip." + name;
     }

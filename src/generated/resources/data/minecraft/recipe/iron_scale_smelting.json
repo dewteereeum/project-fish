@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "aquaticaspirations:iron_scale"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:iron_nugget"
+  }
+}

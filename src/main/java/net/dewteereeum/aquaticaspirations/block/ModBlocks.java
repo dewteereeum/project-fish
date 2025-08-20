@@ -2,6 +2,8 @@ package net.dewteereeum.aquaticaspirations.block;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
+import net.dewteereeum.aquaticaspirations.component.SubstrateTiers;
+import net.dewteereeum.aquaticaspirations.component.SubstrateTypes;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -19,8 +21,8 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(AquaticAspirationsMod.MOD_ID);
 
-    public static final DeferredBlock<Block> IMPROVED_SUBSTRATE_BLOCK = registerBlock("improved_substrate_block",
-            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL)));
+    public static final DeferredBlock<Block> IMPROVED_SUBSTRATE_BLOCK = registerSubstrateBlock("improved_substrate_block",
+            () -> new SubstrateBlock(BlockBehaviour.Properties.of().sound(SoundType.GRAVEL), SubstrateTiers.BASIC, SubstrateTypes.EARTHLY));
 
     public static final DeferredBlock<Block> FISHTANK = registerBlock("fishtank",
             () -> new Fishtank(BlockBehaviour.Properties.of().noOcclusion().sound(SoundType.GLASS)));
@@ -28,7 +30,7 @@ public class ModBlocks {
 
 
 
-    private static <T extends Block>DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
+    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
@@ -36,6 +38,17 @@ public class ModBlocks {
 
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block) {
         ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    }
+
+    private static <T extends Block> DeferredBlock<T> registerSubstrateBlock(String name, Supplier<T> subBlock){
+        DeferredBlock<T> toReturn = BLOCKS.register(name, subBlock);
+        registerSubstrateBlockItem(name, toReturn);
+        return toReturn;
+
+    }
+
+    private static <T extends Block> void registerSubstrateBlockItem(String name, DeferredBlock<T> subBlock){
+        ModItems.ITEMS.register(name, () -> new SubstrateBlockItem((SubstrateBlock) subBlock.get(), new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus) {

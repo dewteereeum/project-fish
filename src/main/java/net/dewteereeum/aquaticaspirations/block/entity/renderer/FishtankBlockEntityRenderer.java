@@ -192,6 +192,8 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
                     default -> 0;
                 };
 
+                fishYRot -= 6;
+
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(fishYRot));
 
                 itemRenderer1.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
