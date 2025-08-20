@@ -17,6 +17,7 @@ public class EmptyTreasureChestItem extends Item implements IFishTankAccessory, 
         super(properties);
     }
 
+
     @Override
     public void accessoryFunction(FishtankBlockEntity fishtankBlockEntity) {
 
@@ -43,6 +44,17 @@ public class EmptyTreasureChestItem extends Item implements IFishTankAccessory, 
 
 
     }
+
+    @Override
+    public float[] getTranslationVector() {
+        return new float[]{3 / 16f, 0, 1 / 16f};
+    }
+
+    @Override
+    public int[] getRotationVector() {
+        return new int[]{0, -6, 0};
+    }
+
 
     @Override
     public BlockPos getLinkedBlock(FishtankBlockEntity blockEntity) {

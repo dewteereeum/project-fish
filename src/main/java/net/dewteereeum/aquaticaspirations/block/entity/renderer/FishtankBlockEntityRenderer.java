@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import net.dewteereeum.aquaticaspirations.Config;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
+import net.dewteereeum.aquaticaspirations.item.custom.accessory.IFishTankAccessory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -153,48 +154,64 @@ public class FishtankBlockEntityRenderer implements BlockEntityRenderer<Fishtank
 
                 pPoseStack.pushPose();
 
-                float x;
-                float y;
-                float z;
-                int accYRot;
-                x = z = 8/16f;
-                y = 4/16f;
+                float x = 8/16f;
+                float y = 4/16f;
+                float z = 8/16f;
+
+                float transX = 0;
+                float transY = 0;
+                float transZ = 0;
+
+                if(stack.getItem() instanceof IFishTankAccessory accessory){
+                    transX = accessory.getTranslationVector()[0];
+                    transY = accessory.getTranslationVector()[1];
+                    transZ = accessory.getTranslationVector()[2];
+                }
+
 
                 switch(facing){
                     case NORTH -> {
-                        x -= 3/16f;
-                        z -= 1/16f;
+                        x -= transX;
+                        z -= transZ;
                     }
                     case EAST -> {
-                        x += 1/16f;
-                        z -= 3/16f;
+                        x += transZ;
+                        z -= transX;
                     }
-                    case SOUTH -> {
-                        x += 3/16f;
-                        z += 1/16f;
+                    case SOUTH -> { //default values for translation and rotation vectors
+                        x += transX;
+                        z += transZ;
                     }
                     case WEST -> {
-                        x -= 1/16f;
-                        z += 3/16f;
+                        x -= transZ;
+                        z += transX;
                     }
                 }
+                y += transY;
                 
 
                 pPoseStack.translate(x, y, z);
                 pPoseStack.scale(1.0f, 1.0f, 1.0f);
 
                 //setting facing direction
-                int fishYRot = switch (facing) {
+                int accXRot = 0;
+                int accZRot = 0;
+                int accYRot = switch (facing) {
                     case NORTH -> 0;
                     case EAST -> -90;
                     case SOUTH -> 180;
                     case WEST -> 90;
                     default -> 0;
                 };
+                if(stack.getItem() instanceof IFishTankAccessory accessory){
+                    accXRot += accessory.getRotationVector()[0];
+                    accYRot += accessory.getRotationVector()[1];
+                    accZRot += accessory.getRotationVector()[2];
+                }
 
-                fishYRot -= 6;
-
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(fishYRot));
+                pPoseStack.mulPose(Axis.XP.rotationDegrees(accXRot));
+                pPoseStack.mulPose(Axis.YP.rotationDegrees(accYRot));
+                pPoseStack.mulPose(Axis.ZP.rotationDegrees(accZRot));
 
                 itemRenderer1.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
                         OverlayTexture.NO_OVERLAY, pPoseStack, pBufferSource, pBlockEntity.getLevel(), 1);

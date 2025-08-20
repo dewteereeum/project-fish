@@ -114,4 +114,14 @@ public class EnderTreasureChestItem extends Item implements IFishTankAccessory, 
 
 
     }
+
+    @Override
+    public float[] getTranslationVector() {
+        return new float[]{3 / 16f, 0, 1 / 16f};
+    }
+
+    @Override
+    public int[] getRotationVector() {
+        return new int[]{0, -6, 0};
+    }
 }
