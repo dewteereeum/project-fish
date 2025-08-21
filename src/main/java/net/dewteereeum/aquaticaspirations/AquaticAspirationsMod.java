@@ -110,6 +110,8 @@ public class AquaticAspirationsMod {
             event.enqueueWork(() -> {
                 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_TANK_FLUID.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TANK_FLUID.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ABYSSAL_WATER.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ABYSSAL_WATER.get(), RenderType.translucent());
             });
 
         }
@@ -118,6 +120,8 @@ public class AquaticAspirationsMod {
         public static void onClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerFluidType(((BaseFluidType) ModFluidTypes.TANK_FLUID_TYPE.get()).getClientFluidTypeExtensions(),
                     ModFluidTypes.TANK_FLUID_TYPE.get());
+            event.registerFluidType(((BaseFluidType) ModFluidTypes.ABYSSAL_WATER_TYPE.get()).getClientFluidTypeExtensions(),
+                    ModFluidTypes.ABYSSAL_WATER_TYPE.get());
         }
 
         @SubscribeEvent

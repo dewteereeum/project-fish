@@ -2,6 +2,7 @@ package net.dewteereeum.aquaticaspirations.item;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.block.ModBlocks;
+import net.dewteereeum.aquaticaspirations.fluid.ModFluids;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -33,6 +34,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ENDER_TREASURE_CHEST);
 
                         output.accept(ModItems.IMPROVED_SUBSTRATE);
+
+                        output.accept(ModFluids.ABYSSAL_WATER_BUCKET);
+                        output.accept(ModFluids.TANK_FLUID_BUCKET);
 
                     }).build());
     public static Supplier<CreativeModeTab> AQUATICASPIRATIONS_BLOCKS_TAB =

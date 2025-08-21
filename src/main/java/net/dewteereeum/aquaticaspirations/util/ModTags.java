@@ -15,7 +15,7 @@ public class ModTags {
         public static final TagKey<Block> SUBSTRATE = createTag("substrate");
         public static final TagKey<Block> EARTHLY = createTag("earthly");
         public static final TagKey<Block> HELLISH = createTag("hellish");
-        public static final TagKey<Block> ENDERIC = createTag("enderic");
+        public static final TagKey<Block> ABYSSAL = createTag("abyssal");
         public static final TagKey<Block> COSMIC = createTag("cosmic");
 
         public static final TagKey<Block> BASIC = createTag("basic");
@@ -37,7 +37,7 @@ public class ModTags {
         public static final TagKey<Item> SUBSTRATE = createTag("substrate");
         public static final TagKey<Item> EARTHLY = createTag("earthly");
         public static final TagKey<Item> HELLISH = createTag("hellish");
-        public static final TagKey<Item> ENDERIC = createTag("enderic");
+        public static final TagKey<Item> ABYSSAL = createTag("abyssal");
         public static final TagKey<Item> COSMIC = createTag("cosmic");
         public static final TagKey<Item> BASIC = createTag("basic");
         public static final TagKey<Item> IMPROVED = createTag("improved");

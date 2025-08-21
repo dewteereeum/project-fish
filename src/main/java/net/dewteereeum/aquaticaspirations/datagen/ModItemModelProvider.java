@@ -28,5 +28,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 
         basicItem(ModFluids.TANK_FLUID_BUCKET.get());
+        basicItem(ModFluids.ABYSSAL_WATER_BUCKET.get());
     }
 }

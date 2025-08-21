@@ -2,6 +2,7 @@
   "values": [
     "minecraft:water",
     "minecraft:lava",
-    "aquaticaspirations:source_tank_fluid"
+    "aquaticaspirations:source_tank_fluid",
+    "aquaticaspirations:source_abyssal_water"
   ]
 }

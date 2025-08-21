@@ -22,11 +22,14 @@ public class ModFluidTagsProvider extends FluidTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(FluidTags.WATER)
                 .add(ModFluids.SOURCE_TANK_FLUID.get())
-                .add(ModFluids.FLOWING_TANK_FLUID.get());
+                .add(ModFluids.FLOWING_TANK_FLUID.get())
+                .add(ModFluids.SOURCE_ABYSSAL_WATER.get())
+                .add(ModFluids.FLOWING_ABYSSAL_WATER.get());
 
         tag(ModTags.Fluids.FISHTANK_FLUID)
                 .add(Fluids.WATER)
                 .add(Fluids.LAVA)
-                .add(ModFluids.SOURCE_TANK_FLUID.get());
+                .add(ModFluids.SOURCE_TANK_FLUID.get())
+                .add(ModFluids.SOURCE_ABYSSAL_WATER.get());
     }
 }

@@ -1,6 +1,8 @@
 {
   "values": [
     "aquaticaspirations:source_tank_fluid",
-    "aquaticaspirations:flowing_tank_fluid"
+    "aquaticaspirations:flowing_tank_fluid",
+    "aquaticaspirations:source_abyssal_water",
+    "aquaticaspirations:flowing_abyssal_water"
   ]
 }

@@ -15,7 +15,14 @@
   "item.aquaticaspirations.iron_scale": "Iron Scale",
   "item.aquaticaspirations.improved_substrate": "Improved Substrate",
 
+  "fluid_type.aquaticaspirations.tank_fluid": "Tank Fluid",
+  "fluid_type.aquaticaspirations.abyssal_water": "Abyssal Water",
+
   "item.aquaticaspirations.tank_fluid_bucket": "Tank Fluid Bucket",
+  "item.aquaticaspirations.abyssal_water_bucket": "Abyssal Water Bucket",
+
+  "block.aquaticaspirations.tank_fluid_block": "Tank Fluid",
+  "block.aquaticaspirations.abyssal_water_block": "Abyssal Water",
 
 
 
@@ -29,7 +36,7 @@
 
   "block.aquaticaspirations.improved_substrate_block": "Improved Substrate Block",
 
-  "block.aquaticaspirations.tank_fluid_block": "Tank Fluid",
+
 
 
   "itemGroup.aquaticaspirations.aquaticaspirations_items_tab": "Aquatic Aspirations Items",
@@ -53,7 +60,7 @@
 
   "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",
   "tooltip.aquaticaspirations.tooltip.hellish": "§6Hellish§r",
-  "tooltip.aquaticaspirations.tooltip.enderic": "§3Enderic§r",
+  "tooltip.aquaticaspirations.tooltip.abyssal": "§3Abyssal§r",
   "tooltip.aquaticaspirations.tooltip.cosmic": "§d§kCosmic§r",
 
   "tooltip.aquaticaspirations.tooltip.natural": "§fNatural§r",

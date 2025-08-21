@@ -24,21 +24,39 @@ public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
             DeferredRegister.create(BuiltInRegistries.FLUID, AquaticAspirationsMod.MOD_ID);
 
+    //TANK FLUID (for debug)
     public static final Supplier<FlowingFluid> SOURCE_TANK_FLUID = FLUIDS.register("source_tank_fluid",
-            () -> new BaseFlowingFluid.Source(ModFluids.TANK_FLUID_PROPERITES));
+            () -> new BaseFlowingFluid.Source(ModFluids.TANK_FLUID_PROPERTIES));
 
     public static final Supplier<FlowingFluid> FLOWING_TANK_FLUID = FLUIDS.register("flowing_tank_fluid",
-            () -> new BaseFlowingFluid.Flowing(ModFluids.TANK_FLUID_PROPERITES));
+            () -> new BaseFlowingFluid.Flowing(ModFluids.TANK_FLUID_PROPERTIES));
 
     public static final DeferredBlock<LiquidBlock> TANK_FLUID_BLOCK = ModBlocks.BLOCKS.register("tank_fluid_block",
             () -> new LiquidBlock(ModFluids.SOURCE_TANK_FLUID.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable().noOcclusion()));
+
     public static final DeferredItem<Item> TANK_FLUID_BUCKET = ModItems.ITEMS.registerItem("tank_fluid_bucket",
             properties -> new BucketItem(ModFluids.SOURCE_TANK_FLUID.get(), properties.craftRemainder(Items.BUCKET).stacksTo(1)));
 
-    public static final BaseFlowingFluid.Properties TANK_FLUID_PROPERITES = new BaseFlowingFluid.Properties(
+    public static final BaseFlowingFluid.Properties TANK_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(
             ModFluidTypes.TANK_FLUID_TYPE, SOURCE_TANK_FLUID, FLOWING_TANK_FLUID)
             .slopeFindDistance(2).levelDecreasePerBlock(1).block(ModFluids.TANK_FLUID_BLOCK).bucket(ModFluids.TANK_FLUID_BUCKET);
 
+    //ABYSSAL WATER
+    public static final Supplier<FlowingFluid> SOURCE_ABYSSAL_WATER = FLUIDS.register("source_abyssal_water",
+            () -> new BaseFlowingFluid.Source(ModFluids.ABYSSAL_WATER_PROPERTIES));
+
+    public static final Supplier<FlowingFluid> FLOWING_ABYSSAL_WATER = FLUIDS.register("flowing_abyssal_water",
+            () -> new BaseFlowingFluid.Flowing(ModFluids.ABYSSAL_WATER_PROPERTIES));
+
+    public static final DeferredBlock<LiquidBlock> ABYSSAL_WATER_BLOCK = ModBlocks.BLOCKS.register("abyssal_water_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_ABYSSAL_WATER.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable().noOcclusion()));
+
+    public static final DeferredItem<Item> ABYSSAL_WATER_BUCKET = ModItems.ITEMS.registerItem("abyssal_water_bucket",
+            properties -> new BucketItem(ModFluids.SOURCE_ABYSSAL_WATER.get(), properties.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final BaseFlowingFluid.Properties ABYSSAL_WATER_PROPERTIES = new BaseFlowingFluid.Properties(
+            ModFluidTypes.ABYSSAL_WATER_TYPE, SOURCE_ABYSSAL_WATER, FLOWING_ABYSSAL_WATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(1).block(ModFluids.ABYSSAL_WATER_BLOCK).bucket(ModFluids.ABYSSAL_WATER_BUCKET);
 
 
     public static void register(IEventBus eventBus) {

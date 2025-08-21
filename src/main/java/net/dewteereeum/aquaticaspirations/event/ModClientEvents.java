@@ -38,6 +38,7 @@ public class ModClientEvents {
                 }
     }
 
+    //Deprecated
     private static @NotNull List<String> getSubToolTips(ItemTooltipEvent event) {
         List<String> subToolTips = new ArrayList<>(2);
         ItemStack stack = event.getItemStack();
@@ -66,7 +67,7 @@ public class ModClientEvents {
     private static final Map<TagKey<Item>, String> TYPE_MAP = Map.of(
             ModTags.Items.EARTHLY, "tooltip.aquaticaspirations.tooltip.earthly",
             ModTags.Items.HELLISH, "tooltip.aquaticaspirations.tooltip.hellish",
-            ModTags.Items.ENDERIC, "tooltip.aquaticaspirations.tooltip.enderic",
+            ModTags.Items.ABYSSAL, "tooltip.aquaticaspirations.tooltip.enderic",
             ModTags.Items.COSMIC, "tooltip.aquaticaspirations.tooltip.cosmic"
     );
 
