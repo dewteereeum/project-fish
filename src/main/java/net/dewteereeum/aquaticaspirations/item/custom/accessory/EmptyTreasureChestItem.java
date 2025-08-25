@@ -3,10 +3,14 @@ package net.dewteereeum.aquaticaspirations.item.custom.accessory;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
+
+import java.util.List;
 
 public class EmptyTreasureChestItem extends Item implements IFishTankAccessory, BlockLinkable{
     public EmptyTreasureChestItem(Properties properties) {
@@ -62,5 +66,12 @@ public class EmptyTreasureChestItem extends Item implements IFishTankAccessory, 
         return Direction.UP;
     }
 
-
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        if(tooltipFlag.hasShiftDown()) {
+            tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.empty_treasure_chest_info"));
+        } else {
+            tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.hold_shift_for_info"));
+        }
+    }
 }

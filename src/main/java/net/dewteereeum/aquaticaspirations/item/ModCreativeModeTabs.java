@@ -36,6 +36,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.IMPROVED_SUBSTRATE);
 
                         output.accept(ModFluids.ABYSSAL_WATER_BUCKET);
+                        output.accept(ModFluids.HELLWATER_BUCKET);
                         output.accept(ModFluids.TANK_FLUID_BUCKET);
 
                     }).build());

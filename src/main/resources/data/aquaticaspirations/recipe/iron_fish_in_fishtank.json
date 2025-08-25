@@ -3,7 +3,19 @@
   "ingredient": {
     "item": "aquaticaspirations:iron_fish"
   },
-  "result": {
-    "id": "aquaticaspirations:iron_scale"
+  "outputs": {
+    "natural": {
+      "id": "aquaticaspirations:iron_scale"
+    },
+    "altered": {
+      "id": "minecraft:iron_ingot"
+    },
+    "enhanced": {
+      "id": "minecraft:iron_block"
+    },
+    "enchanted": {
+      "id": "minecraft:iron_block",
+      "count": 4
+    }
   }
 }

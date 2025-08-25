@@ -4,7 +4,8 @@ package net.dewteereeum.aquaticaspirations.block.entity.custom;
 import net.dewteereeum.aquaticaspirations.block.ModBlockProperties;
 import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
-import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
+import net.dewteereeum.aquaticaspirations.component.*;
+import net.dewteereeum.aquaticaspirations.fluid.ModFluidTypes;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.BlockLinkable;
 import net.dewteereeum.aquaticaspirations.item.custom.accessory.IFishTankAccessory;
@@ -38,6 +39,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -303,21 +305,26 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
 
+
     //////////End of Accessories
 
 
+    private int tickTimer = 0;
+
     public void tick(Level level, BlockPos pPos, BlockState pState) {
-        if (fishOutOfWater()) {
-            if (dyingFishCounter == 0) {
-                dyingFish();
-            }
-            deathCounterIncrease();
-            setChanged(level, pPos, pState);
-            if (deathCounterElapsed()) {
+        if(tickTimer == 1) {
+            if (fishOutOfWater()) {
+                if (dyingFishCounter == 0) {
+                    dyingFish();
+                }
+                deathCounterIncrease();
+                setChanged(level, pPos, pState);
+                if (deathCounterElapsed()) {
+                    resetDyingFishCounter();
+                }
+            } else {
                 resetDyingFishCounter();
             }
-        } else {
-            resetDyingFishCounter();
         }
 
         //fluidChangedCheck(level, pPos, pState);
@@ -325,7 +332,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
             if (CraftingFinished()) {
-                if(fishThriving()) {
+                if(fishThriving() && fluidMatches()) {
                     craftItem();
                 }
                 dirtUpdate();
@@ -342,8 +349,26 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             linkedInventory = null;
         }
+        tickTimer++;
+        if(tickTimer >= 20){
+            tickTimer = 0;
+        }
 
 
+    }
+
+    private boolean fluidMatches(){
+        SubstrateType reqSub = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
+        if(reqSub == null) return false;
+        if(reqSub.equals(SubstrateTypes.EARTHLY)){
+            return getFluid().is(Fluids.WATER.getFluidType());
+        } else if(reqSub.equals(SubstrateTypes.ABYSSAL)){
+            return getFluid().is(ModFluidTypes.ABYSSAL_WATER_TYPE.get());
+        } else if(reqSub.equals(SubstrateTypes.HELLISH)){
+            return getFluid().is(ModFluidTypes.HELLWATER_TYPE.get());
+        }
+
+        return false;
     }
 
 
@@ -351,12 +376,18 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         this.progress = 0;
         this.maxProgress = maxProgress;
     }
-    private void craftItem() {
-        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
+//    private void craftItem() {
+//        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
+//
+//        ItemStack output = recipe.get().value().output();
+//        itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
+//    }
+private void craftItem() {
+    Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
 
-        ItemStack output = recipe.get().value().output();
-        itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
-    }
+    ItemStack output = recipe.get().value().outputs().get(itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.FISH_QUALITY.get()).name());
+    itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
+}
 
     private boolean CraftingFinished() {
         return this.progress >= this.maxProgress;
@@ -381,6 +412,17 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         return false;
 
     }
+
+//    private boolean hasRecipe() {
+//        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
+//        if (recipe.isEmpty() || FLUID_TANK.isEmpty()) {
+//            return false;
+//        }
+//
+//        ItemStack output = recipe.get().value().getResultItem(null);
+//
+//        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
+//    }
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
@@ -510,6 +552,11 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
      */
+
+//    private Optional<RecipeHolder<FishtankRecipe>> getCurrentRecipe() {
+//        return this.level.getRecipeManager()
+//                .getRecipeFor(ModRecipes.FISHTANK_TYPE.get(), new FishtankRecipeInput(itemHandler.getStackInSlot(FISH_SLOT)), level);
+//    }
 
     private Optional<RecipeHolder<FishtankRecipe>> getCurrentRecipe() {
         return this.level.getRecipeManager()

@@ -65,7 +65,7 @@ public class EnderTreasureChestItem extends Item implements IFishTankAccessory, 
         if(tooltipFlag.hasShiftDown()) {
             tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info"));
         } else {
-            tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.ender_treasure_chest_preview"));
+            tooltipComponents.add(Component.translatable("tooltip.aquaticaspirations.tooltip.hold_shift_for_info"));
         }
         if(stack.get(ModDataComponentTypes.LINK_BLOCK.get()) != null){
             tooltipComponents.add(Component.literal(stack.get(ModDataComponentTypes.LINK_BLOCK.get()).getLinkString()).withStyle(ChatFormatting.AQUA));

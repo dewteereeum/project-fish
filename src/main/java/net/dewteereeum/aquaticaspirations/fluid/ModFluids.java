@@ -57,6 +57,22 @@ public class ModFluids {
     public static final BaseFlowingFluid.Properties ABYSSAL_WATER_PROPERTIES = new BaseFlowingFluid.Properties(
             ModFluidTypes.ABYSSAL_WATER_TYPE, SOURCE_ABYSSAL_WATER, FLOWING_ABYSSAL_WATER)
             .slopeFindDistance(2).levelDecreasePerBlock(1).block(ModFluids.ABYSSAL_WATER_BLOCK).bucket(ModFluids.ABYSSAL_WATER_BUCKET);
+    //HELLWATER
+    public static final Supplier<FlowingFluid> SOURCE_HELLWATER = FLUIDS.register("hellwater",
+            () -> new BaseFlowingFluid.Source(ModFluids.HELLWATER_PROPERTIES));
+
+    public static final Supplier<FlowingFluid> FLOWING_HELLWATER = FLUIDS.register("flowing_hellwater",
+            () -> new BaseFlowingFluid.Flowing(ModFluids.HELLWATER_PROPERTIES));
+
+    public static final DeferredBlock<LiquidBlock> HELLWATER_BLOCK = ModBlocks.BLOCKS.register("hellwater_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_HELLWATER.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable().noOcclusion()));
+
+    public static final DeferredItem<Item> HELLWATER_BUCKET = ModItems.ITEMS.registerItem("hellwater_bucket",
+            properties -> new BucketItem(ModFluids.SOURCE_HELLWATER.get(), properties.craftRemainder(Items.BUCKET).stacksTo(1)));
+
+    public static final BaseFlowingFluid.Properties HELLWATER_PROPERTIES = new BaseFlowingFluid.Properties(
+            ModFluidTypes.HELLWATER_TYPE, SOURCE_HELLWATER, FLOWING_HELLWATER)
+            .slopeFindDistance(2).levelDecreasePerBlock(1).block(ModFluids.HELLWATER_BLOCK).bucket(ModFluids.HELLWATER_BUCKET);
 
 
     public static void register(IEventBus eventBus) {

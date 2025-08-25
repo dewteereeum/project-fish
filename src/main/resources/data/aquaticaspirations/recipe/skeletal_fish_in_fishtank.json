@@ -1,9 +1,0 @@
-{
-  "type": "aquaticaspirations:fishtank_production",
-  "ingredient": {
-    "item": "aquaticaspirations:skeletal_fish"
-  },
-  "result": {
-    "id": "minecraft:bone"
-  }
-}

@@ -13,6 +13,7 @@ public class ModRecipes {
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, AquaticAspirationsMod.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, AquaticAspirationsMod.MOD_ID);
+
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FishtankRecipe>> FISHTANK_SERIALIZER =
             SERIALIZERS.register("fishtank_production", FishtankRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<FishtankRecipe>> FISHTANK_TYPE =

@@ -2,6 +2,7 @@ package net.dewteereeum.aquaticaspirations.component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FishQualities {
 
@@ -19,6 +20,10 @@ public class FishQualities {
             ENCHANTED,
             TRANSCENDENT
     ));
+
+    public List<FishQuality> getFishQualitiesList(){
+        return List.copyOf(fishQualitiesList);
+    }
 
     public static FishQuality getNextTier(FishQuality input){
         if(input.equals(TRANSCENDENT)) return TRANSCENDENT;

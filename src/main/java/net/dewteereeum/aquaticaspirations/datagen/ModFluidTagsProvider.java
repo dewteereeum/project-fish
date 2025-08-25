@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,12 +25,15 @@ public class ModFluidTagsProvider extends FluidTagsProvider {
                 .add(ModFluids.SOURCE_TANK_FLUID.get())
                 .add(ModFluids.FLOWING_TANK_FLUID.get())
                 .add(ModFluids.SOURCE_ABYSSAL_WATER.get())
-                .add(ModFluids.FLOWING_ABYSSAL_WATER.get());
+                .add(ModFluids.FLOWING_ABYSSAL_WATER.get())
+                .add(ModFluids.SOURCE_HELLWATER.get())
+                .add(ModFluids.FLOWING_HELLWATER.get());
 
         tag(ModTags.Fluids.FISHTANK_FLUID)
                 .add(Fluids.WATER)
                 .add(Fluids.LAVA)
                 .add(ModFluids.SOURCE_TANK_FLUID.get())
-                .add(ModFluids.SOURCE_ABYSSAL_WATER.get());
+                .add(ModFluids.SOURCE_ABYSSAL_WATER.get())
+                .add(ModFluids.SOURCE_HELLWATER.get());
     }
 }

@@ -1,8 +1,9 @@
-// 1.21.1	2025-08-20T23:43:16.4276385	Item Models: aquaticaspirations
+// 1.21.1	2025-08-22T01:03:45.7630956	Item Models: aquaticaspirations
 706f78ed942f1b64a595372e6b01c2ea72b90e22 assets/aquaticaspirations/models/item/abyssal_water_bucket.json
 a05e7c75143a0bd94bfa509f37ef0ab79858fff1 assets/aquaticaspirations/models/item/anglowfish.json
 9ac1793a1baead9f5b3ca2df4de82d58db19a42c assets/aquaticaspirations/models/item/diamond_fish.json
 442898a69fd51be29380ac4d4e2bcf7b8b0e55b9 assets/aquaticaspirations/models/item/gold_fish.json
+930561a01b878fdf835acf0f3edd2f9f907bc28b assets/aquaticaspirations/models/item/hellwater_bucket.json
 8c6d71305d420ac53b126ca9e0de3ca8f6e1f7cb assets/aquaticaspirations/models/item/improved_substrate.json
 259b6fb6fecfd722d9b9882d70658baf69fd23c4 assets/aquaticaspirations/models/item/iron_fish.json
 36eb8eef9eb0be7da9b4c41733c2bddd560d30f4 assets/aquaticaspirations/models/item/iron_scale.json

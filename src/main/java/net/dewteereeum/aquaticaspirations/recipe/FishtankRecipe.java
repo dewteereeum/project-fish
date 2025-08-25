@@ -1,10 +1,13 @@
 package net.dewteereeum.aquaticaspirations.recipe;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -13,7 +16,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements Recipe<FishtankRecipeInput> {
+import java.util.HashMap;
+import java.util.Map;
+
+public record FishtankRecipe(Ingredient inputItem, Map<String, ItemStack> outputs) implements Recipe<FishtankRecipeInput> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -33,7 +39,10 @@ public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements
 
     @Override
     public ItemStack assemble(FishtankRecipeInput pInput, HolderLookup.Provider provider) {
-        return output.copy();
+        var quality = inputItem.getItems()[0].get(ModDataComponentTypes.FISH_QUALITY.get());
+        if(quality == null) return ItemStack.EMPTY;
+
+        else return outputs.getOrDefault(quality.name(), ItemStack.EMPTY).copy();
     }
 
     @Override
@@ -43,7 +52,10 @@ public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return output;
+        var quality = inputItem.getItems()[0].get(ModDataComponentTypes.FISH_QUALITY.get());
+        if(quality == null) return ItemStack.EMPTY;
+
+        else return outputs.getOrDefault(quality.name(), ItemStack.EMPTY);
     }
 
     @Override
@@ -59,12 +71,12 @@ public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements
 
         public static final MapCodec<FishtankRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(FishtankRecipe::inputItem),
-                ItemStack.CODEC.fieldOf("result").forGetter(FishtankRecipe::output)
+                QUALITY_OUTPUT_MAP_CODEC.fieldOf("outputs").forGetter(FishtankRecipe::outputs)
         ).apply(inst, FishtankRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, FishtankRecipe> STREAM_CODEC =
                 StreamCodec.composite(
                         Ingredient.CONTENTS_STREAM_CODEC, FishtankRecipe::inputItem,
-                        ItemStack.STREAM_CODEC, FishtankRecipe::output,
+                        QUALITY_OUTPUT_MAP_STREAM_CODEC, FishtankRecipe::outputs,
                         FishtankRecipe::new);
         @Override
         public MapCodec<FishtankRecipe> codec() {
@@ -76,4 +88,12 @@ public record  FishtankRecipe(Ingredient inputItem, ItemStack output) implements
             return STREAM_CODEC;
         }
     }
+
+    public static final Codec<Map<String, ItemStack>> QUALITY_OUTPUT_MAP_CODEC = Codec.unboundedMap(Codec.STRING, ItemStack.CODEC);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Map<String, ItemStack>> QUALITY_OUTPUT_MAP_STREAM_CODEC = ByteBufCodecs.map(
+            HashMap::new,
+            ByteBufCodecs.STRING_UTF8,
+            ItemStack.STREAM_CODEC,
+            5
+    );
 }

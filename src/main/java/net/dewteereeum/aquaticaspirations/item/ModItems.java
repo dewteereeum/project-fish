@@ -1,6 +1,7 @@
 package net.dewteereeum.aquaticaspirations.item;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
+import net.dewteereeum.aquaticaspirations.component.FishQualities;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.dewteereeum.aquaticaspirations.component.SubstrateTiers;
 import net.dewteereeum.aquaticaspirations.component.SubstrateTypes;
@@ -20,8 +21,8 @@ public class ModItems {
             ITEMS.register("diamond_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
-                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.ABYSSAL),
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
                             1, 20, false
                     )
             );
@@ -38,7 +39,7 @@ public class ModItems {
             ITEMS.register("gold_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.ADVANCED)
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
                             3, 60, false
                     )
@@ -56,7 +57,7 @@ public class ModItems {
             ITEMS.register("anglowfish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.ADVANCED)
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.ABYSSAL),
                             1, 10, false
                     )
@@ -65,7 +66,7 @@ public class ModItems {
             ITEMS.register("undead_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.IMPROVED)
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
                             8, 20, true
                     )
@@ -74,7 +75,7 @@ public class ModItems {
             ITEMS.register("skeletal_fish",
                     () -> new FunctionalFishItem(new Item.Properties()
                             .stacksTo(1)
-                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.SUPERIOR)
+                            .component(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.IMPROVED)
                             .component(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY),
                             2, 20, true
 

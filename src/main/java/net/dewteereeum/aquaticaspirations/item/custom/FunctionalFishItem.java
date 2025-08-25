@@ -2,11 +2,13 @@ package net.dewteereeum.aquaticaspirations.item.custom;
 
 
 import net.dewteereeum.aquaticaspirations.component.Dirtiness;
+import net.dewteereeum.aquaticaspirations.component.FishQualities;
 import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
@@ -15,6 +17,7 @@ public class FunctionalFishItem extends Item {
 
     public FunctionalFishItem(Properties properties, int dirtProd, int dirtThresh, boolean likesDirt) {
         super(properties
+                .component(ModDataComponentTypes.FISH_QUALITY.get(), FishQualities.NATURAL)
                 .component(ModDataComponentTypes.DIRTINESS.get(), new Dirtiness(dirtProd, dirtThresh, likesDirt)));
     }
 
@@ -31,6 +34,14 @@ public class FunctionalFishItem extends Item {
 
      */
 
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        var quality = stack.get(ModDataComponentTypes.FISH_QUALITY.get());
+        if(quality == null){
+            return false;
+        }
+        return quality.equals(FishQualities.TRANSCENDENT);
+    }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
@@ -61,4 +72,8 @@ public class FunctionalFishItem extends Item {
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
+
+    public static final List<Item> vanillaFish = List.of(
+            Items.TROPICAL_FISH
+    );
 }

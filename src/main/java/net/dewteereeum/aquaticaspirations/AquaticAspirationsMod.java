@@ -112,6 +112,8 @@ public class AquaticAspirationsMod {
                 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_TANK_FLUID.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_ABYSSAL_WATER.get(), RenderType.translucent());
                 ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_ABYSSAL_WATER.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_HELLWATER.get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_HELLWATER.get(), RenderType.translucent());
             });
 
         }
@@ -122,6 +124,9 @@ public class AquaticAspirationsMod {
                     ModFluidTypes.TANK_FLUID_TYPE.get());
             event.registerFluidType(((BaseFluidType) ModFluidTypes.ABYSSAL_WATER_TYPE.get()).getClientFluidTypeExtensions(),
                     ModFluidTypes.ABYSSAL_WATER_TYPE.get());
+            event.registerFluidType(((BaseFluidType) ModFluidTypes.HELLWATER_TYPE.get()).getClientFluidTypeExtensions(),
+                    ModFluidTypes.HELLWATER_TYPE.get());
+
         }
 
         @SubscribeEvent

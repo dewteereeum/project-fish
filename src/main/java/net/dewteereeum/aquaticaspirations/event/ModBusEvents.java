@@ -3,9 +3,7 @@ package net.dewteereeum.aquaticaspirations.event;
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.block.entity.ModBlockEntities;
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
-import net.dewteereeum.aquaticaspirations.component.ModDataComponentTypes;
-import net.dewteereeum.aquaticaspirations.component.SubstrateTiers;
-import net.dewteereeum.aquaticaspirations.component.SubstrateTypes;
+import net.dewteereeum.aquaticaspirations.component.*;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -33,5 +31,14 @@ public class ModBusEvents {
                 builder.set(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
                         .set(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.HELLISH));
 
+    }
+
+    @SubscribeEvent
+    public static void addFishData(ModifyDefaultComponentsEvent event){
+        event.modify(Items.TROPICAL_FISH, builder ->
+                builder.set(ModDataComponentTypes.FISH_QUALITY.get(), FishQualities.NATURAL)
+                        .set(ModDataComponentTypes.SUBSTRATE_TIER.get(), SubstrateTiers.BASIC)
+                        .set(ModDataComponentTypes.SUBSTRATE_TYPE.get(), SubstrateTypes.EARTHLY)
+                        .set(ModDataComponentTypes.DIRTINESS.get(), new Dirtiness(5, 30, false)));
     }
 }

@@ -195,5 +195,6 @@ public class Fishtank extends BaseEntityBlock {
         }
         return createTickerHelper(pBlockEntityType, ModBlockEntities.FISHTANK_BE.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+
     }
 }

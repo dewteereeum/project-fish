@@ -3,7 +3,15 @@
   "ingredient": {
     "item": "aquaticaspirations:diamond_fish"
   },
-  "result": {
-    "id": "minecraft:diamond"
+  "outputs": {
+    "natural": {
+      "id": "minecraft:diamond"
+    },
+    "altered": {
+      "id": "minecraft:diamond_ore"
+    },
+    "enhanced": {
+      "id": "minecraft:diamond_block"
+    }
   }
 }

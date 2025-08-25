@@ -1,6 +1,12 @@
 package net.dewteereeum.aquaticaspirations.item.custom.accessory;
 
 import net.dewteereeum.aquaticaspirations.block.entity.custom.FishtankBlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
 
 public interface IFishTankAccessory {
 
@@ -13,4 +19,5 @@ public interface IFishTankAccessory {
 
     //Where SOUTH is default orientation
     int[] getRotationVector(); //must be of length 3 [xRot, yRot, zRot]
+
 }

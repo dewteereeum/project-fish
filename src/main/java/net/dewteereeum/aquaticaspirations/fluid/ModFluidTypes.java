@@ -31,6 +31,11 @@ public class ModFluidTypes {
             new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, WATER_OVERLAY_RL, 0xA10c0554,
                     new Vector3f(108 / 255f, 168 / 255f, 212 / 255f),
                     FluidType.Properties.create()));
+    public static final Supplier<FluidType> HELLWATER_TYPE = registerFluidType("hellwater",
+            new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, WATER_OVERLAY_RL, 0xA1e66b10,
+                    new Vector3f(108 / 255f, 168 / 255f, 212 / 255f),
+                    FluidType.Properties.create()));
+
 
 
     private static Supplier<FluidType> registerFluidType(String name, FluidType fluidType){

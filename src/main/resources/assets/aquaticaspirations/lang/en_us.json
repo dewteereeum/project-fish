@@ -16,13 +16,16 @@
   "item.aquaticaspirations.improved_substrate": "Improved Substrate",
 
   "fluid_type.aquaticaspirations.tank_fluid": "Tank Fluid",
-  "fluid_type.aquaticaspirations.abyssal_water": "Abyssal Water",
+  "fluid_type.aquaticaspirations.abyssal_water": "§1Abyssal Water§r",
+  "fluid_type.aquaticaspirations.hellwater": "§6Hellwater§r",
 
   "item.aquaticaspirations.tank_fluid_bucket": "Tank Fluid Bucket",
-  "item.aquaticaspirations.abyssal_water_bucket": "Abyssal Water Bucket",
+  "item.aquaticaspirations.abyssal_water_bucket": "§1Abyssal Water Bucket§r",
+  "item.aquaticaspirations.hellwater_bucket": "§6Hellwater Bucket§r",
 
   "block.aquaticaspirations.tank_fluid_block": "Tank Fluid",
-  "block.aquaticaspirations.abyssal_water_block": "Abyssal Water",
+  "block.aquaticaspirations.abyssal_water_block": "§1Abyssal Water§r",
+  "block.aquaticaspirations.hellwater_block": "§6Hellwater§r",
 
 
 
@@ -48,30 +51,33 @@
 
   "tooltip.aquaticaspirations.tooltip.requirements": "§7Hold §oShift§r §7to see thriving conditions§r",
   "tooltip.aquaticaspirations.tooltip.prefers_dirty": "§5Prefers dirty water§r",
-  "tooltip.aquaticaspirations.tooltip.prefers_clean": "§3Prefers clean water§r",
+  "tooltip.aquaticaspirations.tooltip.prefers_clean": "§bPrefers clean water§r",
   "tooltip.aquaticaspirations.tooltip.dirt_threshold": "§7Dirtiness threshold: §r",
   "tooltip.aquaticaspirations.tooltip.substrate_stats": "Requires %s %s substrate",
 
 
-  "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_preview": "§7Hold §oShift§r §7for more information§r",
-  "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info": "A Fishtank will automatically output to the linked inventory. \n§dDoes not work cross-dimensionally §o(for now).§r",
+  "tooltip.aquaticaspirations.tooltip.hold_shift_for_info": "§7Hold §oShift§r §7for more information§r",
+  "tooltip.aquaticaspirations.tooltip.missing_tooltip": "Looks like §someone§r forgot to add a tooltip...",
+
+  "tooltip.aquaticaspirations.tooltip.ender_treasure_chest_info": "Fishtank will automatically output to the linked inventory. \n§dDoes not work cross-dimensionally §o(for now).§r",
+  "tooltip.aquaticaspirations.tooltip.empty_treasure_chest_info": "Fishtank will automatically output to inventory below.",
 
   "tooltip.aquaticaspirations.tooltip.substrate_shift": "§7Hold §oShift§r §7to see substrate information§r",
 
   "tooltip.aquaticaspirations.tooltip.earthly": "§2Earthly§r",
   "tooltip.aquaticaspirations.tooltip.hellish": "§6Hellish§r",
-  "tooltip.aquaticaspirations.tooltip.abyssal": "§3Abyssal§r",
-  "tooltip.aquaticaspirations.tooltip.cosmic": "§d§kCosmic§r",
+  "tooltip.aquaticaspirations.tooltip.abyssal": "§1Abyssal§r",
+  "tooltip.aquaticaspirations.tooltip.cosmic": "§5Cosmic§r",
 
   "tooltip.aquaticaspirations.tooltip.natural": "§fNatural§r",
   "tooltip.aquaticaspirations.tooltip.altered": "§aAltered§r",
-  "tooltip.aquaticaspirations.tooltip.enhanced": "§bEnhanced§r",
+  "tooltip.aquaticaspirations.tooltip.enhanced": "§eEnhanced§r",
   "tooltip.aquaticaspirations.tooltip.enchanted": "§dEnchanted§r",
   "tooltip.aquaticaspirations.tooltip.transcendent": "§cTranscendent§r",
 
   "tooltip.aquaticaspirations.tooltip.basic" : "§fBasic§r",
   "tooltip.aquaticaspirations.tooltip.improved": "§aImproved§r",
-  "tooltip.aquaticaspirations.tooltip.advanced": "§bAdvanced§r",
+  "tooltip.aquaticaspirations.tooltip.advanced": "§6Advanced§r",
   "tooltip.aquaticaspirations.tooltip.superior": "§dSuperior§r",
   "tooltip.aquaticaspirations.tooltip.catalytic": "§cCatalytic§r"
 }
