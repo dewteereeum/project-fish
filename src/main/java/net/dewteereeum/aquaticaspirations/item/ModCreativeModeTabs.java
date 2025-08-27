@@ -24,16 +24,21 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DIAMOND_FISH);
                         output.accept(ModItems.GOLD_FISH);
                         output.accept(ModItems.IRON_FISH);
+                        output.accept(ModItems.COPPER_FISH);
                         output.accept(ModItems.SAND_FISH);
                         output.accept(ModItems.ANGLOWFISH);
                         output.accept(ModItems.UNDEAD_FISH);
                         output.accept(ModItems.SKELETAL_FISH);
+
                         output.accept(ModItems.IRON_SCALE);
+                        output.accept(ModItems.COPPER_SCALE);
 
                         output.accept(ModItems.EMPTY_TREASURE_CHEST);
                         output.accept(ModItems.ENDER_TREASURE_CHEST);
 
                         output.accept(ModItems.IMPROVED_SUBSTRATE);
+
+                        output.accept(ModItems.COPPER_NUGGET);
 
                         output.accept(ModFluids.ABYSSAL_WATER_BUCKET);
                         output.accept(ModFluids.HELLWATER_BUCKET);

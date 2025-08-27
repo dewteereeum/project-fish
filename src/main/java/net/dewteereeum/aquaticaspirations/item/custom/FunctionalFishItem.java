@@ -18,7 +18,8 @@ public class FunctionalFishItem extends Item {
     public FunctionalFishItem(Properties properties, int dirtProd, int dirtThresh, boolean likesDirt) {
         super(properties
                 .component(ModDataComponentTypes.FISH_QUALITY.get(), FishQualities.NATURAL)
-                .component(ModDataComponentTypes.DIRTINESS.get(), new Dirtiness(dirtProd, dirtThresh, likesDirt)));
+                .component(ModDataComponentTypes.DIRTINESS.get(), new Dirtiness(dirtProd, dirtThresh, likesDirt))
+                .stacksTo(1));
     }
 
 

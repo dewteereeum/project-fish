@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class FishtankRecipeBuilder implements RecipeBuilder {
+public class FishtankRecipeBuilder implements RecipeBuilder {
     protected Map<String, ItemStack> results;
     protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
@@ -30,20 +30,25 @@ public abstract class FishtankRecipeBuilder implements RecipeBuilder {
         this.inputFish = inputFish;
         this.results = new HashMap<>();
     }
-    public void Natural(ItemStack result){
-        results.put("natural", result);
+    public FishtankRecipeBuilder Natural(Item result, int count){
+        results.put("natural", new ItemStack(result, count));
+        return this;
     }
-    public void Altered(ItemStack result){
-        results.put("altered", result);
+    public FishtankRecipeBuilder Altered(Item result, int count){
+        results.put("altered", new ItemStack(result, count));
+        return this;
     }
-    public void Enhanced(ItemStack result){
-        results.put("enhanced", result);
+    public FishtankRecipeBuilder Enhanced(Item result, int count){
+        results.put("enhanced", new ItemStack(result, count));
+        return this;
     }
-    public void Enchanted(ItemStack result){
-        results.put("enchanted", result);
+    public FishtankRecipeBuilder Enchanted(Item result, int count){
+        results.put("enchanted", new ItemStack(result, count));
+        return this;
     }
-    public void Transcendent(ItemStack result){
-        results.put("transcendent", result);
+    public FishtankRecipeBuilder Transcendent(Item result, int count){
+        results.put("transcendent", new ItemStack(result, count));
+        return this;
     }
 
     @Override

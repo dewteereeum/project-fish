@@ -59,6 +59,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.UNDEAD_FISH.get())
                 .add(ModItems.SKELETAL_FISH.get())
                 .add(ModItems.SAND_FISH.get())
+                .add(ModItems.COPPER_FISH.get())
 
                 .add(Items.TROPICAL_FISH);
 

@@ -1,0 +1,28 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:iron_fish"
+  },
+  "outputs": {
+    "altered": {
+      "count": 9,
+      "id": "aquaticaspirations:iron_scale"
+    },
+    "enchanted": {
+      "count": 8,
+      "id": "minecraft:iron_ingot"
+    },
+    "enhanced": {
+      "count": 4,
+      "id": "minecraft:iron_ingot"
+    },
+    "natural": {
+      "count": 1,
+      "id": "aquaticaspirations:iron_scale"
+    },
+    "transcendent": {
+      "count": 32,
+      "id": "minecraft:iron_ingot"
+    }
+  }
+}

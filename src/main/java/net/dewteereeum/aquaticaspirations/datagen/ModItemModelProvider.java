@@ -17,14 +17,19 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.DIAMOND_FISH.get());
         basicItem(ModItems.GOLD_FISH.get());
         basicItem(ModItems.IRON_FISH.get());
-        basicItem(ModItems.IRON_SCALE.get());
+        basicItem(ModItems.COPPER_FISH.get());
         basicItem(ModItems.SAND_FISH.get());
         basicItem(ModItems.ANGLOWFISH.get());
         basicItem(ModItems.UNDEAD_FISH.get());
         basicItem(ModItems.SKELETAL_FISH.get());
 
+        basicItem(ModItems.IRON_SCALE.get());
+        basicItem(ModItems.COPPER_SCALE.get());
+
 
         basicItem(ModItems.IMPROVED_SUBSTRATE.get());
+
+        basicItem(ModItems.COPPER_NUGGET.get());
 
 
         basicItem(ModFluids.TANK_FLUID_BUCKET.get());

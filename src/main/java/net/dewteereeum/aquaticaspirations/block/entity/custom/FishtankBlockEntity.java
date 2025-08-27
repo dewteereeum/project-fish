@@ -96,26 +96,6 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     };
 
 
-    /*
-    private void dyingFish(){
-        if (fishOutOfWater() && dyingFishCounter == 0){
-            this.getLevel().playSound(null, this.getBlockPos(), SoundEvents.TROPICAL_FISH_FLOP, SoundSource.BLOCKS, 1f, 1f);
-            System.out.println("A fish is dying. Time: " + this.dyingFishCounter);
-            dyingFishCounter = dyingFishCounter +1;
-            setChanged(level, this.getBlockPos(), this.getBlockState());
-
-            if (this.dyingFishCounter >= 200){
-                this.dyingFishCounter = 0;
-            }
-        }
-        else this.dyingFishCounter = 0;
-
-
-    }
-
-     */
-
-
     public IItemHandler getItemHandler(Direction direction) {
         return this.itemHandler;
     }
@@ -165,14 +145,13 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     private int maxProgress = 80;
     private int dirtLevel = 0;
 
-    private int FishTier;
-    private int SubTier;
 
     private ModBlockProperties.ContainedFluid lastFluidState = ModBlockProperties.ContainedFluid.EMPTY;
 
-    public int[] getOutputSlots(){
+    public int[] getOutputSlots() {
         return new int[]{OUTPUT_SLOT1};
     }
+
     private float rotation;
 
 
@@ -236,7 +215,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         pTag.putInt("fishtank.dirt_level", dirtLevel);
         pTag.putInt("fishtank.progress", progress);
         pTag.putInt("fishtank.max_progress", maxProgress);
-        pTag.putInt("fishtank.dying_fish_counter", dyingFishCounter);
+        pTag.putInt("fishtank.tick_timer", tickTimer);
         pTag = FLUID_TANK.writeToNBT(pRegistries, pTag);
 
         super.saveAdditional(pTag, pRegistries);
@@ -250,8 +229,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         FLUID_TANK.readFromNBT(pRegistries, pTag);
         progress = pTag.getInt("fishtank.progress");
         maxProgress = pTag.getInt("fishtank.max_progress");
-        dyingFishCounter = pTag.getInt("fishtank.dying_fish_counter");
         dirtLevel = pTag.getInt("fishtank.dirt_level");
+        tickTimer = pTag.getInt("fishtank.tick_timer");
     }
 
     public float getRenderingRotation() {
@@ -264,7 +243,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         return oscillator;
     }
 
-    public int getDirtLevel(){
+    public int getDirtLevel() {
         return this.dirtLevel;
     }
 
@@ -290,8 +269,8 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         if (linkedInventory == null) {
             assert this.level != null;
             ItemStack accessoryStack = this.itemHandler.getStackInSlot(2);
-            if(accessoryStack.getItem() instanceof BlockLinkable linkedItem) {
-                if(linkedItem.getLinkedBlock(this) == null) return null;
+            if (accessoryStack.getItem() instanceof BlockLinkable linkedItem) {
+                if (linkedItem.getLinkedBlock(this) == null) return null;
                 BlockPos inventoryPos = linkedItem.getLinkedBlock(this);
                 linkedInventory = BlockCapabilityCache.create(
                         Capabilities.ItemHandler.BLOCK, // capability to cache
@@ -305,34 +284,17 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
 
-
     //////////End of Accessories
 
 
-    private int tickTimer = 0;
+    private int tickTimer = 0; //[0, 100) to allow for operational frequencies as low as 1/5sec
 
     public void tick(Level level, BlockPos pPos, BlockState pState) {
-        if(tickTimer == 1) {
-            if (fishOutOfWater()) {
-                if (dyingFishCounter == 0) {
-                    dyingFish();
-                }
-                deathCounterIncrease();
-                setChanged(level, pPos, pState);
-                if (deathCounterElapsed()) {
-                    resetDyingFishCounter();
-                }
-            } else {
-                resetDyingFishCounter();
-            }
-        }
-
-        //fluidChangedCheck(level, pPos, pState);
         if (hasRecipe() && OutputIsEmptyOrReceivable()) {
             increaseCraftingProgress();
             setChanged(level, pPos, pState);
             if (CraftingFinished()) {
-                if(fishThriving() && fluidMatches()) {
+                if (fishThriving() && fluidMatches()) {
                     craftItem();
                 }
                 dirtUpdate();
@@ -342,29 +304,32 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             resetProgress();
         }
 
-        if(!itemHandler.getStackInSlot(ACCESSORY_SLOT).isEmpty()){
-            if(itemHandler.getStackInSlot(ACCESSORY_SLOT).getItem() instanceof IFishTankAccessory accessory){
-                accessory.accessoryFunction(this);
+        if(tickTimer % 20 == 0) { //once per second
+            if (!itemHandler.getStackInSlot(ACCESSORY_SLOT).isEmpty()) {
+                if (itemHandler.getStackInSlot(ACCESSORY_SLOT).getItem() instanceof IFishTankAccessory accessory) {
+                    accessory.accessoryFunction(this);
+                }
+            } else {
+                linkedInventory = null;
             }
-        } else {
-            linkedInventory = null;
         }
         tickTimer++;
-        if(tickTimer >= 20){
+        if (tickTimer >= 100) { //allows for 5-seconds delays
             tickTimer = 0;
         }
 
 
     }
 
-    private boolean fluidMatches(){
+    private boolean fluidMatches() {
         SubstrateType reqSub = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
-        if(reqSub == null) return false;
-        if(reqSub.equals(SubstrateTypes.EARTHLY)){
+        if (reqSub == null) return false;
+        if(getFluid().isEmpty()) return false;
+        if (reqSub.equals(SubstrateTypes.EARTHLY)) {
             return getFluid().is(Fluids.WATER.getFluidType());
-        } else if(reqSub.equals(SubstrateTypes.ABYSSAL)){
+        } else if (reqSub.equals(SubstrateTypes.ABYSSAL)) {
             return getFluid().is(ModFluidTypes.ABYSSAL_WATER_TYPE.get());
-        } else if(reqSub.equals(SubstrateTypes.HELLISH)){
+        } else if (reqSub.equals(SubstrateTypes.HELLISH)) {
             return getFluid().is(ModFluidTypes.HELLWATER_TYPE.get());
         }
 
@@ -376,18 +341,13 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
         this.progress = 0;
         this.maxProgress = maxProgress;
     }
-//    private void craftItem() {
-//        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
-//
-//        ItemStack output = recipe.get().value().output();
-//        itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
-//    }
-private void craftItem() {
-    Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
 
-    ItemStack output = recipe.get().value().outputs().get(itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.FISH_QUALITY.get()).name());
-    itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
-}
+    private void craftItem() {
+        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
+
+        ItemStack output = recipe.get().value().outputs().get(itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.FISH_QUALITY.get()).name());
+        itemHandler.setStackInSlot(availableSlot, new ItemStack(output.getItem(), itemHandler.getStackInSlot(availableSlot).getCount() + output.getCount()));
+    }
 
     private boolean CraftingFinished() {
         return this.progress >= this.maxProgress;
@@ -413,17 +373,6 @@ private void craftItem() {
 
     }
 
-//    private boolean hasRecipe() {
-//        Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
-//        if (recipe.isEmpty() || FLUID_TANK.isEmpty()) {
-//            return false;
-//        }
-//
-//        ItemStack output = recipe.get().value().getResultItem(null);
-//
-//        return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
-//    }
-
     private boolean hasRecipe() {
         Optional<RecipeHolder<FishtankRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty() || FLUID_TANK.isEmpty()) {
@@ -435,31 +384,33 @@ private void craftItem() {
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
     }
 
-    private void dirtUpdate(){
-        if(dirtLevel == 100) return;
-        int dirtChance = (3 - itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes
-                .SUBSTRATE_TIER.get()).tier()) * 5; //3 - tier is so lower tier substrates produce more dirt, 5 is arbitrary
+    private void dirtUpdate() {
+        if (dirtLevel == 100) return;
+        SubstrateTier subTier = itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes
+                .SUBSTRATE_TIER.get());
+        int dirtAdj = subTier == null ? 3 : subTier.tier();
+        int dirtChance = (3 - dirtAdj) * 5; //3 - tier is so lower tier substrates produce more dirt, 5 is arbitrary
         assert this.level != null;
         int roll = this.level.random.nextInt(1, 101);
-        if(roll <= dirtChance){
+        if (roll <= dirtChance) {
             dirtLevel += itemHandler.getStackInSlot(0).get(ModDataComponentTypes.DIRTINESS.get()).dirtProduction();
         }
     }
 
-    private boolean fishThriving(){
+    private boolean fishThriving() {
         var fishDirtStats = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.DIRTINESS.get());
         var fishSubTier = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TIER);
         var fishSubType = itemHandler.getStackInSlot(FISH_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
-        if(fishDirtStats == null || fishSubType == null || fishSubTier == null) return false;
+        if (fishDirtStats == null || fishSubType == null || fishSubTier == null) return false;
         var subTier = itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes.SUBSTRATE_TIER.get());
         var subType = itemHandler.getStackInSlot(SUBSTRATE_SLOT).get(ModDataComponentTypes.SUBSTRATE_TYPE.get());
 
-        if(subType == null || subTier == null) return false;
+        if (subType == null || subTier == null) return false;
 
-        if(!fishSubType.equals(subType)) return false;
+        if (!fishSubType.equals(subType)) return false;
 
         boolean goodDirtLevels;
-        if(!fishDirtStats.likesDirtyWater()) {
+        if (!fishDirtStats.likesDirtyWater()) {
             goodDirtLevels = dirtLevel <= fishDirtStats.dirtThreshold();
         } else {
             goodDirtLevels = dirtLevel >= fishDirtStats.dirtThreshold();
@@ -469,94 +420,8 @@ private void craftItem() {
         return goodDirtLevels && sufficientSubstrate;
     }
 
-    boolean fishIs(Item fish) {
-        return itemHandler.getStackInSlot(FISH_SLOT).is(fish);
-    }
-
-    boolean fishIsAlive(Item fish) {
-        return (!(fishIs(ModItems.SKELETAL_FISH.get()) || fishIs(ModItems.UNDEAD_FISH.get())));
-    }
-
-    boolean fishOutOfWater() {
-        if (!itemHandler.getStackInSlot(FISH_SLOT).isEmpty() && FLUID_TANK.isEmpty()) {
-            if (!fishIsAlive(itemHandler.getStackInSlot(FISH_SLOT).getItem())) {
-                return false;
-            } else return true;
-        } else return false;
-    }
-
-    private int dyingFishCounter = 0;
-
-    private void dyingFish() {
-        assert level != null;
-        if(!level.isClientSide) return;
-        Random rand = new Random();
-        float pitch = rand.nextFloat(0.7f, 1.0f);
-        this.getLevel().playSound(null, this.getBlockPos(),
-                SoundEvents.COD_FLOP, SoundSource.BLOCKS, 1f, pitch);
-        System.out.println("A fish is dying. Timer: " + dyingFishCounter);
-    }
-
-    private void deathCounterIncrease() {
-        dyingFishCounter++;
-    }
-
-    private boolean deathCounterElapsed() {
-        return this.dyingFishCounter >= 10;
-    }
-
-    private void resetDyingFishCounter() {
-        this.dyingFishCounter = 0;
-    }
 
 
-    private void fluidChangedCheck(Level level, BlockPos blockPos, BlockState blockState) {
-        Fluid polledStateFluid = blockState.getValue(ModBlockProperties.CONTAINED_FLUID).getFluid();
-
-        System.out.println("succesfull poll: " + polledStateFluid.toString());
-        if (polledStateFluid.isSame(this.lastFluidState.getFluid())) return;
-
-        for (ModBlockProperties.ContainedFluid var : ModBlockProperties.ContainedFluid.values()) {
-            if (var.getFluid().isSame(this.getFluid().getFluid())) {
-                level.setBlockAndUpdate(blockPos, blockState.setValue(Fishtank.FLUID, var));
-                this.lastFluidState = var;
-                System.out.println("Fluid state changed to: " + var.toString());
-                return;
-            }
-        }
-
-        level.setBlockAndUpdate(blockPos, blockState.setValue(Fishtank.FLUID, ModBlockProperties.ContainedFluid.EMPTY));
-        System.out.println("No matching fluid found; Defaulted to EMPTY");
-
-    }
-
-
-    /*
-    private void transferFluidToTank() {
-        FluidActionResult result = FluidUtil.tryEmptyContainer(itemHandler.getStackInSlot(0), this.FLUID_TANK, Integer.MAX_VALUE, null, true);
-        if(result.result != ItemStack.EMPTY) {
-            itemHandler.setStackInSlot(1, result.result);
-        }
-    }
-    private void transferFluidFromTankToHandler() {
-        FluidActionResult result = FluidUtil.tryFillContainer(itemHandler.getStackInSlot(1), this.FLUID_TANK, Integer.MAX_VALUE, null, true);
-        if(result.result != ItemStack.EMPTY) {
-            itemHandler.setStackInSlot(1, result.result);
-        }
-    }
-
-    private boolean hasFluidStackInFirstSlot() {
-        return !itemHandler.getStackInSlot(1).isEmpty()
-                && itemHandler.getStackInSlot(1).getCapability(Capabilities.FluidHandler.ITEM, null) != null
-                && !itemHandler.getStackInSlot(1).getCapability(Capabilities.FluidHandler.ITEM, null).getFluidInTank(0).isEmpty();
-    }
-
-     */
-
-//    private Optional<RecipeHolder<FishtankRecipe>> getCurrentRecipe() {
-//        return this.level.getRecipeManager()
-//                .getRecipeFor(ModRecipes.FISHTANK_TYPE.get(), new FishtankRecipeInput(itemHandler.getStackInSlot(FISH_SLOT)), level);
-//    }
 
     private Optional<RecipeHolder<FishtankRecipe>> getCurrentRecipe() {
         return this.level.getRecipeManager()

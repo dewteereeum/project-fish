@@ -1,0 +1,28 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:skeletal_fish"
+  },
+  "outputs": {
+    "altered": {
+      "count": 1,
+      "id": "minecraft:bone"
+    },
+    "enchanted": {
+      "count": 16,
+      "id": "minecraft:bone"
+    },
+    "enhanced": {
+      "count": 4,
+      "id": "minecraft:bone"
+    },
+    "natural": {
+      "count": 1,
+      "id": "minecraft:bone_meal"
+    },
+    "transcendent": {
+      "count": 32,
+      "id": "minecraft:bone"
+    }
+  }
+}

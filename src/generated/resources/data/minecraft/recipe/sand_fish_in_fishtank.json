@@ -1,0 +1,28 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:sand_fish"
+  },
+  "outputs": {
+    "altered": {
+      "count": 4,
+      "id": "minecraft:sand"
+    },
+    "enchanted": {
+      "count": 32,
+      "id": "minecraft:sand"
+    },
+    "enhanced": {
+      "count": 16,
+      "id": "minecraft:sand"
+    },
+    "natural": {
+      "count": 1,
+      "id": "minecraft:sand"
+    },
+    "transcendent": {
+      "count": 64,
+      "id": "minecraft:sand"
+    }
+  }
+}

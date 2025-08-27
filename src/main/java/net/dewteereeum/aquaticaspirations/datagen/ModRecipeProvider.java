@@ -2,10 +2,13 @@ package net.dewteereeum.aquaticaspirations.datagen;
 
 import net.dewteereeum.aquaticaspirations.AquaticAspirationsMod;
 import net.dewteereeum.aquaticaspirations.block.ModBlocks;
+import net.dewteereeum.aquaticaspirations.block.custom.Fishtank;
 import net.dewteereeum.aquaticaspirations.item.ModItems;
+import net.dewteereeum.aquaticaspirations.recipe.FishtankRecipe;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -41,6 +44,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModBlocks.IMPROVED_SUBSTRATE_BLOCK.get())
                 .unlockedBy("has_improved_substrate", has(ModItems.IMPROVED_SUBSTRATE.get()))
                 .save(pRecipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.COPPER_INGOT, 1)
+                .requires(ModItems.COPPER_NUGGET.get(), 9)
+                .unlockedBy("has_copper_nugget", has(ModItems.COPPER_NUGGET.get()))
+                .save(pRecipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.COPPER_NUGGET.get(), 9)
+                .requires(Items.COPPER_INGOT)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .save(pRecipeOutput);
 
         SimpleCookingRecipeBuilder.smelting(
                 Ingredient.of(ModItems.IRON_SCALE.get()),
@@ -49,8 +60,49 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 0.1f,
                 100
         )
-                .unlockedBy("has_iron_scale", this.has(ModItems.IRON_SCALE))
+                .unlockedBy("has_iron_scale", has(ModItems.IRON_SCALE))
                 .save(pRecipeOutput, "iron_scale_smelting");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.COPPER_SCALE.get()),
+                RecipeCategory.MISC,
+                ModItems.COPPER_NUGGET.get(),
+                0.1f,
+                100
+        )
+                .unlockedBy("has_copper_scale", has(ModItems.COPPER_SCALE))
+                .save(pRecipeOutput, "copper_scale_smelting");
+
+        new FishtankRecipeBuilder(Ingredient.of(ModItems.SAND_FISH))
+                .unlockedBy("has_sand_fish", has(ModItems.SAND_FISH))
+                .Natural(Items.SAND, 1)
+                .Altered(Items.SAND, 4)
+                .Enhanced(Items.SAND, 16)
+                .Enchanted(Items.SAND, 32)
+                .Transcendent(Items.SAND, 64)
+                .save(pRecipeOutput, "sand_fish_in_fishtank");
+        new FishtankRecipeBuilder(Ingredient.of(ModItems.SKELETAL_FISH))
+                .unlockedBy("has_skeletal_fish", has(ModItems.SKELETAL_FISH))
+                .Natural(Items.BONE_MEAL, 1)
+                .Altered(Items.BONE, 1)
+                .Enhanced(Items.BONE, 4)
+                .Enchanted(Items.BONE, 16)
+                .Transcendent(Items.BONE, 32)
+                .save(pRecipeOutput, "skeletal_fish_in_fishtank");
+        new FishtankRecipeBuilder(Ingredient.of(ModItems.IRON_FISH))
+                .unlockedBy("has_iron_fish", has(ModItems.IRON_FISH))
+                .Natural(ModItems.IRON_SCALE.get(), 1)
+                .Altered(ModItems.IRON_SCALE.get(), 9)
+                .Enhanced(Items.IRON_INGOT, 4)
+                .Enchanted(Items.IRON_INGOT, 8)
+                .Transcendent(Items.IRON_INGOT, 32)
+                .save(pRecipeOutput, "iron_fish_in_fishtank");
+        new FishtankRecipeBuilder(Ingredient.of(ModItems.COPPER_FISH))
+                .unlockedBy("has_copper_fish", has(ModItems.COPPER_FISH))
+                .Natural(ModItems.COPPER_SCALE.get(), 1)
+                .Altered(ModItems.COPPER_SCALE.get(), 9)
+                .Enhanced(Items.COPPER_INGOT, 4)
+                .Enchanted(Items.COPPER_INGOT, 8)
+                .Transcendent(Items.COPPER_INGOT, 32)
+                .save(pRecipeOutput, "copper_fish_in_fishtank");
 
     }
 

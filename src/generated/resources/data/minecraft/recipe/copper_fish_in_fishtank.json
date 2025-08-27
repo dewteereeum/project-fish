@@ -1,0 +1,28 @@
+{
+  "type": "aquaticaspirations:fishtank_production",
+  "ingredient": {
+    "item": "aquaticaspirations:copper_fish"
+  },
+  "outputs": {
+    "altered": {
+      "count": 9,
+      "id": "aquaticaspirations:copper_scale"
+    },
+    "enchanted": {
+      "count": 8,
+      "id": "minecraft:copper_ingot"
+    },
+    "enhanced": {
+      "count": 4,
+      "id": "minecraft:copper_ingot"
+    },
+    "natural": {
+      "count": 1,
+      "id": "aquaticaspirations:copper_scale"
+    },
+    "transcendent": {
+      "count": 32,
+      "id": "minecraft:copper_ingot"
+    }
+  }
+}
