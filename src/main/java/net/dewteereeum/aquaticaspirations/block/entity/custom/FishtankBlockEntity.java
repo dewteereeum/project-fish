@@ -314,7 +314,7 @@ public class FishtankBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
         tickTimer++;
-        if (tickTimer >= 100) { //allows for 5-seconds delays
+        if (tickTimer >= 100) {//allows for 5-seconds delays
             tickTimer = 0;
         }
 

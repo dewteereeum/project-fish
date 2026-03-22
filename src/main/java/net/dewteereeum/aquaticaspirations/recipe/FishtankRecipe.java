@@ -89,8 +89,8 @@ public record FishtankRecipe(Ingredient inputItem, Map<String, ItemStack> output
         }
     }
 
-    public static final Codec<Map<String, ItemStack>> QUALITY_OUTPUT_MAP_CODEC = Codec.unboundedMap(Codec.STRING, ItemStack.CODEC);
-    public static final StreamCodec<RegistryFriendlyByteBuf, Map<String, ItemStack>> QUALITY_OUTPUT_MAP_STREAM_CODEC = ByteBufCodecs.map(
+    private static final Codec<Map<String, ItemStack>> QUALITY_OUTPUT_MAP_CODEC = Codec.unboundedMap(Codec.STRING, ItemStack.CODEC);
+    private static final StreamCodec<RegistryFriendlyByteBuf, Map<String, ItemStack>> QUALITY_OUTPUT_MAP_STREAM_CODEC = ByteBufCodecs.map(
             HashMap::new,
             ByteBufCodecs.STRING_UTF8,
             ItemStack.STREAM_CODEC,

@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.List;
@@ -104,6 +105,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .Transcendent(Items.COPPER_INGOT, 32)
                 .save(pRecipeOutput, "copper_fish_in_fishtank");
 
+        new FishbaitRecipeBuilder(Ingredient.of(Items.APPLE), Blocks.WATER, ModItems.COPPER_FISH.get())
+                .unlockedBy("has_apple", has(Items.APPLE))
+                .save(pRecipeOutput, "sand_fish_from_bait");
+        new FishbaitRecipeBuilder(Ingredient.of(Items.CLOCK), Blocks.WATER, ModItems.GOLD_FISH.get())
+                .unlockedBy("has_clock", has(Items.CLOCK))
+                .save(pRecipeOutput, "gold_fish_from_bait");
     }
 
     protected static void oreSmelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult,

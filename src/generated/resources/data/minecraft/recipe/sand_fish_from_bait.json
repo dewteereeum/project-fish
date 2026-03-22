@@ -1,0 +1,11 @@
+{
+  "type": "aquaticaspirations:fishbaiting",
+  "fluid": "minecraft:water",
+  "ingredient": {
+    "item": "minecraft:apple"
+  },
+  "result": {
+    "count": 1,
+    "id": "aquaticaspirations:copper_fish"
+  }
+}

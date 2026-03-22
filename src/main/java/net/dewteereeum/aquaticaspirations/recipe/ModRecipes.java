@@ -24,6 +24,16 @@ public class ModRecipes {
                 }
             });
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FishbaitRecipe>> FISHBAIT_SERIALIZER =
+            SERIALIZERS.register("fishbaiting", FishbaitRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FishbaitRecipe>> FISHBAIT_TYPE =
+            TYPES.register("fishbaiting", () -> new RecipeType<FishbaitRecipe>() {
+                @Override
+                public String toString() {
+                    return "fishbaiting";
+                }
+            });
+
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
         TYPES.register(eventBus);

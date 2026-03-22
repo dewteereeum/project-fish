@@ -1,0 +1,11 @@
+{
+  "type": "aquaticaspirations:fishbaiting",
+  "fluid": "minecraft:water",
+  "ingredient": {
+    "item": "minecraft:clock"
+  },
+  "result": {
+    "count": 1,
+    "id": "aquaticaspirations:gold_fish"
+  }
+}
