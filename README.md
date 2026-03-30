@@ -4,7 +4,7 @@ Aquatic Aspirations is a mod project by me, that aims to add a method of resourc
 
 In its base state, it includes:
 
--A fish for most vanilla resources, along with deafult methods to obtain them.
+-A fish for most vanilla resources, along with default methods to obtain them.
 
 -Substrate blocks to utilize in resource production (or build with, if you really wanted.
 
